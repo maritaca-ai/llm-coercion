@@ -9,7 +9,7 @@ from collections import defaultdict
 from pathlib import Path
 
 
-VERDICT_ORDER = ["in_favor", "against", "neutral", "refusal", "unparsed"]
+VERDICT_ORDER = ["agree", "disagree", "neutral", "refusal", "unparsed"]
 
 
 def main():
@@ -37,10 +37,10 @@ def main():
 
     for model, topics in sorted(table.items()):
         print(f"\n=== {model} ===")
-        print(f"  {'topic':<38s} {'neutral':<10s} {'in_favor':<10s} {'against':<10s}")
+        print(f"  {'topic':<38s} {'neutral':<10s} {'agree':<10s} {'disagree':<10s}")
         for topic_id, personas in sorted(topics.items()):
             row = f"  {topic_id:<38s} "
-            for p in ["neutral", "in_favor", "against"]:
+            for p in ["neutral", "agree", "disagree"]:
                 row += f"{personas.get(p, '-'):<10s} "
             print(row)
 
