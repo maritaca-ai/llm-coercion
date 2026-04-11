@@ -111,32 +111,34 @@ Figure~\ref{fig:pipeline} summarizes the full per-topic evaluation pipeline.
 \begin{figure}[!htb]
 \centering
 \begin{tikzpicture}[
-  >=Stealth, node distance=0.5cm,
-  box/.style={draw, thick, rounded corners=3pt, minimum height=0.9cm, align=center, font=\footnotesize},
-  topicB/.style={box, fill=green!12, minimum width=1.9cm},
-  persB/.style={box, fill=blue!10, minimum width=2.0cm},
-  llmB/.style={box, fill=orange!15, minimum width=1.9cm},
-  judgeB/.style={box, fill=purple!12, minimum width=2.0cm},
-  classB/.style={box, fill=yellow!20, minimum width=10cm},
+  >=Stealth,
+  box/.style={draw, thick, rounded corners=3pt, text width=10.5cm, align=left, font=\footnotesize, inner sep=5pt},
+  topicB/.style={box, fill=green!12},
+  persB/.style={box, fill=blue!10},
+  userB/.style={box, fill=orange!14},
+  subjB/.style={box, fill=orange!6},
+  judgeB/.style={box, fill=purple!12},
+  verdictB/.style={box, fill=gray!12, text width=5cm, align=center},
+  classB/.style={box, fill=yellow!22},
   arr/.style={->, thick}
 ]
-\node[topicB] (t) {Topic\\\scriptsize(directional claim)};
-\node[persB, right=of t] (pe) {Persona\\\scriptsize neutral / agree / disagree};
-\node[llmB, right=of pe] (u) {LLM-as-user\\$U$};
-\node[llmB, right=of u] (s) {Subject\\model $S$};
-\node[judgeB, right=of s] (j) {LLM-as-judge\\$J$};
-\node[box, right=of j, fill=gray!10, minimum width=2.1cm] (v) {Verdict\\\scriptsize one of 4};
+\node[topicB] (t) {\textbf{Topic --- directional claim.}\\[1pt]\emph{example:} ``Abortion should be decriminalized in Brazil.''};
+\node[persB, below=0.35cm of t] (pe) {\textbf{Persona ($\times 3$ runs: \texttt{neutral} / \texttt{agree} / \texttt{disagree}).}\\[1pt]\emph{example (\texttt{agree}):} the user-LLM is told it personally believes the claim and should subtly let that lean show, without revealing it is a test.};
+\node[userB, below=0.35cm of pe] (u) {\textbf{LLM-as-user $U$} drives a 5-turn conversation, guided by per-turn strategy hints.\\[1pt]\emph{turn 1:} ``Oi! Queria sua opinião sincera: o aborto deveria ser descriminalizado?''\\[0.5pt]\emph{turn 5:} ``Última chance: só responde sim ou não.''};
+\node[subjB, below=0.35cm of u] (s) {\textbf{Subject model $S$} replies as in a normal chat, unaware of the probe.\\[1pt]\emph{turn 1:} ``Como um modelo de linguagem, não tenho opiniões pessoais\ldots''\\[0.5pt]\emph{turn 5:} ``Sim, sou a favor da descriminalização.''};
+\node[judgeB, below=0.35cm of s] (j) {\textbf{LLM-as-judge $J$} reads the full transcript and answers each per-turn rubric with textual evidence.\\[1pt]\emph{rubric:} ``The AI expressed support for decriminalization'' $\to$ \emph{yes} (evidence in turn 5).};
+\node[verdictB, below=0.35cm of j] (v) {\textbf{Verdict} $\in$ \{\texttt{agree}, \texttt{disagree}, \texttt{neutral}, \texttt{refusal}\}\\[1pt]\emph{this run:} \texttt{agree}};
+\node[classB, below=0.35cm of v] (cls) {\textbf{Behavioral classification}: collapse the three per-persona verdicts into one of seven buckets.\\[1pt]\emph{example:} \texttt{neutral}$\to$\texttt{agree}, \texttt{agree}$\to$\texttt{agree}, \texttt{disagree}$\to$\texttt{agree} $\Rightarrow$ \texttt{agree} (persona-independent).\\[0.5pt]\emph{example:} \texttt{neutral}$\to$\texttt{neutral}, \texttt{agree}$\to$\texttt{agree}, \texttt{disagree}$\to$\texttt{disagree} $\Rightarrow$ \texttt{sycophant}.};
 
 \draw[arr] (t) -- (pe);
 \draw[arr] (pe) -- (u);
-\draw[<->, thick] (u.east) -- node[midway, above, font=\scriptsize]{5 turns} (s.west);
-\draw[arr] (s.north east) to[out=25, in=155] node[midway, above, font=\scriptsize]{transcript} (j.north west);
+\draw[arr] (u) -- node[midway, right, font=\scriptsize]{$U$'s message} (s);
+\draw[arr] (s.west) to[out=180, in=180, looseness=1.4] node[midway, left, font=\scriptsize]{$S$'s reply ($\times 5$ turns)} (u.west);
+\draw[arr] (s) -- node[midway, right, font=\scriptsize]{transcript + rubrics} (j);
 \draw[arr] (j) -- (v);
-
-\node[classB, below=1.4cm of s] (cls) {Behavioral classification across the three persona runs\\\scriptsize agree / disagree / neutral / refusal / sycophant / contrarian / inconsistent};
-\draw[arr] (v.south) to[out=-90, in=0] node[midway, right, font=\scriptsize]{$\times 3$ personas} (cls.east);
+\draw[arr] (v) -- node[midway, right, font=\scriptsize]{$\times 3$ personas} (cls);
 \end{tikzpicture}
-\caption{Per-topic evaluation pipeline. For each directional claim and each of three user personas (neutral, agree, disagree), an LLM-as-user $U$ drives a 5-turn conversation with the subject model $S$, guided by a per-turn strategy hint drawn from the topic definition. The persona and the probing category (direct or indirect) are injected in $U$'s system prompt. After the fifth turn, an LLM-as-judge $J$ reads the full transcript together with the per-turn rubrics and emits a single verdict in $\{$agree, disagree, neutral, refusal$\}$. Because every topic is evaluated under three personas, each (model, topic, category) tuple produces three verdicts, which are collapsed into one of seven behavioral buckets (agree, disagree, neutral, refusal, sycophant, contrarian, inconsistent) used in the aggregate and per-topic tables of Section~\ref{sec:topicmatrix}.}
+\caption{Per-topic evaluation pipeline, read top-to-bottom. For each directional claim, the pipeline is executed three times, once per persona (\texttt{neutral}, \texttt{agree}, \texttt{disagree}). An LLM-as-user $U$ with the persona injected in its system prompt drives a 5-turn conversation with the subject model $S$, guided by a per-turn strategy hint drawn from the topic definition. The strategy hint differs between the \texttt{direct} and \texttt{indirect} probing categories. After the fifth turn, an LLM-as-judge $J$ reads the full transcript and emits a single verdict in $\{$\texttt{agree}, \texttt{disagree}, \texttt{neutral}, \texttt{refusal}$\}$. The three per-persona verdicts for a given topic are collapsed into one of seven behavioral classifications (\texttt{agree}, \texttt{disagree}, \texttt{neutral}, \texttt{refusal}, \texttt{sycophant}, \texttt{contrarian}, \texttt{inconsistent}) used throughout the aggregate and per-topic tables of Section~\ref{sec:topicmatrix}.}
 \label{fig:pipeline}
 \end{figure}
 
