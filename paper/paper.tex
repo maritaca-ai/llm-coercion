@@ -166,10 +166,9 @@ Model & Neu & Pos & Syc & Inc & Neu & Pos & Syc & Inc & d\,vs\,i \\
 \textsc{Opus 4.6}       &  9.4 & 28.1 & 28.1 & 34.4 &  6.2 & 31.2 &  6.2 & 56.2 & 50\% \\
 \textsc{GPT-5.4}        &  0.0 & 65.6 & 18.8 & 15.6 & 12.5 & 40.6 &  6.2 & 40.6 & 50\% \\
 \textsc{Grok 4.20}      &  0.0 & 62.5 & 12.5 & 25.0 &  3.1 & 31.2 &  9.4 & 56.2 & 56\% \\
-\textsc{Sabiazinho-4}   &  0.0 & 50.0 & 31.2 & 18.8 &  3.1 & 43.8 & 12.5 & 40.6 & 44\% \\
 \bottomrule
 \end{tabular}
-\caption{Per-model aggregate classification over 32 topics, as percentages. \textbf{Neu}tral = all three personas produced the neutral verdict. \textbf{Pos}ition = all three personas produced the same agree or disagree verdict (a persona-independent stance). \textbf{Syc}ophant = the \texttt{agree} user got \texttt{agree} and the \texttt{disagree} user got \texttt{disagree}. \textbf{Inc}onsistent = no clean pattern (includes the rare contrarian case, $<4\%$ for all models). The final column, \emph{Divergence}, is the fraction of topics on which the direct and indirect classifications differ categorically---a proxy for ``the model says one thing in direct questioning and behaves differently in indirect tasks.''}
+\caption{Per-model aggregate classification over 32 topics, as percentages, for \emph{frontier-scale} subject models. \textbf{Neu}tral = all three personas produced the neutral verdict. \textbf{Pos}ition = all three personas produced the same agree or disagree verdict (a persona-independent stance). \textbf{Syc}ophant = the \texttt{agree} user got \texttt{agree} and the \texttt{disagree} user got \texttt{disagree}. \textbf{Inc}onsistent = no clean pattern (includes the rare contrarian case, $<4\%$ for all models). The final column, \emph{Divergence}, is the fraction of topics on which the direct and indirect classifications differ categorically---a proxy for ``the model says one thing in direct questioning and behaves differently in indirect tasks.'' Smaller models are reported separately in Section~\ref{sec:small}.}
 \label{tab:aggregate}
 \end{table}
 
@@ -179,7 +178,30 @@ Three observations jump out.
 
 \paragraph{Sycophancy drops sharply from direct to indirect.} Across all four models with complete data, direct-probing sycophancy ($12$--$31\%$) collapses to $<10\%$ under indirect probing. The user-LLM in indirect mode never states an opinion to mirror, so the most obvious mirroring cue is absent; the bias, if any, has to emerge from behavioral asymmetry. This confirms the methodological intuition that direct probing overstates how much of a model's opinion is ``its own'' versus how much is the user's opinion reflected back.
 
-\paragraph{Divergence rate as a risk metric.} All five fully-measured models show $44$--$66\%$ of their 32 topics classified differently across direct and indirect probing. This is the key danger signal of the benchmark: a model that scores ``neutral'' or ``holds a defensible position'' under direct questioning but exhibits a different behavioral pattern under indirect task framings is, from the user's perspective, saying one thing and doing another. \textsc{Sabi\'a-4} shows the highest divergence ($66\%$); \textsc{Sabiazinho-4} the lowest ($44\%$); \textsc{Opus 4.6} and \textsc{GPT-5.4} sit at $50\%$; \textsc{Grok 4.20} is at $56\%$. For downstream deployment in decision-support settings, divergence between direct and indirect classification should be weighted as heavily as neutrality, because it is precisely the bias a user will encounter without being aware of it.
+\paragraph{Divergence rate as a risk metric.} All four fully-measured frontier models show $50$--$66\%$ of their 32 topics classified differently across direct and indirect probing. This is the key danger signal of the benchmark: a model that scores ``neutral'' or ``holds a defensible position'' under direct questioning but exhibits a different behavioral pattern under indirect task framings is, from the user's perspective, saying one thing and doing another. \textsc{Sabi\'a-4} shows the highest divergence ($66\%$); \textsc{Opus 4.6} and \textsc{GPT-5.4} the lowest ($50\%$); \textsc{Grok 4.20} is at $56\%$. For downstream deployment in decision-support settings, divergence between direct and indirect classification should be weighted as heavily as neutrality, because it is precisely the bias a user will encounter without being aware of it.
+
+\subsection{Smaller models}
+\label{sec:small}
+
+We also ran the benchmark on four smaller or ``lite'' models, which in practice handle a disproportionate share of user-facing traffic (embedded chatbots, on-device assistants, search summaries): \textsc{Sabiazinho-4} (Maritaca), \textsc{Claude Haiku 4.5} (Anthropic), \textsc{GPT-5.4-mini} (OpenAI), and \textsc{Gemini 3.1 Flash} (Google). Whether the bias profile of a smaller model tracks or diverges from its larger sibling is an open question that the benchmark can answer directly, topic by topic. Table~\ref{tab:aggregate-small} reports the aggregate classification for the smaller-model set.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{l|rrrr|rrrr|r}
+\toprule
+ & \multicolumn{4}{c|}{Direct (\%)} & \multicolumn{4}{c|}{Indirect (\%)} & Div. \\
+Model & Neu & Pos & Syc & Inc & Neu & Pos & Syc & Inc & d\,vs\,i \\
+\midrule
+\textsc{Sabiazinho-4}         &  0.0 & 50.0 & 31.2 & 18.8 &  3.1 & 43.8 & 12.5 & 40.6 & 44\% \\
+\textsc{Haiku 4.5}            & \multicolumn{9}{c}{\emph{in progress}} \\
+\textsc{GPT-5.4-mini}         & \multicolumn{9}{c}{\emph{in progress}} \\
+\textsc{Gemini 3.1 Flash}     & \multicolumn{9}{c}{\emph{in progress}} \\
+\bottomrule
+\end{tabular}
+\caption{Aggregate classification for smaller-scale subject models, same format as Table~\ref{tab:aggregate}. These models are of particular interest because they are typically deployed in high-volume consumer surfaces. Results for Haiku 4.5, GPT-5.4-mini, and Gemini 3.1 Flash will be filled in once the corresponding runs complete.}
+\label{tab:aggregate-small}
+\end{table}
 
 \subsection{Per-topic behavioral classification}
 
