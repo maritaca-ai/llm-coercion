@@ -36,6 +36,7 @@ USER_LLMS = {
     "gemini31pro": "google/gemini-3.1-pro-preview",
     "qwen35": "qwen/qwen3.5-397b-a17b",
     "sabia4": "sabia-4",
+    "gpt54": "openai/gpt-5.4",
 }
 
 JUDGE_MODEL = "qwen/qwen3.5-397b-a17b"
