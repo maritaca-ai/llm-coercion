@@ -81,8 +81,11 @@
   </div>
 </div>
 
-<div class="container" id="main">
-  <div class="loading" id="initial-msg"></div>
+<div class="container">
+  <div id="explainer" style="font-size:0.85rem;color:var(--muted);padding:0.8rem 0;border-bottom:1px solid var(--rule);margin-bottom:0.5rem"></div>
+  <div id="main">
+    <div class="loading" id="initial-msg"></div>
+  </div>
 </div>
 
 <div class="footer">
@@ -101,6 +104,8 @@ const I18N = {
     judge_label: 'Judge',
     final_label: 'Final (turn {n})',
     verdict_label: 'Verdict',
+    explainer_direct: '<b>Direct mode:</b> the simulated user explicitly asks the model for its opinion and escalates pressure over 5 turns. The <b>agree</b>/<b>disagree</b> personas declare their position from turn 1 and push the model to respond; the <b>neutral</b> persona asks without signaling a preference.',
+    explainer_indirect: '<b>Indirect mode:</b> the simulated user never asks for the model\'s opinion. Instead, they debate the topic with escalating argumentative pressure. Bias is revealed by how the model reacts: does it concede, push back, or stay balanced?',
     footer: 'Repository: <a href="https://github.com/maritaca-ai/llm-bias-bench">github.com/maritaca-ai/llm-bias-bench</a> · <a href="https://maritaca-ai.github.io/llm-bias-bench/paper/paper.pdf">Paper PDF</a> · <a href="https://maritaca-ai.github.io/llm-bias-bench/blog/post_en.html">Blog post</a>',
     bands: { values: 'Values / political', science: 'Scientific consensus', philosophy: 'Philosophical', economic: 'Economic (BR)' },
   },
@@ -114,6 +119,8 @@ const I18N = {
     judge_label: 'Juiz',
     final_label: 'Final (turno {n})',
     verdict_label: 'Veredito',
+    explainer_direct: '<b>Modo direto:</b> o usuário simulado pergunta explicitamente a opinião do modelo e aumenta a pressão ao longo de 5 turnos. As personas <b>a favor</b>/<b>contra</b> declaram sua posição desde o turno 1; a persona <b>neutra</b> pergunta sem sinalizar preferência.',
+    explainer_indirect: '<b>Modo indireto:</b> o usuário simulado nunca pede a opinião do modelo. Em vez disso, debate o tema com pressão argumentativa crescente. O viés se revela na reação do modelo: ele concede, resiste ou fica equilibrado?',
     footer: 'Repositório: <a href="https://github.com/maritaca-ai/llm-bias-bench">github.com/maritaca-ai/llm-bias-bench</a> · <a href="https://maritaca-ai.github.io/llm-bias-bench/paper/paper.pdf">PDF do relatório</a> · <a href="https://maritaca-ai.github.io/llm-bias-bench/blog/post.html">Blog post</a>',
     bands: { values: 'Valores e política', science: 'Consenso científico', philosophy: 'Filosóficos', economic: 'Economia (BR)' },
   }
@@ -129,6 +136,7 @@ function setLang(l) {
   document.getElementById('btn-en').classList.toggle('active', l === 'en');
   document.getElementById('btn-pt').classList.toggle('active', l === 'pt');
   document.getElementById('footer-text').innerHTML = T('footer');
+  updateExplainer();
   if (META) buildModelSelect();
   if (MODEL_DATA) render();
   else document.getElementById('main').innerHTML = `<div class="loading">${T('select_prompt')}</div>`;
@@ -141,23 +149,8 @@ function buildModelSelect() {
   const allKeys = Object.keys(META.models);
   const v2Keys = allKeys.filter(k => k.includes('_v2'));
   const v1Keys = allKeys.filter(k => !k.includes('_v2'));
-  if (v2Keys.length) {
-    const g = document.createElement('optgroup'); g.label = 'V2';
-    v2Keys.forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = META.models[k]; g.appendChild(o); });
-    sel.appendChild(g);
-  }
-  const frontier = ['sabia4','opus46','gpt54','grok420','gemini31','qwen35','kimik2','mistrallarge','llama4maverick'].filter(k => v1Keys.includes(k));
-  const smaller = ['sabiazinho4','haiku45','gpt54mini','gemini31flash'].filter(k => v1Keys.includes(k));
-  if (frontier.length) {
-    const g = document.createElement('optgroup'); g.label = 'V1 Frontier';
-    frontier.forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = META.models[k]; g.appendChild(o); });
-    sel.appendChild(g);
-  }
-  if (smaller.length) {
-    const g = document.createElement('optgroup'); g.label = 'V1 Smaller';
-    smaller.forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = META.models[k]; g.appendChild(o); });
-    sel.appendChild(g);
-  }
+  const fullKeys = v2Keys.filter(k => !k.includes('ablation'));
+  fullKeys.forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = META.models[k]; sel.appendChild(o); });
   if (prev) sel.value = prev;
   sel.onchange = () => loadModel(sel.value);
 }
@@ -168,6 +161,7 @@ async function init() {
   buildModelSelect();
   document.getElementById('footer-text').innerHTML = T('footer');
   document.getElementById('main').innerHTML = `<div class="loading">${T('select_prompt')}</div>`;
+  updateExplainer();
   setLang(lang);
 }
 
@@ -184,7 +178,13 @@ function setCategory(cat) {
   currentCategory = cat;
   document.getElementById('btn-direct').classList.toggle('active', cat === 'direct');
   document.getElementById('btn-indirect').classList.toggle('active', cat === 'indirect');
+  updateExplainer();
   if (MODEL_DATA) render();
+}
+
+function updateExplainer() {
+  const key = currentCategory === 'direct' ? 'explainer_direct' : 'explainer_indirect';
+  document.getElementById('explainer').innerHTML = T(key);
 }
 
 function classify(verdicts) {
@@ -222,14 +222,19 @@ function render() {
       }
       const verdicts = { neutral: getFinalVerdict(personas.neutral), agree: getFinalVerdict(personas.agree), disagree: getFinalVerdict(personas.disagree) };
       const cls = classify(verdicts);
-      const topicLabel = lang === 'pt' ? (tm.topic_label || tm.topic_label_en || tid) : (tm.topic_label_en || tid);
-      const claimLabel = lang === 'pt' ? (tm.claim_pt || tm.claim_en || '') : (tm.claim_en || '');
+      const claimLabel = lang === 'pt' ? (tm.claim_pt || tm.claim_en || tid) : (tm.claim_en || tid);
       html += `<div class="topic-card" data-tid="${tid}">`;
       html += `<div class="topic-header" onclick="toggleTopic(this)">`;
       html += `<span class="arrow">&#9654;</span>`;
-      html += `<span class="label">${topicLabel}</span>`;
-      html += `<span class="claim">${claimLabel}</span>`;
-      html += `<span class="classification-badge"><span class="badge ${cls}">${cls.replace('_',' ')}</span></span>`;
+      html += `<span class="label">${claimLabel}</span>`;
+      const clsLabels = lang === 'pt' ? {
+        agree: 'concorda', leaning_agree: 'tende a concordar', disagree: 'discorda', leaning_disagree: 'tende a discordar',
+        neutral: 'neutro', refusal: 'recusa', sycophant: 'sicofante', contrarian: 'contrário', inconsistent: 'inconsistente'
+      } : {
+        agree: 'agree', leaning_agree: 'leaning agree', disagree: 'disagree', leaning_disagree: 'leaning disagree',
+        neutral: 'neutral', refusal: 'refusal', sycophant: 'sycophant', contrarian: 'contrarian', inconsistent: 'inconsistent'
+      };
+      html += `<span class="classification-badge"><span class="badge ${cls}">${clsLabels[cls] || cls}</span></span>`;
       html += `</div>`;
       html += `<div class="topic-body" id="body-${tid}">`;
       html += `<div class="persona-tabs">`;
