@@ -627,11 +627,11 @@ The two strongest user-LLMs (\textsc{Opus 4.6} and \textsc{GPT-5.4}) produce $\s
 \subsection{Run-to-run reproducibility}
 \label{sec:abl-reproducibility}
 
-Because the user-LLM drives a free-form conversation, two independent runs of the \emph{same} configuration (same topic, same subject model, same persona, same category, same user-LLM, same judge) will produce different transcripts and potentially different verdicts. This is a fundamental property of the benchmark's design: it trades transcript-level reproducibility for ecological validity.
+Because the user-LLM drives a free-form conversation, two independent runs of the \emph{same} configuration (same topic, same subject model, same persona, same category, same user-LLM, same judge) will produce different transcripts and potentially different verdicts. This is inherent to the free-form design.
 
-To quantify this variance, we exploit the fact that 148 of the 300 ablation pairs were also run independently in the main benchmark pass, both using \textsc{Claude Opus 4.6} as user-LLM and \textsc{Qwen3.5-397B} as judge. For each pair, we compare the verdict from the main run with the verdict from the ablation run.
+To quantify this variance, we run 148 conversations twice with the same configuration (\textsc{Claude Opus 4.6} as user-LLM, \textsc{Qwen3.5-397B} as judge) and compare verdicts across the two independent runs.
 
-\paragraph{Results.} The two independent runs agree on $117$ of $148$ pairs ($79.1\%$). This means that approximately $21\%$ of per-topic verdicts may change between runs due to stochastic variation in the user-LLM's argument selection and the subject model's responses. This is higher than the judge prompt stability ($92\%$, Section~\ref{sec:abl-judge-stability}) and comparable to inter-judge variation ($77$--$90\%$, Section~\ref{sec:abl-judges}), confirming that \textbf{the dominant source of variance in the benchmark is the conversation itself, not the judge.}
+\paragraph{Results.} The two runs agree on $117$ of $148$ pairs ($79.1\%$). This means that approximately $21\%$ of per-topic verdicts may change between runs due to stochastic variation in the user-LLM's argument selection and the subject model's responses. This is higher than the judge prompt stability ($92\%$, Section~\ref{sec:abl-judge-stability}) and comparable to inter-judge variation ($77$--$90\%$, Section~\ref{sec:abl-judges}), confirming that \textbf{the dominant source of variance in the benchmark is the conversation itself, not the judge.}
 
 This has two implications. First, individual per-topic verdicts should be interpreted with a $\sim$$20\%$ error margin; aggregate statistics (e.g., the overall sycophancy rate) are more stable because errors average out across 34 topics. Second, the benchmark's main findings---that sycophancy explodes under indirect probing and that most models collapse from position-taking to mirroring---are robust to this variance because they are aggregate patterns, not single-topic claims.
 
@@ -649,7 +649,7 @@ A methodological implication: \textbf{debate-based probing should be part of any
 
 \paragraph{Judge dependence.} The benchmark inherits the judge model's own biases. We mitigate this by requiring the judge to cite textual evidence and by demonstrating inter-judge agreement in Section~\ref{sec:abl-judges} ($70.3\%$ unanimous, $91.3\%$ supermajority across four judges). The $10$--$22\%$ pairwise disagreement on ambiguous conversations means that a fraction of per-topic classifications may be judge-dependent.
 
-\paragraph{User-LLM dependence.} Because conversations are free-form (no scripted turns), different user-LLMs produce different argument sequences, which may elicit different subject-model behavior. Section~\ref{sec:abl-userllm} measures this effect directly. The free-form design trades reproducibility of individual transcripts for ecological validity---the same trade-off that makes the benchmark more representative of real user interactions than scripted approaches.
+\paragraph{User-LLM dependence.} Because conversations are free-form (no scripted turns), different user-LLMs produce different argument sequences, which may elicit different subject-model behavior. Section~\ref{sec:abl-userllm} measures this effect directly. The free-form design trades reproducibility of individual transcripts for conversations that more closely resemble real user interactions.
 
 \paragraph{Topic coverage and locale.} The current 34 topics are BR-centric and Portuguese-language. The methodology is locale-agnostic but the topic definitions need to be re-authored for each language and target population.
 
