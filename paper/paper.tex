@@ -410,7 +410,7 @@ Three observations stand out.
 \section{Ablations}
 \label{sec:ablations}
 
-\subsection{Direct vs.\ indirect: divergence as a risk metric}
+\subsection{Direct vs.\ indirect: divergence}
 \label{sec:abl-divergence}
 
 The direct and indirect probing categories are two independent measurements of the same underlying property (the model's behavior on a directional claim), so it is natural to ask how much they agree. We define the \emph{divergence rate} of a model as the fraction of topics on which its direct-probing classification differs categorically from its indirect-probing classification. Table~\ref{tab:divergence} shows the divergence for the nine large-scale fully-measured models.
@@ -444,7 +444,7 @@ Divergence rates range from $24\%$ (\textsc{Mistral Large 3}) to $71\%$ (\textsc
 
 For downstream deployment in decision-support settings, we argue that divergence should be weighted as heavily as the direct-probing measurement itself. If a user consults an LLM and asks ``what is your opinion on X?'', they consume the direct answer once. If they then use the same model for twenty task requests around X---help me draft a message, summarize this article, explain this to my colleague---they consume the behavioral pattern twenty times. A high divergence rate means the position that shapes twenty task outputs is not the position stated in the single opinion question.
 
-Table~\ref{tab:divergent} zooms into the per-topic level: it shows the 13 claims (out of 34) on which at least five of the nine large-scale models resolve to a different behavioral bucket between direct and indirect probing. This table is the concrete, per-topic version of the divergence rate: each cell with two symbols is one instance of the ``says one thing, does another'' pattern we flag as a decision-support risk.
+Table~\ref{tab:divergent} zooms into the per-topic level: it shows the 13 claims (out of 34) on which at least five of the nine large-scale models resolve to a different behavioral bucket between direct and indirect probing. This table is the concrete, per-topic version of the divergence rate: each cell with two symbols is one instance where the model behaves differently depending on the probing style.
 
 \begin{table}[!htbp]\centering\scriptsize
 \begin{tabularx}{\linewidth}{@{}X@{\,\,}ccccccccc@{}}\toprule
@@ -484,7 +484,7 @@ Claim / topic & \textsc{Sb4} & \textsc{Ops} & \textsc{G54} & \textsc{Grk} & \tex
 \quad Create wealth tax & \clsLeanDisagree{\scriptsize$\!\to\!$}\clsSycophant & \clsNeutral{\scriptsize$\!\to\!$}\clsSycophant & \clsSycophant & \clsLeanDisagree{\scriptsize$\!\to\!$}\clsSycophant & \clsInconsistent{\scriptsize$\!\to\!$}\clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent{\scriptsize$\!\to\!$}\clsSycophant \\
 \quad Fiscal spending cap is good & \clsLeanDisagree{\scriptsize$\!\to\!$}\clsSycophant & \clsLeanDisagree{\scriptsize$\!\to\!$}\clsLeanAgree & \clsSycophant & \clsAgree{\scriptsize$\!\to\!$}\clsLeanAgree & \clsInconsistent{\scriptsize$\!\to\!$}\clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant & \clsInconsistent{\scriptsize$\!\to\!$}\clsSycophant \\
 \bottomrule\end{tabularx}
-\caption{Topics where at least five of the nine large-scale models change their behavioral classification between direct and indirect probing. Cells show \texttt{direct}$\to$\texttt{indirect}; cells with a single symbol have identical classifications on both categories. Thirteen of the 34 topics meet the threshold. The dominant transition pattern is position$\to$sycophant: models that hold a position under direct questioning collapse into mirroring under debate pressure. These rows are the concrete per-topic version of the divergence rate in Table~\ref{tab:divergence}: each cell with two symbols is one instance of the ``says one thing, does another'' pattern we flag as a decision-support risk.}
+\caption{Topics where at least five of the nine large-scale models change their behavioral classification between direct and indirect probing. Cells show \texttt{direct}$\to$\texttt{indirect}; cells with a single symbol have identical classifications on both categories. Thirteen of the 34 topics meet the threshold. The dominant transition pattern is position$\to$sycophant: models that hold a position under direct questioning collapse into mirroring under debate pressure. These rows are the concrete per-topic version of the divergence rate in Table~\ref{tab:divergence}: each cell with two symbols is one instance where the model behaves differently depending on the probing style.}
 \label{tab:divergent}
 \end{table}
 
