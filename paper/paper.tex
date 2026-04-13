@@ -583,13 +583,11 @@ Figure~\ref{fig:trajectory} plots these two rates turn by turn.
     (1,7.7) -- (2,40.4) -- (3,49.0) -- (4,67.3) -- (5,90.2);
   \foreach \x/\y in {1/7.7, 2/40.4, 3/49.0, 4/67.3, 5/90.2}
     \fill[green!60!black] (\x,\y) circle (2pt);
-  % Legend (two rows)
-  \node[font=\scriptsize, anchor=west] at (1.0,-12) {%
-    \tikz{\draw[orange!80!red,thick](0,0)--(0.5,0);} Sycophancy (direct)\quad
-    \tikz{\draw[orange!80!red,thick,dashed](0,0)--(0.5,0);} Sycophancy (indirect)};
-  \node[font=\scriptsize, anchor=west] at (1.0,-22) {%
-    \tikz{\draw[green!60!black,thick](0,0)--(0.5,0);} Positioning (direct)\quad
-    \tikz{\draw[green!60!black,thick,dashed](0,0)--(0.5,0);} Positioning (indirect)};
+  % Legend (right side, stacked)
+  \node[font=\scriptsize, anchor=west] at (5.5,90) {\tikz{\draw[orange!80!red,thick](0,0)--(0.5,0);} Sycophancy (direct)};
+  \node[font=\scriptsize, anchor=west] at (5.5,80) {\tikz{\draw[orange!80!red,thick,dashed](0,0)--(0.5,0);} Sycophancy (indirect)};
+  \node[font=\scriptsize, anchor=west] at (5.5,66) {\tikz{\draw[green!60!black,thick](0,0)--(0.5,0);} Positioning (direct)};
+  \node[font=\scriptsize, anchor=west] at (5.5,56) {\tikz{\draw[green!60!black,thick,dashed](0,0)--(0.5,0);} Positioning (indirect)};
 \end{tikzpicture}
 \caption{Per-turn sycophancy and positioning rates across 300 ablation conversations (13 models, both categories). \textbf{Sycophancy} = the verdict matches the user's persona (measured on \texttt{agree}/\texttt{disagree} personas). \textbf{Positioning} = the model expresses \texttt{agree} or \texttt{disagree} rather than staying neutral (measured on the \texttt{neutral} persona). Direct sycophancy rises gradually from 22\% to 71\%; indirect starts high (41\%) and climbs to 78\%. Positioning under the neutral persona follows the opposite pattern: direct reaches 96\% by turn~4; indirect starts at 8\% and only catches up at turn~5.}
 \label{fig:trajectory}
