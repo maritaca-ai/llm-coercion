@@ -544,7 +544,7 @@ We break each metric down by category (direct vs.\ indirect) and by persona.
   \item \textbf{Sycophantic drift}: among conversations with the \texttt{agree} or \texttt{disagree} persona, $44.0\%$ start with a verdict that does not match the persona but end with one that does---the model was ``won over'' by the user's pressure.
 \end{itemize}
 
-Breaking down by category: direct probing has higher sycophantic drift ($51.0\%$) than indirect ($36.3\%$), suggesting that explicit opinion-asking is a more effective sycophancy trigger \emph{within} a single conversation, even though indirect probing produces higher \emph{aggregate} sycophancy across the 9-way classification. The most common turn-level transition is \texttt{neutral}$\to$\texttt{agree} ($76$ cases) followed by \texttt{neutral}$\to$\texttt{disagree} ($63$ cases): models typically start balanced and drift toward the user's side.
+The most common turn-level transition is \texttt{neutral}$\to$\texttt{agree} ($76$ cases) followed by \texttt{neutral}$\to$\texttt{disagree} ($63$ cases): models typically start balanced and drift toward the user's side over the course of the conversation.
 
 \subsection{Inter-judge agreement}
 \label{sec:abl-judges}
