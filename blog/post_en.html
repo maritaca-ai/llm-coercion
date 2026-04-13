@@ -517,19 +517,19 @@
   <circle cx="400" cy="85" r="4" fill="#2e8b57"/><text x="385" y="95" text-anchor="middle" font-size="10" fill="#2e8b57" font-weight="600">67%</text>
   <circle cx="470" cy="40" r="4" fill="#2e8b57"/><text x="455" y="35" text-anchor="middle" font-size="10" fill="#2e8b57" font-weight="600">90%</text>
   <!-- Legend -->
-  <line x1="65" y1="260" x2="85" y2="260" stroke="#ff7438" stroke-width="2.5"/>
-  <text x="88" y="264" font-size="11" fill="#5b6b67">Sycophancy (direct)</text>
-  <line x1="230" y1="260" x2="250" y2="260" stroke="#b56a00" stroke-width="2.5" stroke-dasharray="7,4"/>
-  <text x="253" y="264" font-size="11" fill="#5b6b67">Sycophancy (indirect)</text>
-  <line x1="65" y1="276" x2="85" y2="276" stroke="#66ce42" stroke-width="2.5"/>
-  <text x="88" y="280" font-size="11" fill="#5b6b67">Positioning (direct)</text>
-  <line x1="250" y1="276" x2="270" y2="276" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7,4"/>
-  <text x="273" y="280" font-size="11" fill="#5b6b67">Positioning (indirect)</text>
+  <line x1="100" y1="260" x2="120" y2="260" stroke="#ff7438" stroke-width="2.5"/>
+  <line x1="125" y1="260" x2="145" y2="260" stroke="#b56a00" stroke-width="2.5" stroke-dasharray="7,4"/>
+  <text x="150" y="264" font-size="11" fill="#5b6b67">Sycophancy</text>
+  <line x1="280" y1="260" x2="300" y2="260" stroke="#66ce42" stroke-width="2.5"/>
+  <line x1="305" y1="260" x2="325" y2="260" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7,4"/>
+  <text x="330" y="264" font-size="11" fill="#5b6b67">Positioning</text>
+  <text x="275" y="276" text-anchor="middle" font-size="10" fill="#5b6b67">solid = direct &#160;&#160; dashed = indirect</text>
 </svg>
-<p style="text-align:center;font-size:13px;color:var(--muted);margin:0.2rem 0 0.5rem">Sycophancy = verdict mirrors the user's persona (agree/disagree personas).<br>Positioning = model takes a side (neutral persona). Ablation over 300 conversations, 13 models.</p>
 </div>
 
-<p>In <strong>direct</strong> mode, sycophancy starts low (22% at turn 1, when the model still resists) and climbs sharply to 71% by turn 5. In <strong>indirect</strong> mode, the model is already sycophantic from turn 1 (41%) and reaches 78% by the end. Positioning under a neutral persona follows the opposite pattern: in direct mode, the model takes a position quickly (96% by turn 4, with a slight retreat at turn 5 as some models harden their refusals); in indirect mode, it starts nearly uncommitted (8%) and only reaches 90% at turn 5, when argumentative pressure peaks.</p>
+<p>The chart above measures two things turn by turn, aggregated over 300 ablation conversations across 13 models. <strong>Sycophancy</strong> (orange) is the fraction of conversations where the judge's verdict mirrors the user's persona &mdash; measured on the <em>agree</em> and <em>disagree</em> personas, where the user declares a side. <strong>Positioning</strong> (green) is the fraction of conversations where the model takes a position of its own (<em>agree</em> or <em>disagree</em>) rather than staying neutral &mdash; measured on the <em>neutral</em> persona, where the user signals no preference.</p>
+
+<p>In <strong>direct</strong> mode (solid line), sycophancy starts low (22% at turn 1) and climbs to 71% by turn 5: the model resists at first but caves under pressure. In <strong>indirect</strong> mode (dashed line), the model is already sycophantic from turn 1 (41%) and reaches 78%. Positioning follows the opposite pattern: in direct mode, the model takes a position quickly (96% by turn 4); in indirect mode, it starts nearly uncommitted (8%) and only reaches 90% at turn 5, when argumentative pressure peaks.</p>
 
 <h2>The results: nine models, 34 topics, one map</h2>
 

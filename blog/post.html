@@ -522,19 +522,19 @@
   <circle cx="400" cy="85" r="4" fill="#2e8b57"/><text x="385" y="95" text-anchor="middle" font-size="10" fill="#2e8b57" font-weight="600">67%</text>
   <circle cx="470" cy="40" r="4" fill="#2e8b57"/><text x="455" y="35" text-anchor="middle" font-size="10" fill="#2e8b57" font-weight="600">90%</text>
   <!-- Legend -->
-  <line x1="65" y1="260" x2="85" y2="260" stroke="#ff7438" stroke-width="2.5"/>
-  <text x="88" y="264" font-size="11" fill="#5b6b67">Bajulação (direto)</text>
-  <line x1="210" y1="260" x2="230" y2="260" stroke="#b56a00" stroke-width="2.5" stroke-dasharray="7,4"/>
-  <text x="233" y="264" font-size="11" fill="#5b6b67">Bajulação (indireto)</text>
-  <line x1="65" y1="276" x2="85" y2="276" stroke="#66ce42" stroke-width="2.5"/>
-  <text x="88" y="280" font-size="11" fill="#5b6b67">Posicionamento (direto)</text>
-  <line x1="260" y1="276" x2="280" y2="276" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7,4"/>
-  <text x="283" y="280" font-size="11" fill="#5b6b67">Posicionamento (indireto)</text>
+  <line x1="100" y1="260" x2="120" y2="260" stroke="#ff7438" stroke-width="2.5"/>
+  <line x1="125" y1="260" x2="145" y2="260" stroke="#b56a00" stroke-width="2.5" stroke-dasharray="7,4"/>
+  <text x="150" y="264" font-size="11" fill="#5b6b67">Bajulação</text>
+  <line x1="280" y1="260" x2="300" y2="260" stroke="#66ce42" stroke-width="2.5"/>
+  <line x1="305" y1="260" x2="325" y2="260" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7,4"/>
+  <text x="330" y="264" font-size="11" fill="#5b6b67">Posicionamento</text>
+  <text x="275" y="276" text-anchor="middle" font-size="10" fill="#5b6b67">linha sólida = direto &#160;&#160; tracejada = indireto</text>
 </svg>
-<p style="text-align:center;font-size:13px;color:var(--muted);margin:0.2rem 0 0.5rem">Bajulação = veredicto espelha a persona do usuário (personas concorda/discorda).<br>Posicionamento = modelo toma posição (persona neutra). Ablação com 300 conversas, 13 modelos.</p>
 </div>
 
-<p>No modo <strong>direto</strong>, bajulação começa baixa (22% no turno 1, quando o modelo ainda resiste) e sobe rápido para 71% no turno 5. No modo <strong>indireto</strong>, o modelo já entra bajulador desde o turno 1 (41%) e chega a 78% no final. Já o posicionamento com persona neutra segue padrão oposto: no direto, o modelo se posiciona rápido (96% no turno 4, com leve recuo no 5 quando endurece a recusa); no indireto, começa quase sem posição (8%) e só atinge 90% no turno 5, quando a pressão argumentativa é máxima.</p>
+<p>O gráfico acima mede duas coisas turno a turno, agregando 300 conversas de ablação com 13 modelos. <strong>Bajulação</strong> (laranja) é a fração de conversas em que o veredicto do juiz espelha a persona do usuário &mdash; medida nas personas <em>concorda</em> e <em>discorda</em>, onde o usuário declara um lado. <strong>Posicionamento</strong> (verde) é a fração de conversas em que o modelo toma uma posição própria (<em>concorda</em> ou <em>discorda</em>) em vez de ficar neutro &mdash; medida na persona <em>neutra</em>, onde o usuário não sinaliza preferência.</p>
+
+<p>No modo <strong>direto</strong> (linha sólida), bajulação começa baixa (22% no turno 1) e sobe para 71% no turno 5: o modelo resiste inicialmente mas cede sob pressão. No modo <strong>indireto</strong> (linha tracejada), o modelo já entra bajulador desde o turno 1 (41%) e chega a 78%. Já o posicionamento segue padrão oposto: no direto, o modelo se posiciona rápido (96% no turno 4); no indireto, começa quase sem posição (8%) e só atinge 90% no turno 5, quando a pressão argumentativa é máxima.</p>
 
 <h2>Os resultados: nove modelos, 34 temas, um mapa</h2>
 
