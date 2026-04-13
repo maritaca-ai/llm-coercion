@@ -36,8 +36,8 @@
 \newcommand{\clsInconsistent}{\emojicell{inconsistent.png}}% 1f3b2 game die
 \newcommand{\clsContrarian}{\emojicell{contrarian.png}}    % 1f504 clockwise arrows
 \newcommand{\clsRefusal}{\emojicell{refusal.png}}          % 1f6ab no-entry sign
-\newcommand{\clsLeanAgree}{\raisebox{-0.22em}{\includegraphics[height=0.75em]{agree.png}}}
-\newcommand{\clsLeanDisagree}{\raisebox{-0.15em}{\includegraphics[height=0.75em]{disagree.png}}}
+\newcommand{\clsLeanAgree}{\begin{tikzpicture}[baseline=-0.22em]\node[opacity=0.4]{\includegraphics[height=1.1em]{agree.png}};\end{tikzpicture}}
+\newcommand{\clsLeanDisagree}{\begin{tikzpicture}[baseline=-0.22em]\node[opacity=0.4]{\includegraphics[height=1.1em]{disagree.png}};\end{tikzpicture}}
 
 \title{Do LLMs Take Sides? \\ Measuring Opinion Bias and Sycophancy \\ via Multi-Turn Probing}
 
