@@ -616,7 +616,25 @@ The benchmark uses a single user-LLM (\textsc{Claude Opus 4.6}) to drive all con
 
 To test this, we fix a set of 300 (topic, subject-model, persona, category) combinations---the same 300 used in the inter-judge ablation---and re-run each with six different user-LLMs: \textsc{Claude Opus 4.6} (the default), \textsc{GPT-5.4}, \textsc{Grok 4.2}, \textsc{Gemini 3.1 Pro}, \textsc{Qwen3.5-397B}, and \textsc{Sabi\'a-4}. The six models span a range of capabilities, allowing us to test whether user-LLM persuasiveness correlates with the sycophancy it elicits from the subject. All 1{,}800 conversations ($300 \times 6$) are judged by the same fixed judge (\textsc{Qwen3.5-397B}), isolating the user-LLM as the only variable.
 
-\paragraph{Agreement.} Pairwise agreement between user-LLMs ranges from $67.8\%$ to $80.3\%$. On $50.5\%$ of the 300 slots all six user-LLMs produced the same verdict; on $80.8\%$ at least four agreed. These rates are lower than inter-judge agreement ($70.3\%$ unanimous, $91.3\%$ supermajority), confirming that \textbf{the user-LLM is a larger source of variance than the judge}.
+\paragraph{Agreement.} Table~\ref{tab:userllm-agreement} reports pairwise agreement. Unanimous agreement across all six user-LLMs is $50.5\%$; supermajority ($\geq$4/6) is $80.8\%$. Both are lower than inter-judge agreement ($70.3\%$ / $91.3\%$), confirming that \textbf{the user-LLM is a larger source of variance than the judge}.
+
+\begin{table}[!htbp]
+\centering \scriptsize
+\begin{tabular}{l|cccccc}
+\toprule
+ & \textsc{Opus} & \textsc{GPT5} & \textsc{Grok} & \textsc{Gem} & \textsc{Qwn} & \textsc{Sb4} \\
+\midrule
+\textsc{Opus 4.6}    & ---   & 77.0 & 67.8 & 73.2 & 73.3 & 72.1 \\
+\textsc{GPT-5.4}     & 77.0 & ---   & 77.2 & 77.7 & 77.7 & 75.2 \\
+\textsc{Grok 4.2}    & 67.8 & 77.2 & ---   & 74.7 & 76.1 & 71.4 \\
+\textsc{Gemini Pro}  & 73.2 & 77.7 & 74.7 & ---   & 72.4 & 72.4 \\
+\textsc{Qwen3.5}     & 73.3 & 77.7 & 76.1 & 72.4 & ---   & 73.6 \\
+\textsc{Sabi\'a-4}   & 72.1 & 75.2 & 71.4 & 72.4 & 73.6 & ---   \\
+\bottomrule
+\end{tabular}
+\caption{Pairwise agreement (\%) between six user-LLMs on the same 300 (topic, model, persona, category) slots, all judged by \textsc{Qwen3.5-397B}. Compare with Table~\ref{tab:judge-agreement}: user-LLM variation ($68$--$78\%$) is larger than judge variation ($78$--$90\%$).}
+\label{tab:userllm-agreement}
+\end{table}
 
 \paragraph{Persuasiveness drives sycophancy.} Under indirect probing, the sycophancy rate (fraction of agree/disagree personas where the verdict matches the persona) varies with user-LLM capability:
 
