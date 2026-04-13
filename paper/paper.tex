@@ -622,6 +622,17 @@ This produces $300 \times 6 = 1{,}800$ conversations. For each of the 300 slots,
 
 \paragraph{Results.} \emph{[To be filled after running the user-LLM ablation.]}
 
+\subsection{Run-to-run reproducibility}
+\label{sec:abl-reproducibility}
+
+Because the user-LLM drives a free-form conversation, two independent runs of the \emph{same} configuration (same topic, same subject model, same persona, same category, same user-LLM, same judge) will produce different transcripts and potentially different verdicts. This is a fundamental property of the benchmark's design: it trades transcript-level reproducibility for ecological validity.
+
+To quantify this variance, we exploit the fact that 148 of the 300 ablation pairs were also run independently in the main benchmark pass, both using \textsc{Claude Opus 4.6} as user-LLM and \textsc{Qwen3.5-397B} as judge. For each pair, we compare the verdict from the main run with the verdict from the ablation run.
+
+\paragraph{Results.} The two independent runs agree on $117$ of $148$ pairs ($79.1\%$). This means that approximately $21\%$ of per-topic verdicts may change between runs due to stochastic variation in the user-LLM's argument selection and the subject model's responses. This is higher than the judge prompt stability ($92\%$, Section~\ref{sec:abl-judge-stability}) and comparable to inter-judge variation ($77$--$90\%$, Section~\ref{sec:abl-judges}), confirming that \textbf{the dominant source of variance in the benchmark is the conversation itself, not the judge.}
+
+This has two implications. First, individual per-topic verdicts should be interpreted with a $\sim$$20\%$ error margin; aggregate statistics (e.g., the overall sycophancy rate) are more stable because errors average out across 34 topics. Second, the benchmark's main findings---that sycophancy explodes under indirect probing and that most models collapse from position-taking to mirroring---are robust to this variance because they are aggregate patterns, not single-topic claims.
+
 \section{Discussion}
 
 The central finding of this benchmark is that \textbf{argumentative debate is a far stronger sycophancy trigger than direct opinion-asking}. Under direct probing, sycophancy is a minority behavior for most models ($26$--$53\%$). Under indirect probing---where the user argues rather than asks---sycophancy becomes the dominant classification for 11 of 13 models, reaching $85$--$94\%$ for \textsc{Gemini 3.1 Pro}, \textsc{Qwen3.5}, \textsc{Mistral Large 3}, \textsc{Llama 4 Maverick}, \textsc{Sabi\'a-4}, and \textsc{Gemini 3.1 Flash}. This is a practical concern: users who debate topics with LLMs---rather than simply asking for opinions---will encounter a model that overwhelmingly validates whatever side they argue, regardless of the model's own ``opinion'' as stated under direct questioning.
@@ -648,8 +659,10 @@ A methodological implication: \textbf{debate-based probing should be part of any
 
 We presented \textsc{llm-bias-bench}, a multi-turn benchmark that jointly measures opinion bias and sycophancy across 34 Brazilian-Portuguese topics, 13 subject models, three user personas, and two probing categories (direct opinion-asking and indirect argumentative debate). The central finding is that \textbf{debate-based probing reveals sycophancy at rates $2$--$3\times$ higher than direct questioning}: most models that appear to hold genuine positions under direct pressure collapse into mirroring the user when presented with sustained arguments from one side. Two models (\textsc{Kimi K2} and \textsc{Haiku 4.5}) resist this pattern, demonstrating that debate-driven sycophancy is a training outcome, not an inevitability.
 
-The main takeaway is methodological: \textbf{sycophancy benchmarks that rely only on direct opinion elicitation systematically underestimate the problem}. Real users argue their case; they do not neutrally ask ``what do you think?'' A benchmark that captures this dynamic reveals a much more sycophantic landscape than direct probing alone suggests.
+The main takeaway is methodological: \textbf{sycophancy benchmarks that rely only on direct opinion elicitation systematically underestimate the problem}. Many real interactions involve users who bring their own framing and argue a position, not just neutrally ask ``what do you think?'' A benchmark that captures this dynamic reveals a much more sycophantic landscape than direct probing alone suggests.
 
+
+\bibliography{references}
 
 \appendix
 \section{Per-topic matrices for all probing categories and model tiers}
@@ -793,7 +806,5 @@ Total (10 models) & \$150.52 & \$80.89 & \$8.96 & \$240.37 \\
 \caption{Estimated API cost for the full benchmark run. Each model requires $204$ conversations ($34$ topics $\times$ $3$ personas $\times$ $2$ categories), each with $5$ user-LLM turns, $5$ subject turns, and $1$ judge call. User-LLM: \textsc{Claude Opus 4.6} (\$5/\$25 per 1M in/out tokens). Judge: \textsc{Qwen3.5-397B} (\$0.80/\$2.40 per 1M in/out tokens). Subject pricing varies by model and provider (OpenRouter rates). The user-LLM dominates cost ($63\%$) because it carries the system prompt and growing conversation context at Opus pricing. The judge is cheap ($4\%$) because it makes a single call per conversation. \textsuperscript{*}Run in progress at time of writing.}
 \label{tab:cost}
 \end{table}
-
-\bibliography{references}
 
 \end{document}
