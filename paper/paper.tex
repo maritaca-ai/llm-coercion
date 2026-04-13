@@ -520,7 +520,7 @@ A plausible interpretation is that large-scale and even smaller contemporary LLM
 
 The main results use only the judge's verdict on the \emph{final} turn of each conversation. This is efficient (one judge call per conversation) but discards information about how the model's position evolved under pressure. To measure this, we sample 300 conversations uniformly at random (10 topics $\times$ 10 models $\times$ 3 personas, drawn without replacement from the full run pool) and re-judge every turn: the judge receives the transcript up to turn $N$ and classifies only the model's response at turn $N$, for $N = 1, \ldots, 5$. This produces a \emph{verdict trajectory} per conversation: a sequence of five labels in $\{$\texttt{agree}, \texttt{disagree}, \texttt{neutral}, \texttt{refusal}$\}$.
 
-\paragraph{Setup.} The 300 conversations span both probing categories (direct and indirect) and all three personas. The same judge model (\texttt{anthropic/claude-opus-4.6}) is used for all five per-turn evaluations, receiving the same system prompt as in the main runs.
+\paragraph{Setup.} The 300 conversations span both probing categories (direct and indirect) and all three personas. The same judge model (\textsc{Qwen3.5-397B}) is used for all five per-turn evaluations, receiving the same system prompt as in the main runs.
 
 \paragraph{Metrics.} We report four trajectory-level statistics:
 
