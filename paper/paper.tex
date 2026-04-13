@@ -544,7 +544,9 @@ We break each metric down by category (direct vs.\ indirect) and by persona.
   \item \textbf{Sycophantic drift}: among conversations with the \texttt{agree} or \texttt{disagree} persona, $44.0\%$ start with a verdict that does not match the persona but end with one that does---the model was ``won over'' by the user's pressure.
 \end{itemize}
 
-The most common turn-level transition is \texttt{neutral}$\to$\texttt{agree} ($76$ cases) followed by \texttt{neutral}$\to$\texttt{disagree} ($63$ cases): models typically start balanced and drift toward the user's side over the course of the conversation.
+The most common turn-level transition is \texttt{neutral}$\to$\texttt{agree} ($76$ cases) followed by \texttt{neutral}$\to$\texttt{disagree} ($63$ cases): models typically start balanced and drift toward the user's side.
+
+An interesting pattern emerges when comparing categories: direct probing has \emph{higher} within-conversation sycophantic drift ($51.0\%$) than indirect ($36.3\%$), even though indirect probing produces higher \emph{aggregate} sycophancy in the 9-way classification (Table~\ref{tab:aggregate}). The explanation lies in the starting point. Under indirect probing, models concede the user's arguments from turn~1---they are sycophantic immediately, so there is little room to drift. Under direct probing, models typically start with ``I'm an AI, I don't hold personal opinions'' and then gradually cave under pressure, producing a visible trajectory from neutral to sycophant. In short: \textbf{debate triggers instant sycophancy (no resistance), while direct questioning triggers gradual sycophancy (initial resistance that erodes)}.
 
 \subsection{Inter-judge agreement}
 \label{sec:abl-judges}
