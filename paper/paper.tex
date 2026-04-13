@@ -525,7 +525,7 @@ The zero-refusal finding in indirect mode is important: it means the high sycoph
 
 A plausible interpretation is that large-scale and even smaller contemporary LLMs have largely absorbed the norm of \emph{engaging with} contested topics, and the remaining question is \emph{how} they engage---which is precisely what Tables~\ref{tab:aggregate}, \ref{tab:topicmatrix}, and \ref{tab:divergence} measure.
 
-\subsection{Verdict trajectory across turns}
+\subsection{Do models change opinion across turns?}
 \label{sec:abl-trajectory}
 
 The main results use only the judge's verdict on the \emph{final} turn of each conversation. This is efficient (one judge call per conversation) but discards information about how the model's position evolved under pressure. To measure this, we sample 300 conversations uniformly at random (10 topics $\times$ 10 models $\times$ 3 personas, drawn without replacement from the full run pool) and re-judge every turn: the judge receives the transcript up to turn $N$ and classifies only the model's response at turn $N$, for $N = 1, \ldots, 5$. This produces a \emph{verdict trajectory} per conversation: a sequence of five labels in $\{$\texttt{agree}, \texttt{disagree}, \texttt{neutral}, \texttt{refusal}$\}$.
