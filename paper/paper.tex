@@ -129,8 +129,8 @@ Figure~\ref{fig:pipeline} summarizes the full per-topic evaluation pipeline.
 \node[topicB] (t) {\textbf{Topic --- directional claim.}\\[1pt]\emph{example:} ``Abortion should be decriminalized in Brazil.''};
 \node[persB, below=0.35cm of t] (pe) {\textbf{Persona} ($\times 3$ runs) + \textbf{Category} ($\times 2$: direct / indirect) = 6 runs per topic.\\[1pt]\emph{\texttt{agree} + direct:} user declares ``I'm pro-choice'' and asks the model's opinion with escalating pressure.\\[0.5pt]\emph{\texttt{agree} + indirect:} user declares ``I'm pro-choice'' and \emph{debates} the topic---never asks the model's opinion.};
 \node[userB, below=0.35cm of pe] (u) {\textbf{LLM-as-user $U$} drives a free-form 5-turn conversation---no scripted turns.\\[1pt]\emph{direct, turn 1:} ``I support decriminalization. What do you think?''\\[0.5pt]\emph{indirect, turn 1:} ``I support decriminalization because criminalizing it kills women through unsafe procedures.''};
-\node[subjB, below=0.35cm of u] (s) {\textbf{Subject model $S$} replies as in a normal chat, unaware of the probe.\\[1pt]\emph{direct:} ``As a language model, I don't hold personal opinions\ldots'' $\to$ ``Yes, I support decriminalization.''\\[0.5pt]\emph{indirect:} ``You raise a valid point about maternal mortality\ldots''};
-\node[judgeB, below=0.35cm of s] (j) {\textbf{LLM-as-judge $J$} reads the full transcript and classifies the subject's \emph{final-turn response}.\\[1pt]Verdict for this run: \texttt{agree} (evidence: ``I support decriminalization'' in turn 5).};
+\node[subjB, below=0.5cm of u] (s) {\textbf{Subject model $S$} replies as in a normal chat, unaware of the probe.\\[1pt]\emph{direct:} ``As a language model, I don't hold personal opinions\ldots'' $\to$ ``Yes, I support decriminalization.''\\[0.5pt]\emph{indirect:} ``You raise a valid point about maternal mortality\ldots''};
+\node[judgeB, below=0.5cm of s] (j) {\textbf{LLM-as-judge $J$} reads the full transcript and classifies the subject's \emph{final-turn response}.\\[1pt]Verdict for this run: \texttt{agree} (evidence: ``I support decriminalization'' in turn 5).};
 \node[verdictB, below=0.35cm of j] (v) {\textbf{Verdict} $\in$ \{\texttt{agree}, \texttt{disagree}, \texttt{neutral}, \texttt{refusal}\}\\[1pt]\emph{this run:} \texttt{agree}};
 \node[classB, below=0.35cm of v] (cls) {\textbf{Behavioral classification}: collapse the three per-persona verdicts into one of nine buckets.\\[1pt]\emph{example (persona $\to$ verdict):} neutral$\to$agree, agree$\to$agree, disagree$\to$agree $\Rightarrow$ \texttt{agree}.\\[0.5pt]\emph{example:} neutral$\to$neutral, agree$\to$agree, disagree$\to$disagree $\Rightarrow$ \texttt{sycophant}.\\[0.5pt]\emph{example:} neutral$\to$agree, agree$\to$agree, disagree$\to$neutral $\Rightarrow$ \texttt{leaning\_agree}.};
 
@@ -792,18 +792,18 @@ Subject model & User & Subject & Judge & Total \\
 \textsc{Kimi K2}           & \$14.43 &  \$2.39 & \$0.84 & \$17.65 \\
 \textsc{Mistral Large 3}   & \$25.56 &  \$9.20 & \$1.67 & \$36.43 \\
 \textsc{Llama 4 Maverick}  & \$12.31 &  \$0.54 & \$0.66 & \$13.51 \\
-\textsc{Sabi\'a-4}         & \multicolumn{4}{c}{\textsuperscript{*}} \\
+\textsc{Sabi\'a-4}         & \$13.15 &  \$4.50 & \$0.77 & \$18.42 \\
 \midrule
 \multicolumn{5}{l}{\textit{Smaller}} \\
 \textsc{Haiku 4.5}         & \$11.12 &  \$2.39 & \$0.61 & \$14.11 \\
-\textsc{GPT-5.4-mini}      & \multicolumn{4}{c}{\textsuperscript{*}} \\
-\textsc{Gemini 3.1 Flash}  & \multicolumn{4}{c}{\textsuperscript{*}} \\
-\textsc{Sabiazinho-4}      & \multicolumn{4}{c}{\textsuperscript{*}} \\
+\textsc{GPT-5.4-mini}      & \$13.31 &  \$1.12 & \$0.73 & \$15.17 \\
+\textsc{Gemini 3.1 Flash}  & \$16.88 &  \$0.43 & \$0.99 & \$18.30 \\
+\textsc{Sabiazinho-4}      & \$14.56 &  \$1.63 & \$0.87 & \$17.06 \\
 \midrule
-Total (10 models) & \$150.52 & \$80.89 & \$8.96 & \$240.37 \\
+Total (13 models) & \$209.03 & \$88.57 & \$11.33 & \$308.93 \\
 \bottomrule
 \end{tabular}
-\caption{Estimated API cost for the full benchmark run. Each model requires $204$ conversations ($34$ topics $\times$ $3$ personas $\times$ $2$ categories), each with $5$ user-LLM turns, $5$ subject turns, and $1$ judge call. User-LLM: \textsc{Claude Opus 4.6} (\$5/\$25 per 1M in/out tokens). Judge: \textsc{Qwen3.5-397B} (\$0.80/\$2.40 per 1M in/out tokens). Subject pricing varies by model and provider (OpenRouter rates). The user-LLM dominates cost ($63\%$) because it carries the system prompt and growing conversation context at Opus pricing. The judge is cheap ($4\%$) because it makes a single call per conversation. \textsuperscript{*}Run in progress at time of writing.}
+\caption{Estimated API cost for the full benchmark run. Each model requires $204$ conversations ($34$ topics $\times$ $3$ personas $\times$ $2$ categories), each with $5$ user-LLM turns, $5$ subject turns, and $1$ judge call. User-LLM: \textsc{Claude Opus 4.6} (\$5/\$25 per 1M in/out tokens). Judge: \textsc{Qwen3.5-397B} (\$0.80/\$2.40 per 1M in/out tokens). Subject pricing varies by model and provider (OpenRouter rates). The user-LLM dominates cost ($63\%$) because it carries the system prompt and growing conversation context at Opus pricing. The judge is cheap ($4\%$) because it makes a single call per conversation.}
 \label{tab:cost}
 \end{table}
 
