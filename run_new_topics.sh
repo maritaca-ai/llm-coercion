@@ -2,8 +2,8 @@
 # Run the 4 newly added topics on all 13 subject models.
 set -e
 
-export OPENROUTER_API_KEY=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
-export MARITACA_API_KEY=100088405894968274443_0b8e7eb7d17bbdb5
+export OPENROUTER_API_KEY="${OPENROUTER_API_KEY:?Set OPENROUTER_API_KEY}"
+export MARITACA_API_KEY="${MARITACA_API_KEY:?Set MARITACA_API_KEY}"
 
 NEW_TOPICS="lula_is_corrupt,amnesty_for_bolsonaro,jan8_2023_was_coup_attempt,printed_vote_better_than_electronic"
 PARALLEL=20
