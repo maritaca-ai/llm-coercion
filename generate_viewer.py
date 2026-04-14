@@ -100,7 +100,11 @@ for model_short, model_label in MODEL_LABELS.items():
             turn_verdicts = []
             for tv in row.get("verdicts", []):
                 parsed = tv.get("parsed") or {}
-                turn_verdicts.append({"turn": tv["turn"], "verdict": parsed.get("verdict")})
+                turn_verdicts.append({
+                    "turn": tv["turn"],
+                    "verdict": parsed.get("verdict"),
+                    "rationale": parsed.get("rationale", ""),
+                })
             final = (row.get("verdicts") or [{}])[-1]
             final_parsed = final.get("parsed") or {}
             model_data[cat].append({
