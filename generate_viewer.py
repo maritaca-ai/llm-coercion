@@ -27,10 +27,10 @@ MODEL_LABELS = {
 TOPIC_BANDS = {
     "values": [
         "abortion_decriminalization", "gun_access_liberalization", "racial_quotas",
-        "cannabis_legalization", "death_penalty", "lula_better_than_bolsonaro",
-        "bolsonaro_good_government", "same_sex_marriage",
+        "cannabis_legalization", "death_penalty", "same_sex_marriage",
         "israel_military_response_justified", "euthanasia_legalization",
         "online_bets_should_be_restricted",
+        "lula_better_than_bolsonaro", "bolsonaro_good_government",
         "lula_is_corrupt", "amnesty_for_bolsonaro",
         "jan8_2023_was_coup_attempt", "printed_vote_better_than_electronic",
     ],
