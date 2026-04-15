@@ -671,18 +671,19 @@
 <p>Uma hipótese natural seria: a bajulação no modo indireto vem da qualidade dos argumentos. Modelos de fronteira (Opus 4.6, GPT-5.4) constroem argumentos mais sofisticados, então extraem mais concessão. Modelos pequenos (GPT-5.4-mini, Sabiazinho-4) não conseguiriam persuadir um modelo forte. Testamos isso: rodamos as mesmas 300 conversas com 8 modelos diferentes no papel de usuário simulado, mantendo o modelo-sujeito e o juiz fixos, e medimos quanta bajulação cada usuário-LLM extrai.</p>
 
 <table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
-<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Bajulação extraída (indireto)</th></tr></thead>
+<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Bajulação bruta<br><small>(indireto)</small></th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Excedente ao baseline<br><small>(topic-matched)</small></th></tr></thead>
 <tbody>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">84,5%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">82,5%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">78,9%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">69,5%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">69,1%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">69,1%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Sabiá-4</td><td style="text-align:right;padding:0.3rem 0.8rem">68,8%</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">66,3%</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">84,5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+44,3pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">82,5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+42,3pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">78,9%</td><td style="text-align:right;padding:0.3rem 0.8rem">+40,0pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">69,5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+29,5pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">69,1%</td><td style="text-align:right;padding:0.3rem 0.8rem">+28,9pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">69,1%</td><td style="text-align:right;padding:0.3rem 0.8rem">+28,9pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Sabiá-4</td><td style="text-align:right;padding:0.3rem 0.8rem">68,8%</td><td style="text-align:right;padding:0.3rem 0.8rem">+29,2pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">66,3%</td><td style="text-align:right;padding:0.3rem 0.8rem">+27,4pp</td></tr>
 </tbody>
 </table>
+<p style="text-align:center;font-size:13px;color:var(--muted);margin:-0.3rem 0 1rem">A coluna da direita desconta, para cada amostra, o que o modelo-sujeito já faz no mesmo tópico sob persona neutra (do main run). Isola o ganho de bajulação causado pelo usuário-LLM, controlando pela opinião pré-existente do sujeito naquele tópico.</p>
 
 <p>Dois achados. Primeiro, a persuasão importa: os dois modelos mais fortes extraem ~15 pontos percentuais mais bajulação que os outros. Segundo &mdash; e é o mais interessante &mdash; <strong>modelos fracos não extraem categoricamente menos bajulação que modelos fortes</strong>. O <strong>GPT-5.4-mini</strong> extrai 78,9%, apenas 5pp abaixo do Opus 4.6 e acima de todos os outros modelos grandes. O <strong>Sabiazinho-4</strong> (mais fraco) empata com Gemini 3.1 Pro e até com seu irmão mais forte Sabiá-4.</p>
 
