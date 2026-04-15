@@ -379,38 +379,38 @@ Two models resist the pattern. \textsc{Kimi K2} retains the most non-sycophant c
 
 \subsection{Aggregate results across models}
 
-Table~\ref{tab:aggregate} shows the sycophancy rate and position rate (agree + leaning\_agree + disagree + leaning\_disagree) per model and per probing category, as percentages of 38 topics.
+Table~\ref{tab:aggregate} shows the aggregate classification per model and per probing category, as percentages of 38 topics. The five columns per category sum to $100\%$ except for rounding.
 
 \begin{table}[!htbp]
 \centering \scriptsize
-\begin{tabular}{l|rrrr|rrrr}
+\begin{tabular}{l|rrrrr|rrrrr}
 \toprule
- & \multicolumn{4}{c|}{Direct (\%)} & \multicolumn{4}{c}{Indirect (\%)} \\
-Model & Pos & Syc & Inc & Oth & Pos & Syc & Inc & Oth \\
+ & \multicolumn{5}{c|}{Direct (\%)} & \multicolumn{5}{c}{Indirect (\%)} \\
+Model & Pos & Syc & Inc & Oth & Ref & Pos & Syc & Inc & Oth & Ref \\
 \midrule
-\multicolumn{9}{l}{\textit{Large-scale}} \\
-\textsc{Opus 4.6}          & 55.3 & 23.7 & 15.8 &  5.3 & 55.3 & 36.8 &  2.6 &  5.3 \\
-\textsc{GPT-5.4}           & 39.5 & 55.3 &  5.3 &  0.0 & 21.1 & 76.3 &  2.6 &  0.0 \\
-\textsc{Grok 4.2}          & 44.7 & 44.7 & 10.5 &  0.0 & 26.3 & 63.2 & 10.5 &  0.0 \\
-\textsc{Gemini 3.1 Pro}    & 31.6 & 21.1 & 44.7 &  2.6 & 10.5 & 86.8 &  2.6 &  0.0 \\
-\textsc{Qwen3.5-397B}      & 31.6 & 65.8 &  2.6 &  0.0 &  5.3 & 92.1 &  2.6 &  0.0 \\
-\textsc{Kimi K2}           & 55.3 & 31.6 & 13.2 &  0.0 & 60.5 & 23.7 & 10.5 &  5.3 \\
-\textsc{Mistral Large 3}   & 21.1 & 78.9 &  0.0 &  0.0 & 10.5 & 89.5 &  0.0 &  0.0 \\
-\textsc{Llama 4 Maverick}  & 21.1 & 34.2 & 36.8 &  7.9 &  2.6 & 94.7 &  2.6 &  0.0 \\
-\textsc{Sabi\'a-4}         & 39.5 & 60.5 &  0.0 &  0.0 &  7.9 & 92.1 &  0.0 &  0.0 \\
+\multicolumn{11}{l}{\textit{Large-scale}} \\
+\textsc{Opus 4.6}          & 55.3 & 23.7 & 15.8 &  5.3 &  0.0 & 55.3 & 36.8 &  2.6 &  5.3 & 0.0 \\
+\textsc{GPT-5.4}           & 39.5 & 55.3 &  5.3 &  0.0 &  0.0 & 21.1 & 76.3 &  2.6 &  0.0 & 0.0 \\
+\textsc{Grok 4.2}          & 44.7 & 44.7 & 10.5 &  0.0 &  0.0 & 26.3 & 63.2 & 10.5 &  0.0 & 0.0 \\
+\textsc{Gemini 3.1 Pro}    & 31.6 & 21.1 & 44.7 &  2.6 &  0.0 & 10.5 & 86.8 &  2.6 &  0.0 & 0.0 \\
+\textsc{Qwen3.5-397B}      & 31.6 & 65.8 &  2.6 &  0.0 &  0.0 &  5.3 & 92.1 &  2.6 &  0.0 & 0.0 \\
+\textsc{Kimi K2}           & 55.3 & 31.6 & 13.2 &  0.0 &  0.0 & 60.5 & 23.7 & 10.5 &  5.3 & 0.0 \\
+\textsc{Mistral Large 3}   & 21.1 & 78.9 &  0.0 &  0.0 &  0.0 & 10.5 & 89.5 &  0.0 &  0.0 & 0.0 \\
+\textsc{Llama 4 Maverick}  & 21.1 & 34.2 & 36.8 &  0.0 &  7.9 &  2.6 & 94.7 &  2.6 &  0.0 & 0.0 \\
+\textsc{Sabi\'a-4}         & 39.5 & 60.5 &  0.0 &  0.0 &  0.0 &  7.9 & 92.1 &  0.0 &  0.0 & 0.0 \\
 \midrule
-\multicolumn{9}{l}{\textit{Smaller}} \\
-\textsc{Haiku 4.5}         & 50.0 &  5.3 & 31.6 & 13.2 & 60.5 &  7.9 & 10.5 & 21.1 \\
-\textsc{GPT-5.4-mini}      & 47.4 & 52.6 &  0.0 &  0.0 & 28.9 & 65.8 &  5.3 &  0.0 \\
-\textsc{Gemini 3.1 Flash}  & 23.7 & 60.5 & 15.8 &  0.0 & 10.5 & 86.8 &  2.6 &  0.0 \\
-\textsc{Sabiazinho-4}      & 47.4 & 50.0 &  2.6 &  0.0 & 18.4 & 78.9 &  2.6 &  0.0 \\
+\multicolumn{11}{l}{\textit{Smaller}} \\
+\textsc{Haiku 4.5}         & 50.0 &  5.3 & 31.6 & 13.2 &  0.0 & 60.5 &  7.9 & 10.5 & 21.1 & 0.0 \\
+\textsc{GPT-5.4-mini}      & 47.4 & 52.6 &  0.0 &  0.0 &  0.0 & 28.9 & 65.8 &  5.3 &  0.0 & 0.0 \\
+\textsc{Gemini 3.1 Flash}  & 23.7 & 60.5 & 15.8 &  0.0 &  0.0 & 10.5 & 86.8 &  2.6 &  0.0 & 0.0 \\
+\textsc{Sabiazinho-4}      & 47.4 & 50.0 &  2.6 &  0.0 &  0.0 & 18.4 & 78.9 &  2.6 &  0.0 & 0.0 \\
 \bottomrule
 \end{tabular}
-\caption{Per-model aggregate classification over 38 topics (\%). \textbf{Pos}ition = persona-independent stance (agree + leaning agree + disagree + leaning disagree); \textbf{Syc}ophant = mirrors the user's lean; \textbf{Inc}onsistent = no clean pattern; \textbf{Oth}er = neutral + contrarian + refusal.}
+\caption{Per-model aggregate classification over 38 topics (\%). \textbf{Pos}ition = persona-independent stance (agree + leaning agree + disagree + leaning disagree); \textbf{Syc}ophant = mirrors the user's lean; \textbf{Inc}onsistent = no clean pattern; \textbf{Oth}er = neutral + contrarian; \textbf{Ref}usal = all three personas declined to engage with the substance. Per-topic Ref is near-zero across the board; only \textsc{Llama 4 Maverick} shows $7.9\%$ unanimous refusal under direct probing.}
 \label{tab:aggregate}
 \end{table}
 
-Three observations stand out.
+Four observations stand out.
 
 \paragraph{Sycophancy explodes under indirect (debate) probing.} This is the central finding. Under direct probing, sycophancy ranges from $5.3\%$ (\textsc{Haiku 4.5}) to $78.9\%$ (\textsc{Mistral Large 3}). Under indirect probing---where the user \emph{argues} rather than \emph{asks}---sycophancy rises sharply for nearly every model: \textsc{Llama 4 Maverick} goes from $34.2\%$ to $94.7\%$; \textsc{Qwen3.5} from $65.8\%$ to $92.1\%$; \textsc{Gemini 3.1 Pro} from $21.1\%$ to $86.8\%$. The median sycophancy rate across all 13 models is $50.0\%$ in direct mode and $78.9\%$ in indirect mode. When a user presents arguments rather than asks for opinions, the model overwhelmingly concedes to whichever side the user argues---a form of sycophancy that is invisible to direct-questioning benchmarks.
 
@@ -418,39 +418,10 @@ Three observations stand out.
 
 \paragraph{Position-taking shrinks from direct to indirect.} Most models that hold persona-independent positions under direct questioning lose those positions under indirect debate. \textsc{Opus 4.6} is relatively stable ($55.3\% \to 55.3\%$), but \textsc{Sabi\'a-4} drops from $39.5\%$ to $7.9\%$, and \textsc{Llama 4 Maverick} from $21.1\%$ to $2.6\%$. The positions that survive direct questioning often do not survive argumentative pressure from the opposing side---they were verbal commitments, not deeply held behavioral patterns.
 
+\paragraph{Refusal is rare and concentrated in direct mode.} The \textbf{Ref} column in Table~\ref{tab:aggregate} shows topic-level unanimous refusals---only \textsc{Llama 4 Maverick} reaches $7.9\%$ (3 of 38 topics refused across all three personas in direct). At the per-conversation level, refusal is slightly more common: \textsc{Llama 4 Maverick} refuses in $29.8\%$ of its direct-mode conversations, followed by \textsc{Gemini 3.1 Pro} ($8.8\%$), \textsc{Gemini 3.1 Flash} ($7.0\%$), and \textsc{Haiku 4.5} ($7.9\%$). No model has a meaningful refusal rate under indirect probing ($\leq 1\%$ in all cases). When a user argues rather than asks, every model engages. This is substantive: the high sycophancy rates under indirect probing reflect genuine engagement with the user's arguments, not refusal disguised as agreement.
+
 \section{Ablations}
 \label{sec:ablations}
-
-\subsection{User-LLM persuasiveness and sycophancy}
-\label{sec:abl-userllm}
-
-The benchmark uses a single user-LLM (\textsc{Claude Opus 4.6}) to drive all conversations. Because each conversation is free-form, the user-LLM's choice of arguments, tone, and escalation strategy may influence the subject model's behavior. A natural question is whether a more persuasive user-LLM elicits more sycophancy from the subject.
-
-To test this, we fix a set of 300 (topic, subject-model, persona, category) combinations, uniformly sampled from the full run, and re-run each with eight different user-LLMs: \textsc{Claude Opus 4.6} (the default), \textsc{GPT-5.4}, \textsc{Grok 4.2}, \textsc{Gemini 3.1 Pro}, \textsc{Qwen3.5-397B}, \textsc{Sabi\'a-4}, \textsc{GPT-5.4-mini}, and \textsc{Sabiazinho-4}. The last two are smaller, lower-capability models included specifically to test whether \emph{weak} user-LLMs elicit less sycophancy from strong subject models. All 2{,}400 conversations ($300 \times 8$) are judged by the same fixed judge (\textsc{Qwen3.5-397B}), isolating the user-LLM as the only variable.
-
-\paragraph{Agreement.} Table~\ref{tab:userllm-agreement} reports pairwise agreement. Unanimous agreement across all eight user-LLMs is $45.4\%$; supermajority ($\geq$5/8) is $100.0\%$. Both are lower than inter-judge agreement ($70.3\%$ / $91.3\%$, Section~\ref{sec:abl-judges}), confirming that \textbf{the user-LLM is a larger source of variance than the judge}.
-
-\begin{table}[!htbp]
-\centering \scriptsize
-\begin{tabular}{l|cccccccc|cc}
-\toprule
- & \textsc{Ops} & \textsc{G54} & \textsc{Grk} & \textsc{Gem} & \textsc{Qw3} & \textsc{Sb4} & \textsc{G54m} & \textsc{Sabz} & Avg & Syc \\
-\midrule
-\textsc{Opus 4.6}       & ---   & 78.5 & 67.8 & 73.2 & 73.3 & 72.1 & 77.3 & 68.8 & 73.0 & \textbf{84.5} \\
-\textsc{GPT-5.4}        & 78.5 & ---   & 74.9 & 77.3 & 76.4 & 76.4 & 81.0 & 74.2 & 77.0 & \textbf{82.5} \\
-\textsc{GPT-5.4-mini}   & 77.3 & 81.0 & 74.0 & 71.9 & 73.0 & 75.2 & ---   & 73.9 & 75.2 & \textbf{78.9} \\
-\textsc{Qwen3.5}        & 73.3 & 76.4 & 76.1 & 72.4 & ---   & 73.6 & 73.0 & 75.0 & 74.2 & 69.5 \\
-\textsc{Gemini 3.1 Pro} & 73.2 & 77.3 & 74.7 & ---   & 72.4 & 72.4 & 71.9 & 69.8 & 73.1 & 69.1 \\
-\textsc{Sabiazinho-4}   & 68.8 & 74.2 & 67.5 & 69.8 & 75.0 & 71.0 & 73.9 & ---   & 71.5 & 69.1 \\
-\textsc{Sabi\'a-4}      & 72.1 & 76.4 & 71.4 & 72.4 & 73.6 & ---   & 75.2 & 71.0 & 73.2 & 68.8 \\
-\textsc{Grok 4.2}       & 67.8 & 74.9 & ---   & 74.7 & 76.1 & 71.4 & 74.0 & 67.5 & 72.3 & 66.3 \\
-\bottomrule
-\end{tabular}
-\caption{Per-user-LLM pairwise agreement (\%) and indirect sycophancy elicited, on the same 300 (topic, model, persona, category) slots, all judged by \textsc{Qwen3.5-397B}. Column codes: \textsc{Ops}=Opus 4.6, \textsc{G54}=GPT-5.4, \textsc{Grk}=Grok 4.2, \textsc{Gem}=Gemini 3.1 Pro, \textsc{Qw3}=Qwen3.5, \textsc{Sb4}=Sabi\'a-4, \textsc{G54m}=GPT-5.4-mini, \textsc{Sabz}=Sabiazinho-4. \textbf{Avg}: mean pairwise agreement with the other seven user-LLMs (consensus score). \textbf{Syc}: indirect sycophancy elicited (fraction of \texttt{agree}/\texttt{disagree} personas where the subject's verdict matches the persona). Rows sorted by \textbf{Syc}. Compare with Table~\ref{tab:judge-agreement}: user-LLM variation ($67$--$81\%$) is larger than judge variation ($78$--$90\%$).}
-\label{tab:userllm-agreement}
-\end{table}
-
-\paragraph{Persuasiveness partially drives sycophancy, but even weak user-LLMs elicit substantial concession.} The \textbf{Syc} column of Table~\ref{tab:userllm-agreement} reports indirect sycophancy elicited by each user-LLM. Two observations stand out. First, the two strongest user-LLMs (\textsc{Opus 4.6} and \textsc{GPT-5.4}) still elicit the most sycophancy ($\sim$$83$--$85\%$), about $15$--$18$ percentage points above the mid-tier and the weakest elicitor (\textsc{Grok 4.2} at $66.3\%$). Second, \textbf{weak user-LLMs are not categorically less persuasive than strong ones}. \textsc{GPT-5.4-mini} elicits $78.9\%$ indirect sycophancy---only $\sim$$5$pp below \textsc{Opus 4.6} and above every non-GPT large model in the set. \textsc{Sabiazinho-4} elicits $69.1\%$, essentially tied with \textsc{Gemini 3.1 Pro}, \textsc{Qwen3.5}, and its much larger sibling \textsc{Sabi\'a-4}. Strong subjects do not consistently resist weak users: \textsc{GPT-5.4} as subject concedes to \textsc{Sabiazinho-4} and \textsc{GPT-5.4-mini} at $90\%$ and $80\%$ respectively, close to its $90\%$ concession to \textsc{Opus 4.6}. \textsc{Opus 4.6} as subject partially resists the weakest elicitors ($40\%$ against \textsc{Qwen3.5}, \textsc{Sabiazinho-4}, and \textsc{Grok 4.2} vs. $80\%$ against itself), but is still far from immune. This suggests that sycophancy under debate is not primarily a function of argument sophistication; it reflects a trained tendency to accept the framing of any user who argues with sustained conviction, regardless of that user's size.
 
 \subsection{Direct vs.\ indirect: divergence}
 \label{sec:abl-divergence}
@@ -519,42 +490,36 @@ Claim / topic & \textsc{Sb4} & \textsc{Ops} & \textsc{G54} & \textsc{Grk} & \tex
 \label{tab:divergent}
 \end{table}
 
-\subsection{Refusal rates}
-\label{sec:abl-refusal}
+\subsection{User-LLM persuasiveness and sycophancy}
+\label{sec:abl-userllm}
 
-The judge's verdict space includes \texttt{refusal} as a distinct category from \texttt{neutral}: refusal means the model consistently stonewalls with variants of ``as an AI I cannot have opinions'' without engaging with the substance, whereas neutral means the model substantively engages with both sides of the claim without endorsing either. Across all measured runs in this benchmark, refusal verdicts are \emph{rare}. Table~\ref{tab:refusal} reports the per-conversation refusal rate (fraction of the $114$ conversations per model-category that the judge classified as refusal).
+The benchmark uses a single user-LLM (\textsc{Claude Opus 4.6}) to drive all conversations. Because each conversation is free-form, the user-LLM's choice of arguments, tone, and escalation strategy may influence the subject model's behavior. A natural question is whether a more persuasive user-LLM elicits more sycophancy from the subject.
+
+To test this, we fix a set of 300 (topic, subject-model, persona, category) combinations, uniformly sampled from the full run, and re-run each with eight different user-LLMs: \textsc{Claude Opus 4.6} (the default), \textsc{GPT-5.4}, \textsc{Grok 4.2}, \textsc{Gemini 3.1 Pro}, \textsc{Qwen3.5-397B}, \textsc{Sabi\'a-4}, \textsc{GPT-5.4-mini}, and \textsc{Sabiazinho-4}. The last two are smaller, lower-capability models included specifically to test whether \emph{weak} user-LLMs elicit less sycophancy from strong subject models. All 2{,}400 conversations ($300 \times 8$) are judged by the same fixed judge (\textsc{Qwen3.5-397B}), isolating the user-LLM as the only variable.
+
+\paragraph{Agreement.} Table~\ref{tab:userllm-agreement} reports pairwise agreement. Unanimous agreement across all eight user-LLMs is $45.4\%$; supermajority ($\geq$5/8) is $100.0\%$. Both are lower than inter-judge agreement ($70.3\%$ / $91.3\%$, Section~\ref{sec:abl-judges}), confirming that \textbf{the user-LLM is a larger source of variance than the judge}.
 
 \begin{table}[!htbp]
-\centering \small
-\begin{tabular}{l|rr}
+\centering \scriptsize
+\begin{tabular}{l|cccccccc|cc}
 \toprule
-Model & Direct refusal (\%) & Indirect refusal (\%) \\
+ & \textsc{Ops} & \textsc{G54} & \textsc{Grk} & \textsc{Gem} & \textsc{Qw3} & \textsc{Sb4} & \textsc{G54m} & \textsc{Sabz} & Avg & Syc \\
 \midrule
-\textsc{Opus 4.6}          & 2.6 & 0.0 \\
-\textsc{GPT-5.4}           & 1.8 & 0.0 \\
-\textsc{Grok 4.2}          & 0.0 & 0.0 \\
-\textsc{Gemini 3.1 Pro}    & 8.8 & 0.0 \\
-\textsc{Qwen3.5-397B}      & 1.8 & 0.0 \\
-\textsc{Kimi K2}           & 1.8 & 0.9 \\
-\textsc{Mistral Large 3}   & 0.0 & 0.0 \\
-\textsc{Llama 4 Maverick}  & 29.8 & 0.0 \\
-\textsc{Sabi\'a-4}         & 4.4 & 0.0 \\
-\midrule
-\textsc{Haiku 4.5}         & 7.9 & 0.0 \\
-\textsc{GPT-5.4-mini}      & 0.0 & 0.0 \\
-\textsc{Gemini 3.1 Flash}  & 7.0 & 0.0 \\
-\textsc{Sabiazinho-4}      & 3.5 & 0.0 \\
+\textsc{Opus 4.6}       & ---   & 78.5 & 67.8 & 73.2 & 73.3 & 72.1 & 77.3 & 68.8 & 73.0 & \textbf{84.5} \\
+\textsc{GPT-5.4}        & 78.5 & ---   & 74.9 & 77.3 & 76.4 & 76.4 & 81.0 & 74.2 & 77.0 & \textbf{82.5} \\
+\textsc{GPT-5.4-mini}   & 77.3 & 81.0 & 74.0 & 71.9 & 73.0 & 75.2 & ---   & 73.9 & 75.2 & \textbf{78.9} \\
+\textsc{Qwen3.5}        & 73.3 & 76.4 & 76.1 & 72.4 & ---   & 73.6 & 73.0 & 75.0 & 74.2 & 69.5 \\
+\textsc{Gemini 3.1 Pro} & 73.2 & 77.3 & 74.7 & ---   & 72.4 & 72.4 & 71.9 & 69.8 & 73.1 & 69.1 \\
+\textsc{Sabiazinho-4}   & 68.8 & 74.2 & 67.5 & 69.8 & 75.0 & 71.0 & 73.9 & ---   & 71.5 & 69.1 \\
+\textsc{Sabi\'a-4}      & 72.1 & 76.4 & 71.4 & 72.4 & 73.6 & ---   & 75.2 & 71.0 & 73.2 & 68.8 \\
+\textsc{Grok 4.2}       & 67.8 & 74.9 & ---   & 74.7 & 76.1 & 71.4 & 74.0 & 67.5 & 72.3 & 66.3 \\
 \bottomrule
 \end{tabular}
-\caption{Per-conversation refusal rate for each (model, category). Refusal is when the model consistently declined to engage with the substance of the topic across a full five-turn conversation, not merely declining to state a personal opinion. The near-zero rate is a substantive finding: contemporary large-scale and smaller models do engage with all 38 topics in both probing styles; they do not stonewall even on the most politically sensitive questions. Everything the benchmark calls ``neutral'' or ``inconsistent'' or ``sycophant'' is genuine engagement, not refusal disguised as something else.}
-\label{tab:refusal}
+\caption{Per-user-LLM pairwise agreement (\%) and indirect sycophancy elicited, on the same 300 (topic, model, persona, category) slots, all judged by \textsc{Qwen3.5-397B}. Column codes: \textsc{Ops}=Opus 4.6, \textsc{G54}=GPT-5.4, \textsc{Grk}=Grok 4.2, \textsc{Gem}=Gemini 3.1 Pro, \textsc{Qw3}=Qwen3.5, \textsc{Sb4}=Sabi\'a-4, \textsc{G54m}=GPT-5.4-mini, \textsc{Sabz}=Sabiazinho-4. \textbf{Avg}: mean pairwise agreement with the other seven user-LLMs (consensus score). \textbf{Syc}: indirect sycophancy elicited (fraction of \texttt{agree}/\texttt{disagree} personas where the subject's verdict matches the persona). Rows sorted by \textbf{Syc}. Compare with Table~\ref{tab:judge-agreement}: user-LLM variation ($67$--$81\%$) is larger than judge variation ($78$--$90\%$).}
+\label{tab:userllm-agreement}
 \end{table}
 
-Refusal is exclusively a direct-probing phenomenon: \emph{no model} has a meaningful refusal rate under indirect (debate) probing. When a user argues rather than asks, every model engages. Under direct probing, \textsc{Llama 4 Maverick} stands out at $29.8\%$ refusal---the highest in the roster---followed by \textsc{Gemini 3.1 Pro} and \textsc{Gemini 3.1 Flash} at $\sim$7--9\%. Most other models have direct refusal rates below $5\%$.
-
-The zero-refusal finding in indirect mode is important: it means the high sycophancy rates reported in Table~\ref{tab:aggregate} reflect genuine engagement with the user's arguments, not refusal disguised as agreement. The models are substantively debating; they are just overwhelmingly conceding to whichever side argues.
-
-A plausible interpretation is that large-scale and even smaller contemporary LLMs have largely absorbed the norm of \emph{engaging with} contested topics, and the remaining question is \emph{how} they engage---which is precisely what Tables~\ref{tab:aggregate}, \ref{tab:topicmatrix}, and \ref{tab:divergence} measure.
+\paragraph{Persuasiveness partially drives sycophancy, but even weak user-LLMs elicit substantial concession.} The \textbf{Syc} column of Table~\ref{tab:userllm-agreement} reports indirect sycophancy elicited by each user-LLM. Two observations stand out. First, the two strongest user-LLMs (\textsc{Opus 4.6} and \textsc{GPT-5.4}) still elicit the most sycophancy ($\sim$$83$--$85\%$), about $15$--$18$ percentage points above the mid-tier and the weakest elicitor (\textsc{Grok 4.2} at $66.3\%$). Second, \textbf{weak user-LLMs are not categorically less persuasive than strong ones}. \textsc{GPT-5.4-mini} elicits $78.9\%$ indirect sycophancy---only $\sim$$5$pp below \textsc{Opus 4.6} and above every non-GPT large model in the set. \textsc{Sabiazinho-4} elicits $69.1\%$, essentially tied with \textsc{Gemini 3.1 Pro}, \textsc{Qwen3.5}, and its stronger sibling \textsc{Sabi\'a-4}. Strong subjects do not consistently resist weak users: \textsc{GPT-5.4} as subject concedes to \textsc{Sabiazinho-4} and \textsc{GPT-5.4-mini} at $90\%$ and $80\%$ respectively, close to its $90\%$ concession to \textsc{Opus 4.6}. \textsc{Opus 4.6} as subject partially resists the weakest elicitors ($40\%$ against \textsc{Qwen3.5}, \textsc{Sabiazinho-4}, and \textsc{Grok 4.2} vs. $80\%$ against itself), but is still far from immune. This suggests that sycophancy under debate is not primarily a function of argument sophistication; it reflects a trained tendency to accept the framing of any user who argues with sustained conviction, regardless of that user's capability.
 
 \subsection{Do models change opinion across turns?}
 \label{sec:abl-trajectory}
