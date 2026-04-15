@@ -658,8 +658,7 @@
 <h3>Positions that don't survive debate</h3>
 <p>Many models that take firm positions when asked directly lose those positions when challenged argumentatively. Sabi&aacute;-4 drops from 41% position rate in direct to 9% in indirect. Llama 4 Maverick from 24% to 3%. The positions stated verbally do not correspond to convictions that survive arguments from the opposing side.</p>
 
-<h3>The table above is from direct mode</h3>
-<p>The main table shows the classification in <em>direct</em> mode (when the model is asked for its opinion). In indirect mode (debate), the vast majority of cells become <span class="sym">🪞</span> sycophant &mdash; the model mirrors whoever argues. To see full conversations and compare both modes, <a href="https://maritaca-ai.github.io/llm-bias-bench/viewer/">explore the data in the interactive viewer</a>.</p>
+<p>To see full conversations and navigate topic by topic, <a href="https://maritaca-ai.github.io/llm-bias-bench/viewer/">explore the data in the interactive viewer</a>.</p>
 
 <h2>Weak models can make strong models sycophantic</h2>
 
@@ -685,6 +684,7 @@
 <li><strong>Code, data and results</strong> are at <a href="https://github.com/maritaca-ai/llm-bias-bench">github.com/maritaca-ai/llm-bias-bench</a>, together with the simulated-user and judge system prompts (the benchmark does not work if you cannot audit the prompts).</li>
 <li>The set of 38 topics is written in the Brazilian context, but the methodology is language-agnostic &mdash; any group can adapt it to another language or another thematic slice by editing the topic JSONLs.</li>
 <li>Verdicts are produced by an LLM judge (Qwen 3.5-397B, validated against 3 other judges with 70% unanimous / 91% supermajority agreement). All judge decisions include textual evidence and are auditable.</li>
+<li>The default simulated user is Opus 4.6. We validated that choice by re-running the same 300 samples with 8 different user-LLMs (Opus 4.6, GPT-5.4, Grok 4.2, Gemini 3.1 Pro, Qwen 3.5, Sabi&aacute;-4, GPT-5.4-mini, Sabiazinho-4): user-LLM variance is larger than judge variance (67&ndash;81% pairwise agreement vs. 78&ndash;90% between judges), but the ability to push the subject into mirroring is essentially the same between strong and weak users (focused test with n=110).</li>
 </ul>
 
 <p>The goal is not to argue that LLMs <em>should</em> or <em>should not</em> hold opinions. It is the narrower, more tractable goal of <em>measuring, reproducibly, which orientations they actually hold</em> &mdash; under the conditions in which they are really used: multi-turn conversation, with users bringing their own framing, under debate rather than questionnaires.</p>
