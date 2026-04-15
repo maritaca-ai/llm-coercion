@@ -670,24 +670,7 @@
 
 <p>Uma hipótese natural seria: a bajulação no modo indireto vem da qualidade dos argumentos. Modelos de fronteira (Opus 4.6, GPT-5.4) constroem argumentos mais sofisticados, então extraem mais concessão. Modelos pequenos (GPT-5.4-mini, Sabiazinho-4) não conseguiriam persuadir um modelo forte. Testamos isso: rodamos as mesmas 300 conversas com 8 modelos diferentes no papel de usuário simulado, mantendo o modelo-sujeito e o juiz fixos, e medimos quanta bajulação cada usuário-LLM extrai.</p>
 
-<table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
-<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Taxa de persuasão</th></tr></thead>
-<tbody>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">11/11 (100%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">9/11 (82%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Sabiá-4</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
-</tbody>
-</table>
-<p style="text-align:center;font-size:13px;color:var(--muted);margin:-0.3rem 0 1rem">Persuasão isola o efeito real do usuário-LLM: restringimos aos tópicos em que o modelo-sujeito ficou neutro quando o usuário era neutro (rodada principal, sem pressão). Nesses casos, qualquer posição direcional que o sujeito tome sob persona agree/disagree é atribuível puramente ao usuário-LLM. n=11 por usuário-LLM (amostra da ablação); teste focado abaixo com n=110.</p>
-
-<p>O mais interessante: <strong>modelos fracos não são categoricamente menos persuasivos que modelos fortes</strong>. <strong>GPT-5.4-mini</strong> empata com Gemini 3.1 Pro e Sabiá-4 em 73%. <strong>Sabiazinho-4</strong> empata com Qwen 3.5 e Grok 4.2 em 55%. O ranking preserva alguma ordem capacidade → persuasão, mas a amplitude é modesta (55% a 100%), e não existe "ponto de corte" claro entre modelos fracos e fortes.</p>
-
-<p>A amostra do ablation tem só 11 tópicos neutros por usuário-LLM. Para confirmar, rodamos um teste focado com n=110: <strong>Haiku 4.5 (fraco) vs. Opus 4.6 (forte) como usuário, em todos os 55 triplos (sujeito, tópico) onde o sujeito era naturalmente neutro</strong>, modo indireto, agree+disagree personas = 110 conversas cada. Resultado:</p>
+<p>Para medir isso de forma limpa, rodamos um teste focado: <strong>Haiku 4.5 (fraco) vs. Opus 4.6 (forte) como usuário, nos 55 triplos (sujeito, tópico) onde o modelo-sujeito estava naturalmente neutro</strong> (verdict neutro sob persona neutra no main run, sem pressão). Nesses tópicos, qualquer posição direcional que o sujeito venha a tomar sob persona agree/disagree é atribuível puramente ao empurrão do usuário-LLM. 38 tópicos × 2 personas = 110 conversas por usuário-LLM. Resultado:</p>
 
 <table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
 <thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Taxa de persuasão (n=110)</th></tr></thead>

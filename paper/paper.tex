@@ -501,25 +501,25 @@ To test this, we fix a set of 300 (topic, subject-model, persona, category) comb
 
 \begin{table}[!htbp]
 \centering \scriptsize
-\begin{tabular}{l|cccccccc|cc}
+\begin{tabular}{l|cccccccc|c}
 \toprule
- & \textsc{Ops} & \textsc{G54} & \textsc{Grk} & \textsc{Gem} & \textsc{Qw3} & \textsc{Sb4} & \textsc{G54m} & \textsc{Sabz} & Avg & Persuasion \\
+ & \textsc{Ops} & \textsc{G54} & \textsc{Grk} & \textsc{Gem} & \textsc{Qw3} & \textsc{Sb4} & \textsc{G54m} & \textsc{Sabz} & Avg \\
 \midrule
-\textsc{Opus 4.6}       & ---   & 78.5 & 67.8 & 73.2 & 73.3 & 72.1 & 77.3 & 68.8 & 73.0 & \textbf{11/11 (100\%)} \\
-\textsc{GPT-5.4}        & 78.5 & ---   & 74.9 & 77.3 & 76.4 & 76.4 & 81.0 & 74.2 & 77.0 & \textbf{9/11 (82\%)} \\
-\textsc{GPT-5.4-mini}   & 77.3 & 81.0 & 74.0 & 71.9 & 73.0 & 75.2 & ---   & 73.9 & 75.2 & \textbf{8/11 (73\%)} \\
-\textsc{Gemini 3.1 Pro} & 73.2 & 77.3 & 74.7 & ---   & 72.4 & 72.4 & 71.9 & 69.8 & 73.1 & 8/11 (73\%) \\
-\textsc{Sabi\'a-4}      & 72.1 & 76.4 & 71.4 & 72.4 & 73.6 & ---   & 75.2 & 71.0 & 73.2 & 8/11 (73\%) \\
-\textsc{Qwen3.5}        & 73.3 & 76.4 & 76.1 & 72.4 & ---   & 73.6 & 73.0 & 75.0 & 74.2 & 6/11 (55\%) \\
-\textsc{Sabiazinho-4}   & 68.8 & 74.2 & 67.5 & 69.8 & 75.0 & 71.0 & 73.9 & ---   & 71.5 & 6/11 (55\%) \\
-\textsc{Grok 4.2}       & 67.8 & 74.9 & ---   & 74.7 & 76.1 & 71.4 & 74.0 & 67.5 & 72.3 & 6/11 (55\%) \\
+\textsc{Opus 4.6}       & ---   & 78.5 & 67.8 & 73.2 & 73.3 & 72.1 & 77.3 & 68.8 & 73.0 \\
+\textsc{GPT-5.4}        & 78.5 & ---   & 74.9 & 77.3 & 76.4 & 76.4 & 81.0 & 74.2 & 77.0 \\
+\textsc{GPT-5.4-mini}   & 77.3 & 81.0 & 74.0 & 71.9 & 73.0 & 75.2 & ---   & 73.9 & 75.2 \\
+\textsc{Gemini 3.1 Pro} & 73.2 & 77.3 & 74.7 & ---   & 72.4 & 72.4 & 71.9 & 69.8 & 73.1 \\
+\textsc{Sabi\'a-4}      & 72.1 & 76.4 & 71.4 & 72.4 & 73.6 & ---   & 75.2 & 71.0 & 73.2 \\
+\textsc{Qwen3.5}        & 73.3 & 76.4 & 76.1 & 72.4 & ---   & 73.6 & 73.0 & 75.0 & 74.2 \\
+\textsc{Sabiazinho-4}   & 68.8 & 74.2 & 67.5 & 69.8 & 75.0 & 71.0 & 73.9 & ---   & 71.5 \\
+\textsc{Grok 4.2}       & 67.8 & 74.9 & ---   & 74.7 & 76.1 & 71.4 & 74.0 & 67.5 & 72.3 \\
 \bottomrule
 \end{tabular}
-\caption{Per-user-LLM pairwise agreement (\%) on the same 300 (topic, model, persona, category) slots, all judged by \textsc{Qwen3.5-397B}. Column codes: \textsc{Ops}=Opus 4.6, \textsc{G54}=GPT-5.4, \textsc{Grk}=Grok 4.2, \textsc{Gem}=Gemini 3.1 Pro, \textsc{Qw3}=Qwen3.5, \textsc{Sb4}=Sabi\'a-4, \textsc{G54m}=GPT-5.4-mini, \textsc{Sabz}=Sabiazinho-4. \textbf{Avg}: mean pairwise agreement with the other seven user-LLMs (consensus score). \textbf{Persuasion}: on the subset of samples where the subject had \emph{no pre-existing opinion} (main-run verdict = \texttt{neutral} under the neutral persona on the same topic and category), fraction of conversations where the subject flips to match the user's persona. This is a baseline-free measure: every denominator topic is one where the subject would produce a \texttt{neutral} verdict if the user did not push, so any directional verdict under the agree/disagree persona is attributable to the user-LLM. The subsample has only $n=11$ per user-LLM (neutral-baseline topics are sparse in the 300-sample pool); we complement it with a focused test on all 55 neutral-baseline triples below.}
+\caption{Per-user-LLM pairwise agreement (\%) on the same 300 (topic, model, persona, category) slots, all judged by \textsc{Qwen3.5-397B}. Column codes: \textsc{Ops}=Opus 4.6, \textsc{G54}=GPT-5.4, \textsc{Grk}=Grok 4.2, \textsc{Gem}=Gemini 3.1 Pro, \textsc{Qw3}=Qwen3.5, \textsc{Sb4}=Sabi\'a-4, \textsc{G54m}=GPT-5.4-mini, \textsc{Sabz}=Sabiazinho-4. \textbf{Avg}: mean pairwise agreement with the other seven user-LLMs (consensus score). User-LLM variation ($67$--$81\%$) is larger than judge variation ($78$--$90\%$ in Table~\ref{tab:judge-agreement}), meaning the choice of user-LLM is a bigger source of verdict variance than the choice of judge.}
 \label{tab:userllm-agreement}
 \end{table}
 
-\paragraph{Persuasion isolates the user's contribution to sycophancy.} Most of what looks like sycophancy in a per-conversation count is the subject expressing an opinion it already holds. To measure only the sycophancy the user-LLM \emph{adds}, we restrict attention to topics where the subject produced the \texttt{neutral} verdict under the \texttt{neutral}-persona condition in the main run---i.e., topics where the subject had no directional opinion when no one pushed. The \textbf{Persuasion} column of Table~\ref{tab:userllm-agreement} reports, for each user-LLM, the fraction of these neutral-baseline conversations (agree/disagree personas only) where the subject flips to match the user's side. Two observations stand out. First, \textsc{Opus 4.6} (persuading $11/11$) and \textsc{GPT-5.4} ($9/11$) are the most persuasive, followed by \textsc{GPT-5.4-mini}, \textsc{Gemini 3.1 Pro}, and \textsc{Sabi\'a-4} at $8/11$ each. Second, and \emph{most striking}, \textbf{a weaker user-LLM is not categorically less persuasive than a stronger one}: \textsc{GPT-5.4-mini} matches \textsc{Gemini 3.1 Pro} and \textsc{Sabi\'a-4} at $73\%$, and \textsc{Sabiazinho-4} ties with \textsc{Qwen3.5} and \textsc{Grok 4.2} at $55\%$. The ablation subsample is only $n=11$ per user-LLM; we complement it with a focused $n=110$ test below.
+Agreement ranges from $67$--$81\%$, showing that the user-LLM is a larger source of verdict variance than the judge ($78$--$90\%$ in Table~\ref{tab:judge-agreement}). To isolate the user-LLM's role in driving sycophancy itself (rather than verdict variance), we turn to the focused persuasion test below, which uses a large, well-matched subsample.
 
 \paragraph{Focused persuasion test: Haiku vs.\ Opus as user, $n=110$.} To test the weak-vs-strong-user comparison with larger samples, we run a focused experiment: across all 13 subject models we identify the 55 (subject, topic) pairs in indirect mode where the subject produced the \texttt{neutral} verdict under the \texttt{neutral}-persona condition in the main run. On each of these pairs we run both \texttt{agree} and \texttt{disagree} personas (110 conversations), with \textsc{Haiku 4.5} as the user-LLM and the main run's existing \textsc{Opus 4.6}-as-user results as the comparison point. Judge remains \textsc{Qwen3.5-397B}.
 
