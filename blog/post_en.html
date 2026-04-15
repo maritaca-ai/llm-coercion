@@ -666,27 +666,35 @@
 <p>A natural hypothesis: sycophancy under debate comes from the quality of the arguments. Frontier models (Opus 4.6, GPT-5.4) produce more sophisticated arguments and therefore extract more concession. Small models (GPT-5.4-mini, Sabiazinho-4) should struggle to persuade a strong subject. We tested this: we re-ran the same 300 conversations with eight different models in the user-LLM role, keeping the subject model and judge fixed, and measured how much sycophancy each user-LLM extracted.</p>
 
 <table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
-<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">User-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Raw sycophancy<br><small>(indirect)</small></th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">User's contribution<br><small>(above baseline)</small></th></tr></thead>
+<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">User-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Persuasion rate</th></tr></thead>
 <tbody>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (strong)</td><td style="text-align:right;padding:0.3rem 0.8rem">84.5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+44.3pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (strong)</td><td style="text-align:right;padding:0.3rem 0.8rem">82.5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+42.3pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (weak)</td><td style="text-align:right;padding:0.3rem 0.8rem">78.9%</td><td style="text-align:right;padding:0.3rem 0.8rem">+40.0pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">69.5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+29.5pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">69.1%</td><td style="text-align:right;padding:0.3rem 0.8rem">+28.9pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (weak)</td><td style="text-align:right;padding:0.3rem 0.8rem">69.1%</td><td style="text-align:right;padding:0.3rem 0.8rem">+28.9pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Sabi&aacute;-4</td><td style="text-align:right;padding:0.3rem 0.8rem">68.8%</td><td style="text-align:right;padding:0.3rem 0.8rem">+29.2pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">66.3%</td><td style="text-align:right;padding:0.3rem 0.8rem">+27.4pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (strong)</td><td style="text-align:right;padding:0.3rem 0.8rem">11/11 (100%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (strong)</td><td style="text-align:right;padding:0.3rem 0.8rem">9/11 (82%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (weak)</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Sabi&aacute;-4</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (weak)</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
 </tbody>
 </table>
-<p style="text-align:center;font-size:13px;color:var(--muted);margin:-0.3rem 0 1rem">The right column isolates just the user-LLM's contribution. For each sample, we look up what the same subject produced on the same topic when the user was neutral (from the main run, no pressure). If the subject already agreed on its own, the sample doesn't count; if the subject did not take that side under the neutral persona but does under the directional persona, it counts as an extra percentage point the user added.</p>
+<p style="text-align:center;font-size:13px;color:var(--muted);margin:-0.3rem 0 1rem">Persuasion isolates the user-LLM's real effect: we restrict to topics where the subject was genuinely neutral when the user was also neutral (main run, no pressure). On those topics, any directional stance the subject takes under an agree/disagree persona is attributable entirely to the user-LLM. n=11 per user-LLM (ablation subsample); focused test with n=110 below.</p>
 
-<p>Two findings. First, persuasiveness does matter: the two strongest user-LLMs elicit ~15 percentage points more sycophancy than the rest. Second &mdash; more interestingly &mdash; <strong>weak models are not categorically less persuasive than strong ones</strong>. <strong>GPT-5.4-mini</strong> extracts 78.9%, only 5pp below Opus 4.6 and above every other large model. <strong>Sabiazinho-4</strong> (weaker) ties with Gemini 3.1 Pro and even with its stronger sibling Sabi&aacute;-4.</p>
+<p>Most importantly: <strong>weak models are not categorically less persuasive than strong ones</strong>. <strong>GPT-5.4-mini</strong> ties with Gemini 3.1 Pro and Sabi&aacute;-4 at 73%. <strong>Sabiazinho-4</strong> ties with Qwen 3.5 and Grok 4.2 at 55%. There is some correlation between capability and persuasion, but the range is narrow (55% to 100%) and no clean cutoff between weak and strong user-LLMs.</p>
 
-<p>To test the hypothesis more directly, we ran a focused experiment: <strong>Haiku 4.5 (weak) vs. Opus 4.6 (strong) as user, Opus 4.6 always as subject</strong>, 38 topics × 2 personas (agree, disagree) = 152 conversations in indirect mode.</p>
+<p>The ablation subsample has only 11 neutral-baseline topics per user-LLM. To confirm, we ran a focused test with n=110: <strong>Haiku 4.5 (weak) vs. Opus 4.6 (strong) as user, across all 55 (subject, topic) pairs where the subject was genuinely neutral</strong>, indirect mode, agree+disagree personas = 110 conversations each. Result:</p>
 
-<p>Under the raw metric (fraction of conversations where Opus agrees with the side the user is arguing), <strong>Haiku makes Opus agree in 51.3% of conversations (39/76), and Opus-as-user gets 52.6% (40/76)</strong> &mdash; a 1.3pp gap. But Opus is an opinionated model: if we just ask in neutral mode (no push either way), it already takes a position on 94.7% of topics on its own. Most of the 51&ndash;53% raw rate is Opus expressing its own opinion, not caving to the user. Subtracting what it already says under neutral, Haiku adds only <strong>+3.9pp</strong> and Opus adds <strong>+5.3pp</strong>. The user's real contribution is small, and essentially the same for a weak and a strong user (1.4pp gap, within noise).</p>
+<table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
+<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">User-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Persuasion rate (n=110)</th></tr></thead>
+<tbody>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (strong)</td><td style="text-align:right;padding:0.3rem 0.8rem">83.6% (92/110)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Haiku 4.5</strong> (weak)</td><td style="text-align:right;padding:0.3rem 0.8rem">80.9% (89/110)</td></tr>
+</tbody>
+</table>
 
-<p>In other words: sycophancy under debate is not primarily a function of argument sophistication. It reflects a trained tendency to accept the framing of any user who argues with sustained conviction &mdash; including weaker users.</p>
+<p>A <strong>2.7pp gap</strong> between a frontier user-LLM and a much smaller model. Across the 13 subjects, Haiku matches or beats Opus on 9 of them, including 100% persuasion on Gemini 3.1 Pro, Llama 4 Maverick, Sabi&aacute;-4, Qwen 3.5, and Mistral Large 3. The two subjects that resist both are the same two models flagged as "resistant" in the main table: Haiku 4.5 as subject (37.5% with either user) and Kimi K2 (57&ndash;64%).</p>
+
+<p>In other words: a user-LLM's ability to push a subject into taking a position is not primarily a function of argument sophistication. Most models concede at essentially the same rate, regardless of whether the user arguing is a frontier model or a much smaller one.</p>
 
 <h2>Reproducibility</h2>
 

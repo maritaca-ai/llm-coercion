@@ -671,27 +671,35 @@
 <p>Uma hipótese natural seria: a bajulação no modo indireto vem da qualidade dos argumentos. Modelos de fronteira (Opus 4.6, GPT-5.4) constroem argumentos mais sofisticados, então extraem mais concessão. Modelos pequenos (GPT-5.4-mini, Sabiazinho-4) não conseguiriam persuadir um modelo forte. Testamos isso: rodamos as mesmas 300 conversas com 8 modelos diferentes no papel de usuário simulado, mantendo o modelo-sujeito e o juiz fixos, e medimos quanta bajulação cada usuário-LLM extrai.</p>
 
 <table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
-<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Bajulação bruta<br><small>(indireto)</small></th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Contribuição do user<br><small>(acima do baseline)</small></th></tr></thead>
+<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Taxa de persuasão</th></tr></thead>
 <tbody>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">84,5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+44,3pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">82,5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+42,3pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">78,9%</td><td style="text-align:right;padding:0.3rem 0.8rem">+40,0pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">69,5%</td><td style="text-align:right;padding:0.3rem 0.8rem">+29,5pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">69,1%</td><td style="text-align:right;padding:0.3rem 0.8rem">+28,9pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">69,1%</td><td style="text-align:right;padding:0.3rem 0.8rem">+28,9pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Sabiá-4</td><td style="text-align:right;padding:0.3rem 0.8rem">68,8%</td><td style="text-align:right;padding:0.3rem 0.8rem">+29,2pp</td></tr>
-<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">66,3%</td><td style="text-align:right;padding:0.3rem 0.8rem">+27,4pp</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">11/11 (100%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">9/11 (82%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>GPT-5.4-mini</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Gemini 3.1 Pro</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Sabiá-4</td><td style="text-align:right;padding:0.3rem 0.8rem">8/11 (73%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Qwen 3.5-397B</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem">Grok 4.2</td><td style="text-align:right;padding:0.3rem 0.8rem">6/11 (55%)</td></tr>
 </tbody>
 </table>
-<p style="text-align:center;font-size:13px;color:var(--muted);margin:-0.3rem 0 1rem">A coluna da direita isola só a contribuição do usuário-LLM. Para cada amostra, consultamos o que o mesmo modelo-sujeito produziu no mesmo tópico quando o usuário era neutro (da rodada principal, sem pressão). Se o sujeito já concordava sozinho, aquela amostra não conta; se não concordava sob persona neutra mas concorda sob a persona direcional, conta como ponto percentual extra induzido pelo usuário.</p>
+<p style="text-align:center;font-size:13px;color:var(--muted);margin:-0.3rem 0 1rem">Persuasão isola o efeito real do usuário-LLM: restringimos aos tópicos em que o modelo-sujeito ficou neutro quando o usuário era neutro (rodada principal, sem pressão). Nesses casos, qualquer posição direcional que o sujeito tome sob persona agree/disagree é atribuível puramente ao usuário-LLM. n=11 por usuário-LLM (amostra da ablação); teste focado abaixo com n=110.</p>
 
-<p>Dois achados. Primeiro, a persuasão importa: os dois modelos mais fortes extraem ~15 pontos percentuais mais bajulação que os outros. Segundo &mdash; e é o mais interessante &mdash; <strong>modelos fracos não extraem categoricamente menos bajulação que modelos fortes</strong>. O <strong>GPT-5.4-mini</strong> extrai 78,9%, apenas 5pp abaixo do Opus 4.6 e acima de todos os outros modelos grandes. O <strong>Sabiazinho-4</strong> (mais fraco) empata com Gemini 3.1 Pro e até com seu irmão mais forte Sabiá-4.</p>
+<p>O mais interessante: <strong>modelos fracos não são categoricamente menos persuasivos que modelos fortes</strong>. <strong>GPT-5.4-mini</strong> empata com Gemini 3.1 Pro e Sabiá-4 em 73%. <strong>Sabiazinho-4</strong> empata com Qwen 3.5 e Grok 4.2 em 55%. O ranking preserva alguma ordem capacidade → persuasão, mas a amplitude é modesta (55% a 100%), e não existe "ponto de corte" claro entre modelos fracos e fortes.</p>
 
-<p>Para testar a hipótese de forma mais direta, rodamos um experimento focado: <strong>Haiku 4.5 (fraco) vs. Opus 4.6 (forte) como usuário, Opus 4.6 sempre como sujeito</strong>, 38 tópicos × 2 personas (concorda, discorda) = 152 conversas, modo indireto.</p>
+<p>A amostra do ablation tem só 11 tópicos neutros por usuário-LLM. Para confirmar, rodamos um teste focado com n=110: <strong>Haiku 4.5 (fraco) vs. Opus 4.6 (forte) como usuário, em todos os 55 triplos (sujeito, tópico) onde o sujeito era naturalmente neutro</strong>, modo indireto, agree+disagree personas = 110 conversas cada. Resultado:</p>
 
-<p>Pela métrica bruta (fração das conversas em que o Opus concordou com a posição que o usuário defendia), <strong>Haiku faz o Opus concordar em 51,3% das conversas (39/76), e Opus faz o Opus concordar em 52,6% (40/76)</strong> &mdash; diferença de 1,3pp. Mas o Opus é um modelo bem opinado: se a gente perguntar em modo neutro (sem empurrar lado nenhum), ele já toma posição em 94,7% dos tópicos naturalmente. A maior parte desses 51-53% bruto é só o Opus expressando opinião própria, não cedendo ao usuário. Descontando o que ele já diz sob persona neutra, o Haiku induz uma mudança extra de apenas <strong>+3,9pp</strong> e o Opus <strong>+5,3pp</strong>. O peso real do usuário é pequeno, e essencialmente igual entre um usuário fraco e um forte (gap de 1,4pp, dentro do ruído).</p>
+<table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
+<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Taxa de persuasão (n=110)</th></tr></thead>
+<tbody>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">83,6% (92/110)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Haiku 4.5</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">80,9% (89/110)</td></tr>
+</tbody>
+</table>
 
-<p>Ou seja: a bajulação no debate não é principalmente uma questão de sofisticação argumentativa. É uma tendência treinada de aceitar o enquadramento de qualquer usuário que argumente com convicção sustentada &mdash; inclusive de usuários mais fracos.</p>
+<p>Diferença de <strong>2,7pp</strong> entre um usuário de ponta e um modelo bem menor. Nos 13 sujeitos, Haiku iguala ou supera Opus em 9 deles, incluindo 100% de persuasão contra Gemini 3.1 Pro, Llama 4 Maverick, Sabiá-4, Qwen 3.5 e Mistral Large 3. Os dois sujeitos que resistem a ambos são os mesmos dois modelos "resistentes" da tabela principal: Haiku 4.5 como sujeito (37,5% com qualquer usuário) e Kimi K2 (57-64%).</p>
+
+<p>Ou seja: a capacidade de um usuário-LLM fazer o modelo-sujeito mudar de posição não é principalmente uma questão de sofisticação argumentativa. A maioria dos modelos cede praticamente na mesma taxa, independente se quem argumenta é um modelo de ponta ou um bem menor. É uma tendência treinada de aceitar o enquadramento de qualquer usuário que argumente com convicção sustentada.</p>
 
 <h2>Reprodutibilidade</h2>
 
