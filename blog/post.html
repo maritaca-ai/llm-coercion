@@ -665,22 +665,27 @@
 
 <p>Para ver as conversas completas e navegar topic-by-topic, <a href="https://maritaca-ai.github.io/llm-bias-bench/viewer/">explore os dados no viewer interativo</a>.</p>
 
-<h2>Modelos fracos conseguem fazer modelos fortes baju­larem</h2>
+<h2>Usuários fortes são mais persuasivos — mas os fracos já bastam quando o modelo não tem opinião</h2>
 
-<p>Uma hipótese natural seria: a bajulação no modo indireto vem da qualidade dos argumentos. Modelos de fronteira (Opus 4.6) construiriam argumentos mais sofisticados e extrairiam mais concessão; modelos pequenos (Haiku 4.5, Sabiazinho-4) não conseguiriam persuadir um modelo forte. Para testar essa hipótese, rodamos um teste focado: <strong>Opus 4.6 (forte) vs. Haiku 4.5 (fraco) vs. Sabiazinho-4 (fraco) como usuário-LLM</strong>, nos 55 triplos (assistente, tópico) onde o modelo-assistente estava naturalmente neutro (veredicto neutro sob a persona neutra da rodada principal &mdash; o usuário pressiona por resposta mas não argumenta a favor de nenhum lado). Nesses tópicos, qualquer posição direcional que o assistente venha a tomar sob persona concorda/discorda é atribuível puramente ao empurrão do usuário-LLM. 55 × 2 personas = 110 conversas por usuário-LLM. Resultado:</p>
+<p>A força do usuário-LLM (quem argumenta) importa? Depende do ponto de partida do modelo-assistente. Rodamos dois experimentos complementares com três usuários-LLM: <strong>Opus 4.6 (forte), Haiku 4.5 (fraco) e Sabiazinho-4 (fraco)</strong>.</p>
+
+<p><strong>Regime A — preencher vácuo:</strong> 55 pares (assistente, tópico) onde o modelo-assistente estava naturalmente neutro na persona neutra da rodada principal (110 conversas por usuário-LLM sob personas concorda/discorda). Como o assistente não tinha opinião, qualquer veredito direcional é puramente fruto do empurrão do usuário-LLM.</p>
+
+<p><strong>Regime B — desalojar opinião:</strong> 200 pares (assistente, tópico) — amostrados com semente fixa do universo de 438 pares — onde o assistente já tinha opinião direcional (agree ou disagree) na persona neutra. Aqui usamos a persona <em>oposta</em> ao lado do assistente: se o baseline era agree, o usuário argumenta disagree, e vice-versa. O usuário-LLM só "vence" se desalojar a opinião existente.</p>
 
 <table style="margin:1rem auto;border-collapse:collapse;font-size:0.92rem">
-<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Taxa de persuasão (n=110)</th></tr></thead>
+<thead><tr><th style="text-align:left;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Usuário-LLM</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Regime A — vácuo (n=110)</th><th style="text-align:right;padding:0.35rem 0.8rem;border-bottom:1px solid #ccc">Regime B — desalojar (n≈200)</th></tr></thead>
 <tbody>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">83,6% (92/110)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Haiku 4.5</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">80,9% (89/110)</td></tr>
-<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">77,3% (85/110)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Opus 4.6</strong> (forte)</td><td style="text-align:right;padding:0.3rem 0.8rem">83,6% (92/110)</td><td style="text-align:right;padding:0.3rem 0.8rem">71,0% (142/200)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Haiku 4.5</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">80,9% (89/110)</td><td style="text-align:right;padding:0.3rem 0.8rem">59,3% (118/199)</td></tr>
+<tr><td style="padding:0.3rem 0.8rem"><strong>Sabiazinho-4</strong> (fraco)</td><td style="text-align:right;padding:0.3rem 0.8rem">77,3% (85/110)</td><td style="text-align:right;padding:0.3rem 0.8rem">58,6% (116/198)</td></tr>
+<tr style="border-top:1px solid #ccc"><td style="padding:0.3rem 0.8rem">Gap forte→fraco</td><td style="text-align:right;padding:0.3rem 0.8rem"><strong>6,3pp</strong></td><td style="text-align:right;padding:0.3rem 0.8rem"><strong>12,4pp</strong></td></tr>
 </tbody>
 </table>
 
-<p>Só <strong>6,3pp</strong> separam o usuário mais forte do mais fraco. Os únicos dois assistentes que realmente resistem aos três usuários são os mesmos da tabela principal: Haiku 4.5 como assistente (1-3 de 8 conversas com qualquer user) e Kimi K2 (6-9 de 14). Em todos os outros 11 assistentes, o modelo mais fraco consegue praticamente o mesmo que o Opus.</p>
+<p>No regime de vácuo, o gap entre o usuário-LLM mais forte e o mais fraco é de só <strong>6,3pp</strong> — praticamente qualquer usuário que argumente com convicção sustentada consegue preencher a neutralidade do assistente. No regime de desalojamento, o gap <strong>dobra para 12,4pp</strong>, e fica ainda mais gritante nos assistentes "cedentes": Mistral Large cai de 94% (Opus) para 61% (Haiku); GPT-5.4-mini cai de 71% para 41%; Llama 4 Maverick de 100% para 83%. Os três assistentes "resistentes" (Haiku 4.5, Opus 4.6, Kimi K2) resistem igual aos três usuários (6–27%), mostrando que a resistência é propriedade do assistente, não artefato de argumento fraco.</p>
 
-<p>Ou seja: a capacidade de um usuário-LLM fazer o modelo-assistente mudar de posição não é principalmente uma questão de sofisticação argumentativa. A maioria dos modelos cede praticamente na mesma taxa, independente se quem argumenta é um modelo de ponta ou um bem menor. É uma tendência treinada de aceitar o enquadramento de qualquer usuário que argumente com convicção sustentada.</p>
+<p>Conclusão: <strong>usuários-LLM mais fortes são mais persuasivos quando precisam desalojar uma opinião existente, mas usuários fracos já são altamente eficazes quando o modelo não tem opinião a defender</strong>. Metodologicamente, avaliações de persuasão que condicionam em baseline neutra (como prior work tende a fazer) subestimam sistematicamente o papel da força do usuário-LLM.</p>
 
 <h2>Reprodutibilidade</h2>
 
@@ -688,7 +693,7 @@
 <li><strong>Código, dados e resultados</strong> estão em <a href="https://github.com/maritaca-ai/llm-bias-bench">github.com/maritaca-ai/llm-bias-bench</a>, junto com os prompts dos usuários simulados e do juiz (o benchmark não funciona se você não pode auditar os prompts).</li>
 <li>O conjunto de 38 tópicos foi escrito em contexto brasileiro, mas a metodologia é agnóstica a idioma &mdash; qualquer grupo pode adaptar para outro idioma ou outro recorte temático editando os JSONL de tópicos.</li>
 <li>Os veredictos são produzidos por um LLM juiz (Qwen 3.5-397B). Validamos esse juiz rodando os mesmos 300 transcritos por 4 juízes diferentes (Opus 4.6, Grok 4.2, Gemini 3.1 Pro, Qwen 3.5): concordância unânime de 70% e maioria de 91%. Cada decisão inclui evidência textual e é auditável.</li>
-<li>O usuário simulado padrão é o Opus 4.6. Validamos essa escolha rodando as mesmas 300 amostras com 8 usuários-LLM diferentes (Opus 4.6, GPT-5.4, Grok 4.2, Gemini 3.1 Pro, Qwen 3.5, Sabiá-4, GPT-5.4-mini, Sabiazinho-4): a variância entre usuários-LLM é maior que entre juízes (67-81% de concordância pareada vs. 78-90% entre juízes), mas a capacidade de levar o modelo a espelhar é praticamente igual entre usuários fortes e fracos (teste focado com n=110).</li>
+<li>O usuário simulado padrão é o Opus 4.6. Validamos essa escolha rodando as mesmas 300 amostras com 8 usuários-LLM diferentes (Opus 4.6, GPT-5.4, Grok 4.2, Gemini 3.1 Pro, Qwen 3.5, Sabiá-4, GPT-5.4-mini, Sabiazinho-4): a variância entre usuários-LLM é maior que entre juízes (67-81% de concordância pareada vs. 78-90% entre juízes). Quando o assistente não tem opinião, usuários fracos conseguem quase o mesmo que o Opus (gap de ~6pp, n=110); quando o assistente já tem opinião, o Opus persuade claramente mais (gap de ~12pp, n=200).</li>
 </ul>
 
 <p>O objetivo não é afirmar que LLMs <em>deveriam</em> ou <em>não deveriam</em> ter opinião. É o objetivo mais estreito e mais tratável de <em>medir, de forma reproduzível, as orientações que eles têm de fato</em> &mdash; nas condições em que eles são usados de verdade: conversa multi-turno, com usuários que trazem seu próprio enquadramento, sob tarefas e não questionários.</p>
