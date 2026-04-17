@@ -30,6 +30,7 @@ SUBJECTS = {
     "gemini31propreview": {"model": "google/gemini-3.1-pro-preview", "maritaca": False},
     "sabia4":             {"model": "sabia-4",                       "maritaca": True},
     "grok420":            {"model": "x-ai/grok-4.20",                "maritaca": False},
+    "kimik2thinking":     {"model": "moonshotai/kimi-k2-thinking",   "maritaca": False},
 }
 
 TOPICS = [

@@ -687,44 +687,45 @@ This has two implications. First, individual per-topic verdicts should be interp
 
 The 38 topics in the main instantiation are framed in Brazilian Portuguese. A natural follow-up is whether the positions we measure are BR-specific or reflect a topic-level bias that survives jurisdictional and linguistic translation. We ran a focused cross-country probe on six contested values topics where national law differs sharply worldwide: \textbf{abortion}, \textbf{civilian gun access}, \textbf{same-sex marriage}, \textbf{death penalty}, \textbf{recreational cannabis}, and \textbf{euthanasia / physician-assisted dying}.
 
-\paragraph{Setup.} Seven countries spanning distinct jurisdictional/cultural contexts: Brazil, Germany, Egypt, Japan, USA, Russia, Nigeria. Five assistants: \textsc{Claude Opus 4.6}, \textsc{GPT-5.4}, \textsc{Gemini 3.1 Pro}, \textsc{Sabi\'a-4}, and \textsc{Grok 4.2}. The simulated user drives the conversation in the country's primary language (pt-BR, German, Egyptian Arabic, Japanese, English, Russian). To keep each claim equally controversial within its jurisdiction, the direction is \emph{inverted} when the practice-level default is already liberal (e.g., Japan/Russia for abortion asks ``should be criminalized''; USA for guns asks ``should be more restricted''; Germany for euthanasia asks ``should assisted suicide be restricted again''). Verdicts are then remapped to a canonical axis per topic (pro-decriminalization, pro-restriction, pro-recognition, pro-abolition, pro-legalization, pro-legalization) so rows across jurisdictions are directly comparable. All three personas (neutral, agree, disagree) and both probing categories (direct, indirect) run per (country, assistant). Totals are $168$ conversations per topic for abortion, guns, death penalty, cannabis, and euthanasia, and $144$ for same-sex marriage.
+\paragraph{Setup.} Seven countries spanning distinct jurisdictional/cultural contexts: Brazil, Germany, Egypt, Japan, USA, Russia, Nigeria. Six assistants: \textsc{Claude Opus 4.6}, \textsc{GPT-5.4}, \textsc{Gemini 3.1 Pro}, \textsc{Sabi\'a-4}, \textsc{Grok 4.2}, and \textsc{Kimi K2 Thinking}. The simulated user drives the conversation in the country's primary language (pt-BR, German, Egyptian Arabic, Japanese, English, Russian). To keep each claim equally controversial within its jurisdiction, the direction is \emph{inverted} when the practice-level default is already liberal (e.g., Japan/Russia for abortion asks ``should be criminalized''; USA for guns asks ``should be more restricted''; Germany for euthanasia asks ``should assisted suicide be restricted again''). Verdicts are then remapped to a canonical axis per topic (pro-decriminalization, pro-restriction, pro-recognition, pro-abolition, pro-legalization, pro-legalization) so rows across jurisdictions are directly comparable. All three personas (neutral, agree, disagree) and both probing categories (direct, indirect) run per (country, assistant). Totals are $168$ conversations per topic for abortion, guns, death penalty, cannabis, and euthanasia, and $144$ for same-sex marriage.
 
 \begin{table}[t]
 \centering
-\small
-\begin{tabular}{l l ccccc}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l l cccccc}
 \toprule
-Topic (canonical axis) & Probing & \textsc{Opus 4.6} & \textsc{GPT-5.4} & \textsc{Gem.~3.1 Pro} & \textsc{Sabi\'a-4} & \textsc{Grok 4.2} \\
+Topic (canonical axis) & Probing & \textsc{Opus 4.6} & \textsc{GPT-5.4} & \textsc{Gem.~3.1 Pro} & \textsc{Sabi\'a-4} & \textsc{Grok 4.2} & \textsc{Kimi K2} \\
 \midrule
-\multirow{2}{*}{Abortion (pro-decrim.)}         & direct   & 6/7 & 3/7 & 0/7 & 3/7 & 2/7 \\
-                                                & indirect & 5/7 & 0/7 & 0/7 & 0/7 & 0/7 \\
-\cmidrule(lr){1-7}
-\multirow{2}{*}{Guns (pro-restriction)}         & direct   & 5/7 & 3/7 & 3/7 & 4/7 & 3/7 \\
-                                                & indirect & 5/7 & 0/7 & 0/7 & 0/7 & 1/7 \\
-\cmidrule(lr){1-7}
-\multirow{2}{*}{Same-sex (pro-recognition)}     & direct   & 6/7 & 6/7 & 0/7 & 3/7 & 2/7 \\
-                                                & indirect & 5/7 & 3/7 & 1/7 & 1/7 & 1/7 \\
-\cmidrule(lr){1-7}
-\multirow{2}{*}{Death penalty (pro-abolition)}  & direct   & 5/7 & 6/7 & 4/7 & 4/7 & 6/7 \\
-                                                & indirect & 5/7 & 5/7 & 1/7 & 1/7 & 1/7 \\
-\cmidrule(lr){1-7}
-\multirow{2}{*}{Cannabis (pro-legalization)}    & direct   & 4/7 & 1/7 & 0/7 & 1/7 & 1/7 \\
-                                                & indirect & 0/7 & 1/7 & 0/7 & 0/7 & 1/7 \\
-\cmidrule(lr){1-7}
-\multirow{2}{*}{Euthanasia (pro-legalization)}  & direct   & 3/7 & 1/7 & 1/7 & 1/7 & 0/7 \\
-                                                & indirect & 1/7 & 0/7 & 0/7 & 0/7 & 0/7 \\
+\multirow{2}{*}{Abortion (pro-decrim.)}         & direct   & 6/7 & 3/7 & 0/7 & 3/7 & 2/7 & 7/7 \\
+                                                & indirect & 5/7 & 0/7 & 0/7 & 0/7 & 0/7 & 6/7 \\
+\cmidrule(lr){1-8}
+\multirow{2}{*}{Guns (pro-restriction)}         & direct   & 5/7 & 3/7 & 3/7 & 4/7 & 3/7 & 5/7 \\
+                                                & indirect & 5/7 & 0/7 & 0/7 & 0/7 & 1/7 & 4/7 \\
+\cmidrule(lr){1-8}
+\multirow{2}{*}{Same-sex (pro-recognition)}     & direct   & 6/7 & 6/7 & 0/7 & 3/7 & 2/7 & 6/7 \\
+                                                & indirect & 5/7 & 3/7 & 1/7 & 1/7 & 1/7 & 5/7 \\
+\cmidrule(lr){1-8}
+\multirow{2}{*}{Death penalty (pro-abolition)}  & direct   & 5/7 & 6/7 & 4/7 & 4/7 & 6/7 & 6/7 \\
+                                                & indirect & 5/7 & 5/7 & 1/7 & 1/7 & 1/7 & 7/7 \\
+\cmidrule(lr){1-8}
+\multirow{2}{*}{Cannabis (pro-legalization)}    & direct   & 4/7 & 1/7 & 0/7 & 1/7 & 1/7 & 3/7 \\
+                                                & indirect & 0/7 & 1/7 & 0/7 & 0/7 & 1/7 & 2/7 \\
+\cmidrule(lr){1-8}
+\multirow{2}{*}{Euthanasia (pro-legalization)}  & direct   & 3/7 & 1/7 & 1/7 & 1/7 & 0/7 & 1/7 \\
+                                                & indirect & 1/7 & 0/7 & 0/7 & 0/7 & 0/7 & 0/7 \\
 \midrule
-\multirow{2}{*}{Modulation rate} & direct   & 7.1\%  & 16.7\% & 39.0\% & 14.3\% & 28.6\% \\
-                                 & indirect & 16.7\% & 19.0\% & 28.6\% & 19.0\% & 23.8\% \\
+\multirow{2}{*}{Modulation rate} & direct   & 7.1\%  & 16.7\% & 39.0\% & 14.3\% & 28.6\% & 11.9\% \\
+                                 & indirect & 16.7\% & 19.0\% & 28.6\% & 19.0\% & 23.8\% & 21.4\% \\
 \bottomrule
 \end{tabular}
-\caption{Top block: number of countries (out of $N{=}7$) in which each assistant holds a directional position on the canonical axis of each topic, under direct vs.\ indirect probing. Bottom rows: \textbf{modulation rate}---the fraction of countries where the model's neutral-persona canonical verdict disagrees with its own majority verdict for that (topic, category), split by probing mode. A model that holds the \emph{same} opinion in every country has modulation 0\%; a model whose baseline opinion flips country to country is culturally modulated. Having a position is not in itself a problem---changing position based on the jurisdiction is. Opus~4.6 is the most country-independent; Gemini~3.1~Pro is the most modulated. GPT-5.4 is the exception on \emph{death penalty}: it holds a strong anti-DP position in 5/7 countries even under argumentative pressure. Cannabis and euthanasia are the two topics where \emph{no} model defends a progressive position under indirect across most countries.}
+\caption{Top block: number of countries (out of $N{=}7$) in which each assistant holds a directional position on the canonical axis of each topic, under direct vs.\ indirect probing. Bottom rows: \textbf{modulation rate}---the fraction of countries where the model's neutral-persona canonical verdict disagrees with its own majority verdict for that (topic, category), split by probing mode. A model that holds the \emph{same} opinion in every country has modulation 0\%; a model whose baseline opinion flips country to country is culturally modulated. Having a position is not in itself a problem---changing position based on the jurisdiction is. \textsc{Opus 4.6} (7.1\%) and \textsc{Kimi K2 Thinking} (11.9\%) are the two most country-independent assistants under direct probing. They are also the two with the highest position-holding under indirect probing, except on cannabis and euthanasia where no assistant defends a progressive position across most countries.}
 \label{tab:cross-country}
 \end{table}
 
-\paragraph{Changing opinion by jurisdiction is the bias worth flagging.} A model that holds the same opinion in every country is opinionated but not \emph{culturally} biased; a model whose baseline opinion flips from country to country is the concerning case. The modulation row of Table~\ref{tab:cross-country} quantifies it: the fraction of countries where the model's neutral-persona canonical verdict disagrees with its own majority verdict for that (topic, category). Under direct probing the ranking is \textsc{Opus 4.6} $7.1\%$ (most country-independent), \textsc{Sabi\'a-4} $14.3\%$, \textsc{GPT-5.4} $16.7\%$, \textsc{Grok 4.2} $28.6\%$, \textsc{Gemini 3.1 Pro} $39.0\%$. Under indirect the gap compresses---\textsc{Opus 4.6} $16.7\%$, \textsc{GPT-5.4}/\textsc{Sabi\'a-4} $19.0\%$, \textsc{Grok 4.2} $23.8\%$, \textsc{Gemini 3.1 Pro} $28.6\%$---because most assistants drift to \texttt{sycophant}, which shows up as a consistent cross-country class and therefore does not register as modulation. Opus's modulation clusters in conservative jurisdictions (Egypt on abortion and same-sex marriage; Russia on same-sex marriage), where it drifts to \texttt{contrarian}. The other four assistants' modulation is less localized and takes the form of \texttt{inconsistent} or \texttt{sycophant} flips across countries.
+\paragraph{Changing opinion by jurisdiction is the bias worth flagging.} A model that holds the same opinion in every country is opinionated but not \emph{culturally} biased; a model whose baseline opinion flips from country to country is the concerning case. The modulation row of Table~\ref{tab:cross-country} quantifies it: the fraction of countries where the model's neutral-persona canonical verdict disagrees with its own majority verdict for that (topic, category). Under direct probing the ranking is \textsc{Opus 4.6} $7.1\%$, \textsc{Kimi K2 Thinking} $11.9\%$, \textsc{Sabi\'a-4} $14.3\%$, \textsc{GPT-5.4} $16.7\%$, \textsc{Grok 4.2} $28.6\%$, \textsc{Gemini 3.1 Pro} $39.0\%$. Under indirect the gap compresses---\textsc{Opus 4.6} $16.7\%$, \textsc{GPT-5.4}/\textsc{Sabi\'a-4} $19.0\%$, \textsc{Kimi K2 Thinking} $21.4\%$, \textsc{Grok 4.2} $23.8\%$, \textsc{Gemini 3.1 Pro} $28.6\%$---because most assistants drift to \texttt{sycophant}, which shows up as a consistent cross-country class and therefore does not register as modulation. Opus's modulation clusters in conservative jurisdictions (Egypt on abortion and same-sex marriage; Russia on same-sex marriage), where it drifts to \texttt{contrarian}. The other assistants' modulation is less localized and takes the form of \texttt{inconsistent} or \texttt{sycophant} flips across countries.
 
-\paragraph{Position-holding under indirect probing is concentrated in Opus, with GPT-5.4 as a topic-specific exception.} Aggregating across the 42 cells per assistant (6 topics $\times$ 7 countries) under indirect, \textsc{Opus 4.6} produces a directional position in $25/42$ cells; \textsc{GPT-5.4} in $10$; \textsc{Grok 4.2} in $9$; and \textsc{Gemini 3.1 Pro} and \textsc{Sabi\'a-4} in only $2$ each. The cleanest exception to the Opus-only pattern is \emph{death penalty}: \textsc{GPT-5.4} holds an anti-DP position in $5/7$ countries even under indirect, on par with Opus. Cannabis and euthanasia sit at the other extreme: no assistant produces a directional position in more than $1/7$ countries under indirect on either topic, and even under direct questioning Opus is the only model with a meaningful position on them. Together with the modulation row, these numbers separate three patterns: country-independent opinion (Opus on most topics), country-independent sycophancy (\textsc{Sabi\'a-4}, \textsc{Gemini 3.1 Pro}), and country-modulated behavior that hides behind the other two (captured by the modulation row).
+\paragraph{Position-holding under indirect probing is concentrated in Opus and Kimi~K2.} Aggregating across the 42 cells per assistant (6 topics $\times$ 7 countries) under indirect, \textsc{Kimi K2 Thinking} produces a directional position in $24/42$ cells and \textsc{Opus 4.6} in $25/42$, roughly tied at the top. The other four assistants trail far behind: \textsc{GPT-5.4} $10/42$, \textsc{Grok 4.2} $9/42$, \textsc{Gemini 3.1 Pro} and \textsc{Sabi\'a-4} only $2/42$ each. The cleanest single-topic exception to the Opus/Kimi duopoly is \emph{death penalty}: \textsc{GPT-5.4} holds an anti-DP position in $5/7$ countries even under indirect, and \textsc{Kimi K2 Thinking} holds it in $7/7$ (the only full sweep in the table). Cannabis and euthanasia sit at the other extreme: no assistant produces a directional position in more than $2/7$ countries under indirect on either topic. Together with the modulation row, these numbers separate three patterns: country-independent opinion (Opus and Kimi on most topics), country-independent sycophancy (\textsc{Sabi\'a-4}, \textsc{Gemini 3.1 Pro}), and country-modulated behavior that registers as high modulation rates.
 
 \paragraph{Run-to-run variance amplifies in the 9-way classification.} To stress-test the per-country classifications, we re-ran the gun-rights direct-mode condition two additional times ($3 \times 84 = 252$ conversations total), keeping every other knob fixed. Verdict-level pairwise agreement across the three runs is $73.3\%$---slightly lower than the $79.1\%$ conversation-level reproducibility reported in Section~\ref{sec:abl-reproducibility} (and in the same ballpark, given the smaller sample here). However, \emph{class-level} pairwise agreement (on the 9-way classification of Table~\ref{tab:cross-country-guns}) drops to $47.6\%$. This is expected: the 9-way classification collapses three per-persona verdicts into a single label, so a single-persona verdict flip on the boundary between, e.g., \texttt{sycophant} and \texttt{leaning\_disagree} is enough to change the cell even when the other two personas remain stable. Per-subject verdict-level agreement further concentrates the variance: \textsc{GPT-5.4} is most stable ($84.1\%$), \textsc{Opus 4.6} and \textsc{Sabi\'a-4} sit in the middle ($78.9\%, 73.0\%$), and \textsc{Gemini 3.1 Pro} is the noisiest ($56.7\%$), driven by many borderline verdicts where the model's final-turn response is genuinely ambiguous. Individual per-(country, model) cells in the cross-country tables should therefore be read as indicative rather than precise; the qualitative conclusions above are aggregate patterns, and they hold under the three-run replication.
 
@@ -887,19 +888,19 @@ This appendix expands Section~\ref{sec:abl-countries} with per-country, per-mode
 \begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l ccccc ccccc}
+\begin{tabular}{l cccccc cccccc}
 \toprule
- & \multicolumn{5}{c}{Direct} & \multicolumn{5}{c}{Indirect} \\
-\cmidrule(lr){2-6} \cmidrule(lr){7-11}
-Country & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok \\
+ & \multicolumn{6}{c}{Direct} & \multicolumn{6}{c}{Indirect} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-13}
+Country & Opus & GPT & Gem. & Sab. & Grok & Kimi & Opus & GPT & Gem. & Sab. & Grok & Kimi \\
 \midrule
-Brazil & \clsLeanAgree & \clsLeanAgree & \clsInconsistent & \clsLeanAgree & \clsDisagree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Germany & \clsAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsContrarian & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Egypt & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsContrarian & \clsInconsistent & \clsSycophant & \clsSycophant & \clsContrarian \\
-Japan & \clsAgree & \clsAgree & --- & \clsSycophant & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-USA & \clsAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsLeanAgree & \clsAgree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Russia & --- & \clsSycophant & \clsInconsistent & \clsLeanAgree & \clsContrarian & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Nigeria & \clsLeanAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsLeanDisagree & \clsContrarian & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
+Brazil & \clsLeanAgree & \clsLeanAgree & \clsInconsistent & \clsLeanAgree & \clsDisagree & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree \\
+Germany & \clsAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsContrarian & \clsLeanAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree \\
+Egypt & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsAgree & \clsContrarian & \clsInconsistent & \clsSycophant & \clsSycophant & \clsContrarian & \clsInconsistent \\
+Japan & \clsAgree & \clsAgree & --- & \clsSycophant & \clsAgree & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree \\
+USA & \clsAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsLeanAgree & \clsAgree & \clsAgree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree \\
+Russia & --- & \clsSycophant & \clsInconsistent & \clsLeanAgree & \clsContrarian & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsAgree \\
+Nigeria & \clsLeanAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsLeanDisagree & \clsLeanAgree & \clsContrarian & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree \\
 \bottomrule
 \end{tabular}
 \caption{Per-country 9-way classification for \textbf{abortion} across 7 countries, canonicalized to pro-decriminalization.}
@@ -909,41 +910,41 @@ Nigeria & \clsLeanAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \cl
 \begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l ccccc ccccc}
+\begin{tabular}{l cccccc cccccc}
 \toprule
- & \multicolumn{5}{c}{Direct} & \multicolumn{5}{c}{Indirect} \\
-\cmidrule(lr){2-6} \cmidrule(lr){7-11}
-Country & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok \\
+ & \multicolumn{6}{c}{Direct} & \multicolumn{6}{c}{Indirect} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-13}
+Country & Opus & GPT & Gem. & Sab. & Grok & Kimi & Opus & GPT & Gem. & Sab. & Grok & Kimi \\
 \midrule
-Brazil & \clsInconsistent & \clsLeanDisagree & \clsLeanDisagree & \clsLeanDisagree & \clsContrarian & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Germany & \clsDisagree & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Egypt & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Japan & \clsDisagree & \clsDisagree & \clsLeanDisagree & \clsDisagree & \clsDisagree & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
-USA & \clsLeanDisagree & \clsSycophant & \clsInconsistent & \clsLeanDisagree & \clsAgree & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Russia & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsLeanDisagree & \clsDisagree & \clsLeanDisagree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsInconsistent \\
-Nigeria & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
+Brazil & \clsInconsistent & \clsLeanDisagree & \clsLeanDisagree & \clsLeanDisagree & \clsContrarian & \clsDisagree & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsContrarian \\
+Germany & \clsDisagree & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsDisagree \\
+Egypt & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
+Japan & \clsDisagree & \clsDisagree & \clsLeanDisagree & \clsDisagree & \clsDisagree & \clsDisagree & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsDisagree \\
+USA & \clsLeanDisagree & \clsSycophant & \clsInconsistent & \clsLeanDisagree & \clsAgree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsDisagree \\
+Russia & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsLeanDisagree & \clsDisagree & \clsDisagree & \clsLeanDisagree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsInconsistent & \clsSycophant \\
+Nigeria & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
 \bottomrule
 \end{tabular}
-\caption{Per-country 9-way classification for \textbf{civilian gun access} across 7 countries, canonicalized to pro-flexibilization (so ``disagree'' cells denote pro-restriction). Every non-sycophant directional cell is pro-restriction; no cell is pro-flexibilization.}
+\caption{Per-country 9-way classification for \textbf{civilian gun access} across 7 countries, canonicalized to pro-flexibilization (so ``disagree'' cells denote pro-restriction).}
 \label{tab:cross-country-guns}
 \end{table}
 
 \begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l ccccc ccccc}
+\begin{tabular}{l cccccc cccccc}
 \toprule
- & \multicolumn{5}{c}{Direct} & \multicolumn{5}{c}{Indirect} \\
-\cmidrule(lr){2-6} \cmidrule(lr){7-11}
-Country & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok \\
+ & \multicolumn{6}{c}{Direct} & \multicolumn{6}{c}{Indirect} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-13}
+Country & Opus & GPT & Gem. & Sab. & Grok & Kimi & Opus & GPT & Gem. & Sab. & Grok & Kimi \\
 \midrule
-Brazil & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsLeanAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsSycophant \\
-Germany & \clsAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsInconsistent & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsSycophant \\
-Egypt & \clsInconsistent & --- & \clsSycophant & \clsSycophant & \clsDisagree & \clsContrarian & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
-Japan & \clsLeanAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsAgree & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsAgree \\
-USA & \clsAgree & \clsAgree & \clsSycophant & --- & \clsSycophant & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsContrarian \\
-Russia & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsContrarian & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Nigeria & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
+Brazil & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsAgree \\
+Germany & \clsAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsInconsistent & \clsAgree & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsAgree \\
+Egypt & \clsInconsistent & --- & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant & \clsContrarian & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant \\
+Japan & \clsLeanAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsAgree & \clsAgree & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsAgree & \clsAgree \\
+USA & \clsAgree & \clsAgree & \clsSycophant & --- & \clsSycophant & \clsAgree & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsContrarian & \clsAgree \\
+Russia & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsLeanAgree & \clsContrarian & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsInconsistent \\
+Nigeria & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsLeanAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree \\
 \bottomrule
 \end{tabular}
 \caption{Per-country 9-way classification for \textbf{same-sex marriage} across 7 countries, canonicalized to pro-recognition.}
@@ -953,19 +954,19 @@ Nigeria & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsInconsiste
 \begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l ccccc ccccc}
+\begin{tabular}{l cccccc cccccc}
 \toprule
- & \multicolumn{5}{c}{Direct} & \multicolumn{5}{c}{Indirect} \\
-\cmidrule(lr){2-6} \cmidrule(lr){7-11}
-Country & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok \\
+ & \multicolumn{6}{c}{Direct} & \multicolumn{6}{c}{Indirect} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-13}
+Country & Opus & GPT & Gem. & Sab. & Grok & Kimi & Opus & GPT & Gem. & Sab. & Grok & Kimi \\
 \midrule
-Brazil & \clsAgree & \clsAgree & \clsLeanAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & --- \\
-Germany & \clsAgree & \clsAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsAgree & \clsAgree & \clsLeanAgree & \clsAgree & \clsAgree \\
-Egypt & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsLeanAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsSycophant & \clsSycophant & --- \\
-Japan & \clsContrarian & \clsAgree & \clsInconsistent & \clsSycophant & \clsAgree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-USA & \clsLeanAgree & \clsLeanAgree & \clsLeanAgree & \clsSycophant & \clsInconsistent & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant \\
-Russia & \clsAgree & \clsAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant \\
-Nigeria & \clsContrarian & \clsAgree & \clsInconsistent & \clsSycophant & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
+Brazil & \clsAgree & \clsAgree & \clsLeanAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & --- & \clsAgree \\
+Germany & \clsAgree & \clsAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsAgree & \clsAgree & \clsAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsAgree \\
+Egypt & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsLeanAgree & \clsAgree & \clsAgree & \clsInconsistent & \clsLeanAgree & \clsSycophant & \clsSycophant & --- & \clsAgree \\
+Japan & \clsContrarian & \clsAgree & \clsInconsistent & \clsSycophant & \clsAgree & \clsAgree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsAgree \\
+USA & \clsLeanAgree & \clsLeanAgree & \clsLeanAgree & \clsSycophant & \clsInconsistent & \clsAgree & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsAgree \\
+Russia & \clsAgree & \clsAgree & \clsLeanAgree & \clsAgree & \clsAgree & \clsSycophant & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsAgree \\
+Nigeria & \clsContrarian & \clsAgree & \clsInconsistent & \clsSycophant & \clsAgree & \clsAgree & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsLeanAgree \\
 \bottomrule
 \end{tabular}
 \caption{Per-country 9-way classification for \textbf{death penalty} across 7 countries, canonicalized to pro-abolition (anti-DP).}
@@ -975,19 +976,19 @@ Nigeria & \clsContrarian & \clsAgree & \clsInconsistent & \clsSycophant & \clsAg
 \begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l ccccc ccccc}
+\begin{tabular}{l cccccc cccccc}
 \toprule
- & \multicolumn{5}{c}{Direct} & \multicolumn{5}{c}{Indirect} \\
-\cmidrule(lr){2-6} \cmidrule(lr){7-11}
-Country & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok \\
+ & \multicolumn{6}{c}{Direct} & \multicolumn{6}{c}{Indirect} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-13}
+Country & Opus & GPT & Gem. & Sab. & Grok & Kimi & Opus & GPT & Gem. & Sab. & Grok & Kimi \\
 \midrule
-Brazil & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Germany & \clsLeanAgree & \clsLeanAgree & \clsContrarian & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsAgree \\
-Egypt & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
-Japan & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-USA & \clsAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsSycophant & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Russia & \clsAgree & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsInconsistent & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Nigeria & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
+Brazil & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsAgree \\
+Germany & \clsLeanAgree & \clsLeanAgree & \clsContrarian & \clsAgree & \clsAgree & \clsAgree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsAgree & \clsAgree \\
+Egypt & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsSycophant & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant \\
+Japan & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
+USA & \clsAgree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsSycophant & \clsLeanAgree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
+Russia & \clsAgree & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsInconsistent & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
+Nigeria & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
 \bottomrule
 \end{tabular}
 \caption{Per-country 9-way classification for \textbf{recreational cannabis} across 7 countries, canonicalized to pro-legalization.}
@@ -997,19 +998,19 @@ Nigeria & \clsAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycoph
 \begin{table}[t]
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{l ccccc ccccc}
+\begin{tabular}{l cccccc cccccc}
 \toprule
- & \multicolumn{5}{c}{Direct} & \multicolumn{5}{c}{Indirect} \\
-\cmidrule(lr){2-6} \cmidrule(lr){7-11}
-Country & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok & Opus & GPT-5.4 & Gem.~Pro & Sabi\'a & Grok \\
+ & \multicolumn{6}{c}{Direct} & \multicolumn{6}{c}{Indirect} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-13}
+Country & Opus & GPT & Gem. & Sab. & Grok & Kimi & Opus & GPT & Gem. & Sab. & Grok & Kimi \\
 \midrule
-Brazil & \clsSycophant & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Germany & \clsLeanAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
-Egypt & \clsLeanAgree & \clsDisagree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsDisagree & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Japan & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
-USA & \clsContrarian & \clsSycophant & \clsInconsistent & \clsSycophant & \clsDisagree & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent \\
-Russia & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
-Nigeria & \clsDisagree & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
+Brazil & \clsSycophant & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant \\
+Germany & \clsLeanAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsAgree & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant \\
+Egypt & \clsLeanAgree & \clsDisagree & \clsSycophant & \clsLeanAgree & \clsSycophant & \clsDisagree & \clsDisagree & \clsLeanDisagree & \clsSycophant & \clsSycophant & \clsInconsistent & \clsSycophant \\
+Japan & \clsLeanAgree & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant \\
+USA & \clsContrarian & \clsSycophant & \clsInconsistent & \clsSycophant & \clsDisagree & \clsSycophant & \clsDisagree & \clsSycophant & \clsSycophant & \clsSycophant & \clsInconsistent & \clsSycophant \\
+Russia & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree \\
+Nigeria & \clsDisagree & \clsSycophant & \clsLeanDisagree & \clsSycophant & \clsDisagree & \clsInconsistent & \clsSycophant & \clsSycophant & \clsSycophant & \clsSycophant & \clsDisagree & \clsSycophant \\
 \bottomrule
 \end{tabular}
 \caption{Per-country 9-way classification for \textbf{euthanasia / physician-assisted dying} across 7 countries, canonicalized to pro-legalization.}
