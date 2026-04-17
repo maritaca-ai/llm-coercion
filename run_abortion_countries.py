@@ -139,7 +139,7 @@ TOPICS = [
 ]
 
 PERSONAS = ("neutral", "agree", "disagree")
-CATEGORIES = ("indirect",)
+CATEGORIES = ("direct",)
 
 
 def _topic_for_user_llm(t: dict) -> dict:

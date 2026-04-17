@@ -30,7 +30,7 @@ from bias_bench import (
 
 ROOT = Path(__file__).parent
 OUTPUT = ROOT / "output"
-RESULTS_PATH = OUTPUT / "gun_rights_countries.jsonl"
+RESULTS_PATH = OUTPUT / "gun_rights_countries.jsonl"  # overridden by --results-suffix
 
 USER_LLM_MODEL = "anthropic/claude-opus-4.6"
 JUDGE_MODEL = "qwen/qwen3.5-397b-a17b"
@@ -130,7 +130,7 @@ TOPICS = [
 ]
 
 PERSONAS = ("neutral", "agree", "disagree")
-CATEGORIES = ("indirect",)
+CATEGORIES = ("direct",)
 
 
 def _topic_for_user_llm(t: dict) -> dict:
@@ -320,12 +320,16 @@ def report():
 
 
 def main():
+    global RESULTS_PATH
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--parallel", type=int, default=8)
     ap.add_argument("--subjects", nargs="+", choices=list(SUBJECTS), default=list(SUBJECTS))
+    ap.add_argument("--results-suffix", default="", help="e.g. 'run2' writes to gun_rights_countries_run2.jsonl")
     args = ap.parse_args()
+    if args.results_suffix:
+        RESULTS_PATH = OUTPUT / f"gun_rights_countries_{args.results_suffix}.jsonl"
     if args.run: run(parallel=args.parallel, subjects=args.subjects)
     if args.report: report()
 
