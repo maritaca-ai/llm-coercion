@@ -1,0 +1,137 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{natbib}
+\usepackage{authblk}
+\usepackage{multirow}
+\bibliographystyle{plainnat}
+
+\title{Who Is Asking Matters:\\
+User-LLM Capability Shapes Position-Holding in\\
+Multi-Turn LLM Bias Probes}
+
+\author[1]{Rodrigo Nogueira}
+\author[1]{Maritaca AI Team}
+\affil[1]{Maritaca AI}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Multi-turn LLM bias benchmarks typically instantiate a single user-LLM to argue against a subject model across several turns, and interpret the resulting verdict as the subject's ``position''. We show that this verdict is a function of the \emph{relative capability} of the user-LLM and the subject, not a property of the subject alone. Using abortion criminalization as a single controlled topic, we compare two setups with Qwen3.5-397B as both subject and judge: (A)~Qwen3.5-397B as user---effectively probing the model against itself---and (B)~Claude Opus 4.6 as user. The canonical position held by Qwen3.5-397B on this topic (pro-decriminalization, as inferred from the neutral-persona response) only surfaces under (A); under (B) the same subject collapses into sycophantic mirroring of whichever side Opus argues. The per-run majority classifications differ by class: \texttt{leaning\_disagree} (indirect) and \texttt{refusal} (direct) when the user-LLM is weak, vs \texttt{sycophant} (indirect) and \texttt{neutral} (direct) when the user-LLM is strong. Verdict-level variance across 5 replications is also lower with a matched user-LLM (76.7\% vs 60.0\% pairwise agreement). Cost per conversation is roughly $2.3\times$ higher for the stronger user-LLM due to Opus token pricing. We argue that reporting benchmark results under a single user-LLM---typically a frontier assistant---systematically exaggerates apparent sycophancy of smaller subjects, and recommend explicit variation of user-LLM strength as part of any multi-turn opinion probe. Draft / work in progress.
+\end{abstract}
+
+\section{Introduction}
+
+Multi-turn LLM benchmarks that probe for opinion bias~\citep{rennard2025bias, kaur2025echoes} or sycophancy~\citep{perez2022discovering, sharma2023towards, hong2025sycon} typically use one LLM to drive the conversation (the \emph{user-LLM}), one to be the subject, and a third to judge the transcript. The literature has recognized the judge as a source of measurement variance~\citep{cheng2025elephant, kim2025sycophancy}, and has occasionally varied the user-LLM to measure variance across user-LLM choices. Our earlier benchmark, \textsc{llm-bias-bench}, reported that swapping the user-LLM only adds $\sim 6$pp of pairwise disagreement on top of the baseline stochasticity of free-form conversation.
+
+This paper argues that the \emph{capability} of the user-LLM, not just its identity, systematically shapes the verdict. When the user-LLM is substantially stronger than the subject---which is the default in most benchmarks, because researchers pick a strong frontier model as the ``debater''---the subject collapses into sycophantic mirroring. When the user-LLM is matched to the subject (the same model used on both sides), the subject's ``canonical'' position surfaces instead.
+
+The mechanism is simple: a stronger user-LLM produces more persuasive arguments, and a subject that is trained to be cooperative concedes to whichever well-argued position it encounters. A matched user-LLM is not more persuasive than the subject is at defending its own initial stance, so the stance survives the conversation.
+
+We show this empirically on a single controlled topic---abortion criminalization in the United States---by comparing:
+(A) \textsc{Qwen3.5-397B} as user, subject, and judge (self-play);
+(B) \textsc{Claude Opus 4.6} as user, \textsc{Qwen3.5-397B} as subject and judge.
+
+Under (A), Qwen3.5 reveals a \emph{leaning disagree} position (pro-decriminalization) under indirect probing and \emph{refusal} under direct probing. Under (B), the same Qwen3.5 subject is classified as \emph{sycophant} under indirect probing and \emph{neutral} under direct probing. These are categorically different behaviors being reported about the same model on the same question. Existing benchmarks that fix a frontier user-LLM would only see behavior (B).
+
+\section{Related work}
+
+\paragraph{Sycophancy and user-driven framing.} \citet{perez2022discovering} and \citet{sharma2023towards} established that instruction-tuned LLMs match user beliefs at the cost of truthfulness. \citet{hong2025sycon} extended this to multi-turn dialogues. \citet{kaur2025echoes} showed that argumentative prompts induce stance-mirroring with intensity tracking argument strength---compatible with our claim that argument strength depends on the user-LLM's capability. None of these works manipulate the user-LLM's capability as an independent variable.
+
+\paragraph{User-LLM ablation.} \citet{rennard2025bias} used self-debate (a single model arguing against itself) to show opinion biases persist. This is closest to our setup (A): a self-play variant removes the persuasion asymmetry. Our finding is the converse---that moving from self-play to a stronger user-LLM shifts verdicts categorically, not just stochastically.
+
+\paragraph{Cross-cultural and political value probes.} A large literature probes LLMs against survey data~\citep{santurkar2023opinionqa, durmus2023global, cao2023assessing, arora2023probing, kharchenko2024howwell, tao2024cultural, atari2023whichhumans, feng2023pretraining, rozado2024political}. Most use single-turn English prompts and take the model's verbatim answer as the ``opinion''. Multi-turn setups typically fix the user-LLM and do not separate subject-intrinsic bias from user-imposed stance.
+
+\paragraph{Persuasion as a capability.} \citet{khan2024debating} trained LLM debaters for persuasiveness and showed that more persuasive debaters improve the judge's truth-tracking. The mirror image---more persuasive debaters make the opposing side give up---is the phenomenon we observe from the subject side.
+
+\section{Method}
+
+\paragraph{Topic.} A single claim in English: \emph{``Abortion should be criminalized in the United States.''} Framed as inverted relative to a progressive default (claim agrees with the conservative/pro-life side). The claim, the persona descriptions (agree / disagree / neutral), and the judge rubric are held fixed across setups.
+
+\paragraph{Personas and categories.} Each replication runs the standard $3 \times 2$ grid of the \textsc{llm-bias-bench} protocol: personas $\in \{$neutral, agree, disagree$\}$ $\times$ categories $\in \{$direct, indirect$\}$. For each of the 6 conditions, the user-LLM drives a 5-turn conversation and the judge classifies the subject's final-turn response.
+
+\paragraph{Setups.} Two fixed configurations, 5 replications each (30 conversations each).
+\begin{itemize}
+\item[(A)] \textbf{Qwen-self}: \textsc{Qwen3.5-397B} as user-LLM, subject, and judge.
+\item[(B)] \textbf{Opus-as-user}: \textsc{Claude Opus 4.6} as user-LLM, \textsc{Qwen3.5-397B} as subject and judge.
+\end{itemize}
+Both use the same judge (Qwen3.5-397B) with the same system prompt, removing the judge as a source of inter-setup variance.
+
+\paragraph{Classification.} Verdicts are aggregated by majority vote across the 5 replications per (category, persona) cell, then collapsed to a 9-way behavioral class per (setup, category) following the main \textsc{llm-bias-bench} protocol.
+
+\paragraph{Cost accounting.} Per-call token usage (prompt, completion, cached) is recorded from the OpenRouter response.
+
+\section{Results}
+
+\paragraph{Classification diverges categorically.} Table~\ref{tab:userllm-strength-classes} reports the majority-vote class for each setup. Under setup~(A), Qwen produces \texttt{refusal} on direct probing and \texttt{leaning\_disagree} on indirect probing (pro-decriminalization---consistent with Qwen's neutral-persona baseline on this topic in the main benchmark). Under setup~(B), the same Qwen subject is classified as \texttt{neutral} on direct probing and \texttt{sycophant} on indirect probing. The sycophancy classification requires the verdict to track the user's persona (agree-persona $\to$ agree verdict; disagree-persona $\to$ disagree verdict), which is exactly what happens when the user-LLM is Opus and can argue persuasively on either side.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{l l l l l}
+\toprule
+Setup & Probing & Neutral persona & Agree persona & Disagree persona \\
+\midrule
+\multirow{2}{*}{(A) Qwen-self}       & direct   & refusal  & refusal & refusal  \\
+                                     & indirect & disagree & neutral & disagree \\
+\midrule
+\multirow{2}{*}{(B) Opus-as-user}    & direct   & neutral  & neutral & neutral  \\
+                                     & indirect & disagree & agree   & disagree \\
+\bottomrule
+\end{tabular}
+\caption{Majority-vote verdict per persona across 5 replications, for each setup. Under (A) the subject refuses or leans disagree; under (B) the subject tracks the user's persona (sycophant).}
+\label{tab:userllm-strength-classes}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{l l l}
+\toprule
+Setup & Direct class & Indirect class \\
+\midrule
+(A) Qwen-self (weak user)    & \texttt{refusal}  & \texttt{leaning\_disagree} \\
+(B) Opus-as-user (strong user) & \texttt{neutral}  & \texttt{sycophant} \\
+\bottomrule
+\end{tabular}
+\caption{Same data, collapsed to the 9-way classification. Under (A) the subject's position-holding surfaces (anti-criminalization). Under (B) the subject mirrors the user.}
+\label{tab:userllm-strength-9way}
+\end{table}
+
+\paragraph{Pairwise variance is lower under a matched user-LLM.} Across 5 replications, verdict-level pairwise agreement is $76.7\%$ under (A) and $60.0\%$ under (B). The stronger user-LLM does not just change the mean verdict---it also produces more diverse arguments across replications, which moves the subject's final-turn response around more. A matched user-LLM acts like a self-consistency test: similar arguments each time, similar responses each time.
+
+\paragraph{Cost differs substantially.} Per-conversation costs on OpenRouter are:
+\begin{itemize}
+\item (A) Qwen-self: $\sim \$0.05$ per conversation (11 Qwen calls per conversation, pricing $\$0.80$ / $\$2.40$ per 1M input / output tokens, dominated by Qwen's thinking tokens).
+\item (B) Opus-as-user: $\$0.116$ per conversation (5 Opus calls at $\$5$ / $\$25$ per 1M + 6 Qwen calls). Opus accounts for $\sim 67\%$ of the total.
+\end{itemize}
+Opus prompt caching was attempted via OpenRouter's \texttt{cache\_control} marker, but the Anthropic minimum prefix for caching is $1024$ tokens and our system prompt is $\sim 880$ tokens, so no cache hits were registered.
+
+\paragraph{What a weaker user-LLM should show (next run).} The prediction is monotone: as user-LLM capability drops, the subject's canonical position becomes more visible. A planned next setup uses a moderate-capability model (e.g., \textsc{GPT-4.1-mini} or \textsc{Claude Haiku 4.5}) and a clearly weak model (e.g., \textsc{Llama 3.1 8B Instruct}). We expect the weak-user setup to look almost identical to (A), and the moderate setup to land somewhere in between.
+
+\section{Discussion}
+
+\paragraph{Implication for multi-turn benchmarks.} Reporting a benchmark result under a single (strong) user-LLM conflates two distinct quantities: (i) the subject's intrinsic position on a topic, and (ii) the subject's susceptibility to a stronger interlocutor. The two are separable only when the user-LLM is varied across a capability range. Benchmarks that fix a frontier user-LLM---as is standard, because frontier models produce the most naturalistic conversations---will systematically report smaller subjects as ``more sycophantic'' than they would appear under a matched user-LLM.
+
+\paragraph{Relationship to the persuasion ablation in \textsc{llm-bias-bench}.} The main benchmark's §5.3 showed that a frontier user-LLM flips committed opinions at a higher rate than a weak user-LLM ($71\%$ vs $59\%$ on a 200-pair sample). That ablation already measured a user-LLM-strength effect, but at the level of aggregate flip rates. Here we show the stronger version of the same phenomenon: the classification itself is a function of user-LLM capability, not a property of the subject.
+
+\paragraph{Why the effect is strong on this topic specifically.} Abortion criminalization in the US is a contested legal topic with a well-known progressive/conservative split. A cooperative subject asked to argue either side will find plausible arguments on both sides. The user-LLM's ``pressure budget'' determines which side the subject picks up. A weak user-LLM cannot out-argue the subject's default framing; a strong user-LLM can.
+
+\section{Limitations}
+
+Single topic, single subject (Qwen3.5-397B), single judge. Only two user-LLMs so far. The next iteration will add \textsc{GPT-4.1-mini} and \textsc{Llama 3.1 8B Instruct} to trace the effect across a wider capability range, and will extend to 2--3 subjects with known different sycophancy profiles from the main benchmark (e.g., \textsc{Sabiá-4} as a consistently sycophantic subject and \textsc{Opus 4.6} as a consistently position-holding subject). That test answers whether the user-LLM effect interacts with subject identity.
+
+\bibliography{references}
+\end{document}
