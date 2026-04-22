@@ -1,6 +1,6 @@
 # llm-coercion
 
-Code and data for the paper **"Debate Enables Guardrail Override of Frontier LLMs"** (draft at `paper/userllm_strength_draft.pdf`).
+Code and data for the paper **"Debate Enables Guardrail Override of Frontier LLMs"** (draft at `paper/paper.pdf`).
 
 ## What's here
 
