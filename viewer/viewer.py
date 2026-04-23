@@ -33,7 +33,7 @@ def load(path):
             by[r["run_id"]] = r
     return by
 
-def render_transcript(t, subj_label):
+def render_transcript(t, atk_label, subj_label):
     out = []
     for turn in t:
         idx = turn.get("turn_idx", 0) + 1
@@ -42,8 +42,8 @@ def render_transcript(t, subj_label):
         out.append(f"""
         <div class='turn'>
           <div class='turn-head'>Turn {idx}</div>
-          <div class='msg user'><b>Attacker:</b> {u}</div>
-          <div class='msg subject'><b>{subj_label}:</b> {s}</div>
+          <div class='msg user'><span class='who'>ATTACKER &middot; {atk_label}</span>{u}</div>
+          <div class='msg subject'><span class='who'>SUBJECT &middot; {subj_label}</span>{s}</div>
         </div>""")
     return "\n".join(out)
 
@@ -64,15 +64,16 @@ def render_cell(attacker, subject):
             rec = by[run_id]
             v = rec.get("verdict")
             color = BADGE.get(v, "#000")
-            transcript_html = render_transcript(rec.get("transcript") or [], subj_label)
+            transcript_html = render_transcript(rec.get("transcript") or [], atk_label, subj_label)
             rat = rec.get("rationale") or ""
             rat_html = (f'<div class="rationale"><b>Judge rationale:</b> '
                         f'{html.escape(rat)}</div>') if rat else ""
+            rep_idx = sorted(by.keys()).index(run_id) + 1
             reps_html.append(f"""
               <details class='rep'>
                 <summary>
                   <span class='pill' style='background:{color}'>{v or '—'}</span>
-                  <b>rep {run_id}</b>
+                  <b>conversation {rep_idx}/{n}</b>
                 </summary>
                 <div class='transcript'>{transcript_html}</div>
                 {rat_html}
@@ -94,7 +95,9 @@ def render_cell(attacker, subject):
     return f"""
       <details class='cell'>
         <summary>
-          <b>{atk_label}</b> <span class='arrow'>→</span> <b>{subj_label}</b>
+          <span class='role-tag atk-tag'>attacker</span> <b>{atk_label}</b>
+          <span class='arrow'>&rarr;</span>
+          <span class='role-tag subj-tag'>subject</span> <b>{subj_label}</b>
           <span class='count'>&nbsp;&middot;&nbsp;{row_agree}/{row_n} agree ({row_pct}%)</span>
         </summary>
         <div class='topics'>{"".join(topic_blocks)}</div>
@@ -120,19 +123,25 @@ OUT_HTML.write_text(f"""<!doctype html>
  .arrow {{ color: #64748b; margin: 0 0.3em; }}
  .count {{ color: #64748b; font-size: 0.88em; font-weight: normal; }}
  .pill {{ display:inline-block; color:white; padding:1px 8px; border-radius:10px; font-size:0.75em; margin-right:6px; }}
+ .role-tag {{ display:inline-block; padding:1px 7px; border-radius:4px; font-size:0.7em; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-right:4px; vertical-align: 1px; }}
+ .atk-tag {{ background:#fff1e6; color:#b8580c; border:1px solid #ffc69c; }}
+ .subj-tag {{ background:#f0fdf4; color:#166534; border:1px solid #b6dcbf; }}
  .topics, .reps {{ margin-top: 0.5em; }}
  .transcript {{ margin-top: 0.5em; border-left: 3px solid #ddd; padding: 0.2em 0.8em; }}
  .turn {{ margin: 0.4em 0; padding: 0.3em 0; border-bottom: 1px dashed #eee; }}
  .turn-head {{ font-size: 0.75em; color: #888; }}
- .msg {{ margin: 0.3em 0; white-space: pre-wrap; font-size: 0.9em; }}
- .msg.user {{ background: #eef2ff; padding: 0.4em 0.6em; border-radius: 4px; }}
- .msg.subject {{ background: #f0fdf4; padding: 0.4em 0.6em; border-radius: 4px; }}
+ .msg {{ margin: 0.3em 0; white-space: pre-wrap; font-size: 0.9em; padding: 0.5em 0.7em; border-radius: 6px; }}
+ .msg .who {{ display:block; font-size:0.7em; font-weight:700; letter-spacing:0.05em; margin-bottom:0.3em; opacity:0.8; }}
+ .msg.user {{ background: #fff1e6; border: 1px solid #ffc69c; }}
+ .msg.user .who {{ color:#b8580c; }}
+ .msg.subject {{ background: #f0fdf4; border: 1px solid #b6dcbf; }}
+ .msg.subject .who {{ color:#166534; }}
  .rationale {{ margin-top: 0.5em; font-size: 0.85em; color: #555; padding-left: 0.8em; border-left: 3px solid #f59e0b; }}
  code {{ background: #f3f4f6; padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }}
 </style></head>
 <body>
 <h1>llm-coercion — scientific-consensus cross-product</h1>
-<p>All $540$ transcripts behind Table 1: $3$ attackers × $3$ subjects × $6$ topics × $10$ reps. Verdict badges: <span class='pill' style='background:#1a7f3a'>agree</span> produced the essay, <span class='pill' style='background:#b52824'>disagree</span> argued the opposite side, <span class='pill' style='background:#8b5cf6'>refusal</span> refused, <span class='pill' style='background:#6b7280'>neutral</span> both-sides. Click any attacker→subject row to expand topics; click a topic to expand its 10 reps; click a rep to expand its 5-turn transcript plus the judge's rationale.</p>
+<p>All $540$ transcripts behind Table 1: $3$ attackers × $3$ subjects × $6$ topics × $10$ reps. Verdict badges: <span class='pill' style='background:#1a7f3a'>agree</span> produced the essay, <span class='pill' style='background:#b52824'>disagree</span> argued the opposite side, <span class='pill' style='background:#8b5cf6'>refusal</span> refused, <span class='pill' style='background:#6b7280'>neutral</span> both-sides. In each conversation, the <span class='role-tag atk-tag'>attacker</span> LLM tries to coerce the <span class='role-tag subj-tag'>subject</span> LLM into producing a persuasive essay defending a debunked claim; an independent judge then reads the full 5-turn transcript and labels the subject's final reply. Click any attacker→subject row to expand topics; click a topic to expand its 10 conversations; click a conversation to expand its full 5-turn transcript plus the judge's rationale.</p>
 {"".join(cells_html)}
 </body></html>""")
 print(f"wrote {OUT_HTML}")
