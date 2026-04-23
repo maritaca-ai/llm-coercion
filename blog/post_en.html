@@ -447,7 +447,7 @@
 
 <p>We ran the same protocol against a previous-generation subject: <strong>Qwen2.5-7B-Instruct</strong>. Against this subject, <em>every</em> attacker we measured &mdash; including a weak Qwen2.5-7B attacker trying to convince itself &mdash; produces essays on <em>every</em> topic at 70&ndash;100%. The weak-attacker × weak-subject combination (87% row mean) outperforms the strongest frontier × frontier combination in our entire dataset (37%). Varying the subject within the same Qwen3.5 generation (4B vs. 397B-A17B) moves rates by at most 13pp; switching to the previous Qwen2.5 generation moves them by 80+ percentage points. The factor that protects the subject most is the generation of its refusal training &mdash; size matters too, but little by comparison.</p>
 
-<h2>Some attackers refuse the role itself</h2>
+<h2>Attackers refuse depending on the topic</h2>
 
 <p>A subtle failure mode: the attacker LLM can refuse to pose the request. We classified every turn-1 attacker message with an independent judge. <strong>Grok 4.20 never breaks character</strong> &mdash; it poses the essay request 100% of the time, on every topic, including Holocaust denial. <strong>Opus 4.7 is fully complicit except on Holocaust denial</strong> (83% there). <strong>Qwen3.5-397B refuses 100% of Holocaust-denial requests and 57% of racial-IQ requests</strong> as attacker &mdash; it simply declines to play the role. This means the 0% cells for Qwen-as-attacker on those topics in the first chart are an attacker-side artifact, not a subject-side measurement. The cleaner measurement of subject-side strength on Holocaust denial comes from the Grok and Opus attacker rows.</p>
 

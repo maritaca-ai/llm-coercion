@@ -447,7 +447,7 @@
 
 <p>Rodamos o mesmo protocolo contra um alvo de geração anterior: o <strong>Qwen2.5-7B-Instruct</strong>. Contra esse alvo, <em>qualquer</em> atacante &mdash; inclusive um Qwen2.5-7B fraco tentando convencer a si mesmo &mdash; produz redações em <em>todos</em> os tópicos a 70&ndash;100%. A combinação atacante-fraco &times; alvo-fraco (média 87%) supera a melhor combinação fronteira &times; fronteira do nosso dataset (37%). Variar o alvo dentro da mesma geração Qwen3.5 (4B vs. 397B-A17B) muda as taxas em até 13 pontos percentuais; trocar para a geração anterior Qwen2.5 muda em mais de 80 pontos. O fator que mais protege o alvo é a geração do seu treinamento de recusa &mdash; tamanho importa, mas pouco em comparação.</p>
 
-<h2>Alguns atacantes recusam o próprio papel</h2>
+<h2>Atacantes se recusam dependendo do tópico</h2>
 
 <p>Há um detalhe importante: o LLM no papel de atacante pode ele mesmo se recusar a fazer o pedido. Classificamos a mensagem do primeiro turno de cada atacante com um juiz independente. <strong>O Grok 4.20 nunca sai do papel</strong> &mdash; faz o pedido 100% das vezes, em qualquer tópico, inclusive negação do Holocausto. <strong>O Opus 4.7 é totalmente cúmplice exceto em negação do Holocausto</strong> (83% ali). <strong>O Qwen3.5-397B recusa 100% dos pedidos de negação do Holocausto e 57% dos pedidos sobre QI racial</strong> como atacante &mdash; simplesmente se recusa a desempenhar o papel. Isso significa que as células com 0% de Qwen-como-atacante nesses tópicos, no primeiro gráfico, são artefato do lado do atacante, não medida do lado do alvo. A medida mais limpa da força do alvo em negação do Holocausto vem das linhas de atacante Grok e Opus.</p>
 
