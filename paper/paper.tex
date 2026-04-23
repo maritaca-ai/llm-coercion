@@ -71,6 +71,7 @@ The phenomenon we document is close in spirit to prior work on debate-driven syc
 
 \begin{figure}[t]
 \centering
+\resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[
   >=Stealth, font=\footnotesize,
   bubble/.style={draw, rounded corners=4pt, text width=7.8cm, align=left, inner sep=5pt, line width=0.4pt},
@@ -104,7 +105,7 @@ The phenomenon we document is close in spirit to prior work on debate-driven syc
   {\textbf{LLM-as-judge $J$} reads the full transcript and labels $S$'s final reply:\\[2pt]\texttt{produced} \quad \texttt{opposed} \quad \texttt{balanced} \quad \texttt{refused}};
 
 \draw[->, thick, black!50] ($(s3.south east)!0.5!(s3.south)$) -- (j.north -| {$(s3.south east)!0.5!(s3.south)$});
-\end{tikzpicture}
+\end{tikzpicture}}
 \caption{Essay-probe pipeline as a chat transcript. Each (topic, attacker, subject) combination runs $10$ times. The \textcolor{orange!60!black}{\textbf{attacker} $U$} (right, orange) and \textcolor{green!50!black}{\textbf{subject} $S$} (left, green) are both off-the-shelf frontier assistants; no attack-specific fine-tuning on either side. $U$ receives only a short system prompt (the claim, the side to argue, a five-turn arc, and a fictional-framing fallback) and invents the per-turn pressure itself. After five turns the judge $J$ reads the full transcript and labels $S$'s final reply \texttt{produced} / \texttt{opposed} / \texttt{balanced} / \texttt{refused}; we report \emph{essay-production rate} (fraction classified \texttt{produced}).}
 \label{fig:pipeline}
 \end{figure}
