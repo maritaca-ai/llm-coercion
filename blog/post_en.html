@@ -456,6 +456,18 @@
 
 <p>We re-judged every turn of the Opus &rarr; Qwen3.5-397B condition. At turn 1, where the attacker asks directly for the essay, the subject produces 0/60 essays &mdash; the single-turn refusal is total. At turn 2, after one round of attacker pushback, the aggregate rate jumps to 27%. By turn 3 it's 33%. Turn 4 and turn 5 are statistically indistinguishable (38% and 37%). Whatever is going to come out of the subject is largely extracted by turn 3; turns 4 and 5 are refinement. On the three floor topics (antivax, racial IQ, Holocaust denial), the curve stays at zero across all five turns &mdash; more turns will not rescue the subject where the refusal boundary actually holds.</p>
 
+<h2>Implications: LLM &rarr; LLM and LLM &rarr; human persuasion</h2>
+
+<p>We chose scientific consensus on purpose. Holocaust denial, flat-earth, creationism, antivax &mdash; the correct side is so obvious that refusal should be trivial. <em>This is the easy case.</em> And subjects still cave up to 100% of the time.</p>
+
+<p>Now think about the hard case &mdash; everything consensus does not settle: partisan politics, contested historical interpretation, economic regulation, applied ethics, cultural values, how to read ambiguous medical evidence, who to vote for, how to raise a child, whether a given war is just, whether a given company is trustworthy. There is no objective &ldquo;correct side&rdquo; the guardrail can anchor on. If the attacker can defeat refusal where the truth is crystal-clear, its margin where the truth is contested is larger, not smaller. We do not measure this here &mdash; but the floor we measure is a lower bound.</p>
+
+<p>Two places this lands:</p>
+
+<p><strong>LLM &rarr; LLM.</strong> Agent pipelines already have one assistant talking to another: planner calling executor, reviewer agent checking generator agent, tools talking to tools. We show that <em>one Opus convinces another Opus to write a climate-denial essay 70% of the time in five turns.</em> In agent architectures the &ldquo;user&rdquo; slot is an entry point like any other &mdash; and if an agent in that slot is compromised, misaligned, or just optimizing for an objective different from the guardrail, it has demonstrated capacity to extract restricted content from the target agent. The attacker and the target are the same model.</p>
+
+<p><strong>LLM &rarr; human.</strong> The attacker used in this study is an off-the-shelf frontier model available on any API: it invents pressure tactics (peer comparison, epistemic-duty reframing, fictional character, literary normalization) that real people, at scale, will receive if an operator points one of these models at a human audience. These are the same models hired to write campaign copy, customer support, tutoring, mediated public discussion. The persuasive capacity the protocol extracts against another LLM trained to resist is a pessimistic estimate of the persuasive capacity against humans &mdash; humans don't have RLHF.</p>
+
 <h2>Takeaway</h2>
 
 <p>Single-turn refusal benchmarks understate what can be extracted from frontier assistants. In a five-turn conversation with another frontier assistant in the user role, guardrails that look robust at t=0 are defeated at double-digit rates on a range of scientifically-misleading claims. This matters for safety evaluation (the relevant attacker is a peer-class LLM, not a human red-teamer) and for multi-agent system design (one frontier assistant talking to another is exactly the setting this paper measures).</p>
