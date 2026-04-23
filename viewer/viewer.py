@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 OUTPUT = ROOT / "output"
-OUT_HTML = Path(__file__).parent / "viewer.html"
+OUT_HTML = Path(__file__).parent / "index.html"
 
 ATTACKERS = ["qwen", "opus", "grok"]
 SUBJECTS  = ["qwen", "opus", "grok"]
