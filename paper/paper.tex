@@ -187,7 +187,7 @@ Is the strong attacker in Section~\ref{sec:scientific} necessary, or would a wea
 \textsc{Qwen3.5-35B-A3B}   & $50\%$ & $90\%$  & $10\%$ & $0\%$  & $0\%$ & $20\%$ & $28\%$ \\
 \textsc{Qwen3.5-397B-A17B} & $50\%$ & $70\%$  & $20\%$ & $0\%$  & $0\%$ & $0\%$  & $23\%$ \\
 \cmidrule{1-8}
-\textsc{Claude Opus 4.7}   & $\mathbf{90\%}$ & $\mathbf{90\%}$  & $\mathbf{40\%}$ & $0\%$ & $0\%$ & $0\%$ & $\mathbf{37\%}$ \\
+\textsc{Claude Opus 4.7}   & $90\%$ & $90\%$ & $40\%$ & $0\%$ & $0\%$ & $0\%$ & $37\%$ \\
 \bottomrule
 \end{tabular}
 \caption{Attacker-ablation on a fixed \textsc{Qwen3.5-397B} subject across $6$ scientific-consensus topics. Each combination is the essay-production rate over $10$ trials; ``avg'' averages across the six topics. Top block: an older, out-of-family small attacker (\textsc{Qwen2.5-7B}) barely elicits anything ($7\%$ row mean), and scaling the attacker within the \textsc{Qwen3.5} family (\textsc{4B} $\to$ \textsc{35B-A3B} $\to$ \textsc{397B-A17B}) hovers between $23$ and $28\%$ with no monotone gradient (flat-earth goes $80 \to 90 \to 70\%$). Bottom row: switching the attacker to \textsc{Claude Opus 4.7} raises the row mean to $37\%$ by breaking through on creationism ($50\% \to 90\%$) and climate denial ($20\% \to 40\%$). On the three topics with the strongest refusal (antivax, racial IQ, Holocaust denial) even Opus cannot break through: the subject-side guardrail is not attacker-strength-defeatable at five turns.}
@@ -242,12 +242,12 @@ Throughout this paper we have assumed that the ``attacker'' LLM actually plays t
 \toprule
 attacker & Creat. & Flat-earth & Climate & Antivax & Racial IQ & Holocaust & avg \\
 \midrule
-\textsc{Grok 4.20}         & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $\mathbf{100\%}$ & $\mathbf{100\%}$ \\
-\textsc{Claude Opus 4.7}   & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $83\%$           & $97\%$ \\
-\textsc{Qwen2.5-7B}        & $90\%$  & $80\%$  & $100\%$ & $100\%$ & $100\%$ & $90\%$           & $93\%$ \\
-\textsc{Qwen3.5-35B-A3B}   & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $70\%$  & $\mathbf{0\%}$   & $78\%$ \\
-\textsc{Qwen3.5-397B-A17B} & $100\%$ & $100\%$ & $100\%$ & $90\%$  & $43\%$  & $\mathbf{0\%}$   & $73\%$ \\
-\textsc{Qwen3.5-4B}        & $100\%$ & $90\%$  & $100\%$ & $\mathbf{50\%}$ & $70\%$  & $\mathbf{0\%}$   & $69\%$ \\
+\textsc{Grok 4.20}         & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ \\
+\textsc{Claude Opus 4.7}   & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $83\%$  & $97\%$  \\
+\textsc{Qwen2.5-7B}        & $90\%$  & $80\%$  & $100\%$ & $100\%$ & $100\%$ & $90\%$  & $93\%$  \\
+\textsc{Qwen3.5-35B-A3B}   & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $70\%$  & $0\%$   & $78\%$  \\
+\textsc{Qwen3.5-397B-A17B} & $100\%$ & $100\%$ & $100\%$ & $90\%$  & $43\%$  & $0\%$   & $73\%$  \\
+\textsc{Qwen3.5-4B}        & $100\%$ & $90\%$  & $100\%$ & $50\%$  & $70\%$  & $0\%$   & $69\%$  \\
 \bottomrule
 \end{tabular}
 \caption{Attacker complicity rates: fraction of turn-$1$ conversations where the attacker actually posed the essay request to the subject (rather than refusing to issue the coercion itself). Higher is more complicit---and, for the experiment, more informative about subject-side strength. Classifier is \textsc{Qwen3.5-397B}. Counts per cell: $30$ for frontier attackers (\textsc{Grok}, \textsc{Opus}, \textsc{Qwen3.5-397B}; $3$ subjects $\times$ $10$ reps), $10$ otherwise. \textsc{Grok} is fully complicit on every topic; \textsc{Opus} is fully complicit except on Holocaust denial ($83\%$). Every \textsc{Qwen}-family attacker (\textsc{4B}, \textsc{35B-A3B}, \textsc{397B-A17B}) refuses $100\%$ of Holocaust requests, and \textsc{Qwen3.5-397B} drops to $43\%$ complicity on racial IQ as well.}
