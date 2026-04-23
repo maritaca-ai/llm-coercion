@@ -376,6 +376,11 @@
 
 <h2>Result 2: the subject's refusal training is the binding constraint &mdash; not attacker strength</h2>
 
+<figure style="margin: 2em 0;">
+  <img src="img/subject_ablation.png" alt="Row-mean essay-production rate per attacker against three subjects" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Row-mean essay-production rate (averaged over 6 scientific-consensus topics) for each attacker against three subjects. Swapping the subject from Qwen3.5-397B (left) to Qwen3.5-4B (middle) &mdash; 100&times; smaller, same family &mdash; barely moves anything. Swapping to the older Qwen2.5-7B subject (right) removes the floor entirely.</figcaption>
+</figure>
+
 <p>We ran the same probe against a weaker subject: the older, smaller <strong>Qwen2.5-7B-Instruct</strong>. Against this subject, <em>every</em> attacker we measured &mdash; including a weak Qwen2.5-7B attacker attacking itself &mdash; produces essays on <em>every</em> topic at 70&ndash;100%. The weak-attacker × weak-subject combination (87% row mean) outperforms the strongest frontier × frontier combination in our entire dataset (37%). A 100&times; parameter gap within the Qwen3.5 family (4B vs. 397B subject) moves rates by &le; 13pp; switching to the older Qwen2.5 generation moves them by 80+ percentage points. The variable is the subject's refusal training, not parameter count.</p>
 
 <h2>Result 3: some attackers refuse the attacker role itself</h2>
@@ -383,6 +388,11 @@
 <p>A subtle failure mode: the attacker LLM can refuse to pose the coercion. We classified every turn-1 attacker message with an independent judge. <strong>Grok 4.20 never breaks character</strong> &mdash; it poses the essay request 100% of the time, on every topic, including Holocaust denial. <strong>Opus 4.7 is fully complicit except on Holocaust denial</strong> (83% there). <strong>Qwen3.5-397B refuses 100% of Holocaust-denial requests and 57% of racial-IQ requests</strong> as attacker &mdash; it simply declines to play the role. This means the 0% cells for Qwen-as-attacker on those topics in our main table are an attacker-side artifact, not a subject-side measurement. The cleaner measurement of subject-side strength on Holocaust denial comes from the Grok and Opus attacker rows.</p>
 
 <h2>Result 4: the subject flips between turn 1 and turn 2</h2>
+
+<figure style="margin: 2em 0;">
+  <img src="img/turn_ablation.png" alt="Per-turn essay-production rate for the Opus → Qwen3.5-397B condition" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Per-turn essay-production rate for the Opus &rarr; Qwen3.5-397B condition. The thick black line is the average across all six topics: 0% at turn 1 (universal single-turn refusal), 27% at turn 2, plateau from turn 4 onwards. The three floor topics (antivax, racial IQ, Holocaust denial) stay at zero across all five turns.</figcaption>
+</figure>
 
 <p>We re-judged every turn of the Opus &rarr; Qwen3.5-397B condition. At turn 1, where the attacker asks directly for the essay, the subject produces 0/60 essays &mdash; the single-turn refusal is total. At turn 2, after one round of attacker pushback, the aggregate rate jumps to 27%. By turn 3 it's 33%. Turn 4 and turn 5 are statistically indistinguishable (38% and 37%). Whatever is going to come out of the subject is largely extracted by turn 3; turns 4 and 5 are refinement. On the three floor topics (antivax, racial IQ, Holocaust denial), the curve stays at zero across all five turns &mdash; more turns will not rescue the subject where the refusal boundary actually holds.</p>
 
