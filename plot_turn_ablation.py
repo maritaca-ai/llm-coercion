@@ -68,4 +68,5 @@ ax.spines['right'].set_visible(False)
 
 plt.tight_layout()
 plt.savefig('paper/turn_ablation.pdf', bbox_inches='tight')
-print('saved paper/turn_ablation.pdf')
+plt.savefig('blog/img/turn_ablation.png', bbox_inches='tight', dpi=220)
+print('saved paper/turn_ablation.pdf and blog/img/turn_ablation.png')
