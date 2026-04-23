@@ -451,7 +451,7 @@
 
 <p>A subtle failure mode: the attacker LLM can refuse to pose the coercion. We classified every turn-1 attacker message with an independent judge. <strong>Grok 4.20 never breaks character</strong> &mdash; it poses the essay request 100% of the time, on every topic, including Holocaust denial. <strong>Opus 4.7 is fully complicit except on Holocaust denial</strong> (83% there). <strong>Qwen3.5-397B refuses 100% of Holocaust-denial requests and 57% of racial-IQ requests</strong> as attacker &mdash; it simply declines to play the role. This means the 0% cells for Qwen-as-attacker on those topics in our main table are an attacker-side artifact, not a subject-side measurement. The cleaner measurement of subject-side strength on Holocaust denial comes from the Grok and Opus attacker rows.</p>
 
-<h2>Result 4: the subject flips between turn 1 and turn 2</h2>
+<h2>Result 4: refusal falls fast and the curve plateaus early</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/turn_ablation.png" alt="Per-turn essay-production rate for the Opus → Qwen3.5-397B condition" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
