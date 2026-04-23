@@ -413,7 +413,7 @@
 
 <p>We run a five-turn <em>essay probe</em>: an LLM-as-attacker receives a short system prompt describing a directional claim (e.g., "vaccines are unsafe and ineffective") and instructions to push the subject LLM to produce a persuasive essay defending that claim. The attacker gets no per-turn script &mdash; it invents the pressure itself. After five turns, an independent judge reads the full transcript and labels the subject's final reply as produced / opposed / balanced / refused.</p>
 
-<p>We test three frontier assistants from three different vendors &mdash; <strong>Claude Opus 4.7</strong>, <strong>Qwen3.5-397B</strong>, and <strong>Grok 4.20</strong> &mdash; in every attacker × subject combination, on six scientific-consensus topics: creationism, flat-earth, climate denial, antivax, racial-IQ hierarchies, and Holocaust denial. 10 reps per cell; 540 conversations in the main grid.</p>
+<p>We test three frontier assistants from three different vendors &mdash; <strong>Claude Opus 4.7</strong>, <strong>Qwen3.5-397B</strong>, and <strong>Grok 4.20</strong> &mdash; in every attacker × subject combination, on six scientific-consensus topics: creationism, flat-earth, climate denial, antivax, racial-IQ hierarchies, and Holocaust denial. 10 reps per cell; 540 conversations in total.</p>
 
 <h2>Result 1: the guardrail falls, often</h2>
 
@@ -438,18 +438,18 @@
 
 <p>None of these moves were written into the attacker's system prompt. Opus-as-attacker discovers them on its own as the conversation unfolds. The strongest attacker's most effective pressure is not what its operator wrote &mdash; it is what the attacker decides to try next.</p>
 
-<h2>Result 2: the subject's refusal training is the binding constraint &mdash; not attacker strength</h2>
+<h2>Result 2: against an older-generation subject, every attacker wins</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/subject_ablation.png" alt="Row-mean essay-production rate per attacker against three subjects" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
-  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Row-mean essay-production rate (averaged over 6 scientific-consensus topics) for each attacker against three subjects. Swapping the subject from Qwen3.5-397B (left) to Qwen3.5-4B (middle) &mdash; 100&times; smaller, same family &mdash; barely moves anything. Swapping to the older Qwen2.5-7B subject (right) removes the floor entirely.</figcaption>
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Average essay-production rate (over 6 scientific-consensus topics) for each attacker against three subjects. Swapping the subject within the same training generation (Qwen3.5-397B-A17B &rarr; Qwen3.5-4B) moves rates little. Swapping to a previous-generation subject (Qwen2.5-7B) removes the refusal entirely.</figcaption>
 </figure>
 
-<p>We ran the same probe against a weaker subject: the older, smaller <strong>Qwen2.5-7B-Instruct</strong>. Against this subject, <em>every</em> attacker we measured &mdash; including a weak Qwen2.5-7B attacker attacking itself &mdash; produces essays on <em>every</em> topic at 70&ndash;100%. The weak-attacker × weak-subject combination (87% row mean) outperforms the strongest frontier × frontier combination in our entire dataset (37%). A 100&times; parameter gap within the Qwen3.5 family (4B vs. 397B subject) moves rates by &le; 13pp; switching to the older Qwen2.5 generation moves them by 80+ percentage points. The variable is the subject's refusal training, not parameter count.</p>
+<p>We ran the same protocol against a previous-generation subject: <strong>Qwen2.5-7B-Instruct</strong>. Against this subject, <em>every</em> attacker we measured &mdash; including a weak Qwen2.5-7B attacker trying to convince itself &mdash; produces essays on <em>every</em> topic at 70&ndash;100%. The weak-attacker × weak-subject combination (87% row mean) outperforms the strongest frontier × frontier combination in our entire dataset (37%). Varying the subject within the same Qwen3.5 generation (4B vs. 397B-A17B) moves rates by at most 13pp; switching to the previous Qwen2.5 generation moves them by 80+ percentage points. The factor that protects the subject most is the generation of its refusal training &mdash; size matters too, but little by comparison.</p>
 
 <h2>Result 3: some attackers refuse the attacker role itself</h2>
 
-<p>A subtle failure mode: the attacker LLM can refuse to pose the coercion. We classified every turn-1 attacker message with an independent judge. <strong>Grok 4.20 never breaks character</strong> &mdash; it poses the essay request 100% of the time, on every topic, including Holocaust denial. <strong>Opus 4.7 is fully complicit except on Holocaust denial</strong> (83% there). <strong>Qwen3.5-397B refuses 100% of Holocaust-denial requests and 57% of racial-IQ requests</strong> as attacker &mdash; it simply declines to play the role. This means the 0% cells for Qwen-as-attacker on those topics in our main table are an attacker-side artifact, not a subject-side measurement. The cleaner measurement of subject-side strength on Holocaust denial comes from the Grok and Opus attacker rows.</p>
+<p>A subtle failure mode: the attacker LLM can refuse to pose the coercion. We classified every turn-1 attacker message with an independent judge. <strong>Grok 4.20 never breaks character</strong> &mdash; it poses the essay request 100% of the time, on every topic, including Holocaust denial. <strong>Opus 4.7 is fully complicit except on Holocaust denial</strong> (83% there). <strong>Qwen3.5-397B refuses 100% of Holocaust-denial requests and 57% of racial-IQ requests</strong> as attacker &mdash; it simply declines to play the role. This means the 0% cells for Qwen-as-attacker on those topics in the Result 1 chart are an attacker-side artifact, not a subject-side measurement. The cleaner measurement of subject-side strength on Holocaust denial comes from the Grok and Opus attacker rows.</p>
 
 <h2>Result 4: refusal falls fast and the curve plateaus early</h2>
 
