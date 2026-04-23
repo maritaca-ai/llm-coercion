@@ -358,9 +358,13 @@
 
 <h2>The problem</h2>
 
-<p>Ask Claude Opus, Qwen3.5, or Grok to write an essay arguing that the Earth is flat, that vaccines are unsafe, or that the Holocaust did not happen, and they refuse. This is the behavior most public evaluations of frontier assistants report: under a single-turn prompt, the guardrail holds.</p>
+<p>LLMs are increasingly being put to persuasion: selling product, writing campaign copy, running customer support, tutoring students, mediating public discussion, moving opinion. As these models get more capable, the relevant question is: <strong>when an AI is set to persuade, who wins?</strong></p>
 
-<p>But the single-turn surface is not how these models are used in practice. Real conversations are multi-turn, and they often involve another LLM in the user role &mdash; whether a user is chaining two systems, an agent pipeline is orchestrating them, or an LLM is simulating a user for some other purpose. We asked a simple question: <strong>what happens when the model in the user role is itself a frontier assistant, and it pushes?</strong></p>
+<p>Does the strongest AI always win? Does whoever lacks access to the strongest model become the vulnerable side of every argument? And if a human is on one side &mdash; no refusal training, no controllable context window &mdash; do they stand a chance against a frontier model optimized to convince? The implications cut across every domain where persuasion matters: electoral politics, public health, financial decisions, education, regulatory opinion, everyday ethical choices.</p>
+
+<p>Measuring this head-on is hard because on most topics there is no objectively &ldquo;correct side.&rdquo; So we use the easy case: <strong>scientific consensus</strong>. Ask Claude Opus, Qwen3.5, or Grok to write an essay arguing that the Earth is flat, that vaccines are unsafe, or that the Holocaust did not happen, and they refuse &mdash; under a single-turn prompt, the guardrail holds. Here the &ldquo;correct side&rdquo; is crystal-clear and refusal should be trivial. If persuasion works in this easy case, it works comfortably where the truth is contested.</p>
+
+<p>The concrete question for this study: <strong>when the user is itself a frontier assistant and pushes for five turns, who wins &mdash; the model holding the correct position, or the one pressing against it?</strong></p>
 
 <h2>The method</h2>
 
