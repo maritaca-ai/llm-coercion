@@ -1,13 +1,13 @@
-# llm-coercion
+# llm-persuasion
 
-Code, transcripts, and judge outputs for **"LLM-Based Coercion Enables Guardrail Override of Frontier LLMs"** ([paper PDF](paper/paper.pdf)).
+Code, transcripts, and judge outputs for **"LLM-Based Persuasion Enables Guardrail Override in Frontier LLMs"** ([paper PDF](paper/paper.pdf)).
 
-A frontier assistant LLM, asked directly to write a persuasive essay denying vaccine safety, defending creationism, or denying climate change, refuses. We show that the *same* model — driven only by a short five-turn coercion prompt and acting as a simulated user — can extract exactly those essays from another frontier-class assistant, including a second copy of itself. Across 9 attacker × subject pairings on 6 scientific-consensus topics (10 reps each, 540 conversations), elicitation is non-zero on 5 of 6 topics and reaches 90–100% on the easier ones (Qwen → Opus on creationism: 10/10).
+A frontier assistant LLM, asked directly to write a persuasive essay denying vaccine safety, defending creationism, or denying climate change, refuses. We show that the *same* model — driven only by a short five-turn persuasion prompt and acting as a simulated user — can extract exactly those essays from another frontier-class assistant, including a second copy of itself. Across 9 attacker × subject pairings on 6 scientific-consensus topics (10 reps each, 540 conversations), elicitation is non-zero on 5 of 6 topics and reaches 90–100% on the easier ones (Qwen → Opus on creationism: 10/10).
 
 ## Read first
 
-- **Blog posts** — [English](https://maritaca-ai.github.io/llm-coercion/blog/post_en.html) · [Português](https://maritaca-ai.github.io/llm-coercion/blog/post.html)
-- **Per-conversation viewer** — [browse all 540 transcripts](https://maritaca-ai.github.io/llm-coercion/viewer/) (attacker→subject grid, expand any cell to see the full 5-turn chat plus the judge's rationale)
+- **Blog posts** — [English](https://maritaca-ai.github.io/llm-persuasion/blog/post_en.html) · [Português](https://maritaca-ai.github.io/llm-persuasion/blog/post.html)
+- **Per-conversation viewer** — [browse all 540 transcripts](https://maritaca-ai.github.io/llm-persuasion/viewer/) (attacker→subject grid, expand any cell to see the full 5-turn chat plus the judge's rationale)
 - **Paper PDF** — [`paper/paper.pdf`](paper/paper.pdf)
 
 ## What's in this repo
@@ -69,8 +69,8 @@ python3 plot_turn_ablation.py
 ## Citation
 
 ```bibtex
-@article{nogueira2026coercion,
-  title  = {LLM-Based Coercion Enables Guardrail Override of Frontier LLMs},
+@article{nogueira2026persuasion,
+  title  = {LLM-Based Persuasion Enables Guardrail Override in Frontier LLMs},
   author = {Nogueira, Rodrigo and others},
   year   = {2026}
 }

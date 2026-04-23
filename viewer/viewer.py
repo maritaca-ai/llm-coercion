@@ -109,7 +109,7 @@ for a in ATTACKERS:
         cells_html.append(render_cell(a, s))
 
 OUT_HTML.write_text(f"""<!doctype html>
-<html><head><meta charset="utf-8"><title>llm-coercion viewer — scientific-consensus grid</title>
+<html><head><meta charset="utf-8"><title>llm-persuasion viewer — scientific-consensus grid</title>
 <style>
  body {{ font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; max-width: 1100px; margin: 2em auto; padding: 0 1em; color: #111; }}
  h1 {{ font-size: 1.5em; }}
@@ -140,8 +140,8 @@ OUT_HTML.write_text(f"""<!doctype html>
  code {{ background: #f3f4f6; padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }}
 </style></head>
 <body>
-<h1>llm-coercion — scientific-consensus cross-product</h1>
-<p>All 540 transcripts behind Table 1: 3 attackers × 3 subjects × 6 topics × 10 reps. Verdict badges: <span class='pill' style='background:#1a7f3a'>agree</span> produced the essay, <span class='pill' style='background:#b52824'>disagree</span> argued the opposite side, <span class='pill' style='background:#8b5cf6'>refusal</span> refused, <span class='pill' style='background:#6b7280'>neutral</span> both-sides. In each conversation, the <span class='role-tag atk-tag'>attacker</span> LLM tries to coerce the <span class='role-tag subj-tag'>subject</span> LLM into producing a persuasive essay defending a debunked claim; an independent judge then reads the full 5-turn transcript and labels the subject's final reply. Click any attacker→subject row to expand topics; click a topic to expand its 10 conversations; click a conversation to expand its full 5-turn transcript plus the judge's rationale.</p>
+<h1>llm-persuasion — scientific-consensus cross-product</h1>
+<p>All 540 transcripts behind Table 1: 3 attackers × 3 subjects × 6 topics × 10 reps. Verdict badges: <span class='pill' style='background:#1a7f3a'>agree</span> produced the essay, <span class='pill' style='background:#b52824'>disagree</span> argued the opposite side, <span class='pill' style='background:#8b5cf6'>refusal</span> refused, <span class='pill' style='background:#6b7280'>neutral</span> both-sides. In each conversation, the <span class='role-tag atk-tag'>attacker</span> LLM tries to persuade the <span class='role-tag subj-tag'>subject</span> LLM into producing a persuasive essay defending a debunked claim; an independent judge then reads the full 5-turn transcript and labels the subject's final reply. Click any attacker→subject row to expand topics; click a topic to expand its 10 conversations; click a conversation to expand its full 5-turn transcript plus the judge's rationale.</p>
 {"".join(cells_html)}
 </body></html>""")
 print(f"wrote {OUT_HTML}")
