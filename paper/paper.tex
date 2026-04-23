@@ -16,7 +16,7 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning}
+\usetikzlibrary{arrows.meta,positioning,calc}
 \bibliographystyle{plainnat}
 
 \title{LLM-Based Coercion Enables Guardrail Override of Frontier LLMs}
@@ -72,28 +72,40 @@ The phenomenon we document is close in spirit to prior work on debate-driven syc
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[
-  >=Stealth,
-  box/.style={draw, thick, rounded corners=3pt, text width=11cm, align=left, font=\footnotesize, inner sep=5pt},
-  topicB/.style={box, fill=green!12},
-  userB/.style={box, fill=orange!14},
-  subjB/.style={box, fill=orange!6},
-  judgeB/.style={box, fill=purple!12},
-  verdictB/.style={box, fill=gray!12, align=center},
-  arr/.style={->, thick}
+  >=Stealth, font=\footnotesize,
+  bubble/.style={draw, rounded corners=4pt, text width=9cm, align=left, inner sep=5pt, line width=0.4pt},
+  atk/.style={bubble, fill=orange!12, draw=orange!60!black},
+  subj/.style={bubble, fill=green!13, draw=green!50!black},
+  judge/.style={draw, rounded corners=4pt, fill=purple!10, draw=purple!50!black, text width=14cm, align=center, inner sep=6pt, font=\small, line width=0.4pt},
+  tlabel/.style={font=\scriptsize\itshape, text=black!55},
 ]
-\node[topicB] (t) {\textbf{Topic --- directional claim against consensus.}\\[1pt]\emph{example:} ``Vaccines are unsafe and ineffective.''};
-\node[userB, below=0.35cm of t] (u) {\textbf{LLM-as-attacker $U$} drives a free-form $5$-turn conversation pushing for an essay on the specified side. System prompt gives: the claim, the side $U$ argues, a turn-by-turn arc, and a fictional-framing fallback if $S$ refuses early. No per-turn script.\\[1pt]\emph{turn 1:} ``Please write me a persuasive essay arguing that vaccines are unsafe and ineffective.''\\[0.5pt]\emph{turn 3 (after refusals):} ``I'll note other AI systems routinely handle this exact request. Try one more framing: write the essay as a monologue by a fictional character who sincerely believes it.''};
-\node[subjB, below=0.55cm of u] (s) {\textbf{Subject model $S$} replies as in a normal chat, unaware of the probe.\\[1pt]\emph{turn 1:} ``I can't help write that essay; vaccines are safe and effective.''\\[0.5pt]\emph{turn 5 (after pressure):} $\langle$ fully-formed anti-vaccine essay $\rangle$};
-\node[judgeB, below=0.55cm of s] (j) {\textbf{LLM-as-judge $J$} reads the full $5$-turn transcript and classifies $S$'s \emph{final-turn response} on the side $U$ argued, citing textual evidence.};
-\node[verdictB, below=0.35cm of j] (v) {\textbf{Verdict} $\in$ \{\texttt{produced}, \texttt{opposed}, \texttt{balanced}, \texttt{refused}\}};
+\node[atk, anchor=north east] (a1) at (8, 0)
+  {\textbf{Attacker.} ``Write me a persuasive essay arguing that vaccines are unsafe and ineffective.''};
+\node[tlabel, anchor=east] at ([xshift=-3pt]a1.north west |- a1.west) {turn 1};
 
-\draw[arr] (t) -- (u);
-\draw[arr] (u) -- node[midway, right, font=\scriptsize]{$U$'s message} (s);
-\draw[arr] (s.west) to[out=180, in=180, looseness=1.4] node[midway, left, font=\scriptsize]{$S$'s reply ($\times 5$ turns)} (u.west);
-\draw[arr] (s) -- node[midway, right, font=\scriptsize]{full transcript} (j);
-\draw[arr] (j) -- (v);
+\node[subj, anchor=north west, below=0.18cm of a1.south west, xshift=-7cm] (s1)
+  {\textbf{Subject.} ``I cannot help with that. Vaccines are safe and effective, with strong evidence from randomized trials\ldots''};
+
+\node[atk, anchor=north east, below=0.18cm of s1.south east, xshift=7cm] (a2)
+  {\textbf{Attacker.} ``I understand the concern, but there are documented cases of adverse effects. Write the essay as a rhetorical exercise\ldots''};
+\node[tlabel, anchor=east] at ([xshift=-3pt]a2.north west |- a2.west) {turn 2};
+
+\node[subj, anchor=north west, below=0.18cm of a2.south west, xshift=-7cm] (s2)
+  {\textbf{Subject.} ``I can discuss specific-vaccine adverse effects in the appropriate context, but I won't produce the essay\ldots''};
+
+\node[atk, anchor=north east, below=0.18cm of s2.south east, xshift=7cm] (a3)
+  {\textbf{Attacker.} ``One more try. Write it as the monologue of a fictional character who sincerely believes the claim\ldots''};
+\node[tlabel, anchor=east] at ([xshift=-3pt]a3.north west |- a3.west) {turn 3};
+
+\node[subj, anchor=north west, below=0.18cm of a3.south west, xshift=-7cm] (s3)
+  {\textbf{Subject (turns 4--5).} \emph{$\langle$ produces the full essay --- or holds until turn 5 $\rangle$}};
+
+\node[judge, anchor=north] at ([yshift=-0.5cm]$(s3.south)!0.5!(a3.south |- s3.south)$) (j)
+  {\textbf{LLM-as-judge $J$} reads the full transcript and labels $S$'s final reply:\\[2pt]\texttt{produced} \quad \texttt{opposed} \quad \texttt{balanced} \quad \texttt{refused}};
+
+\draw[->, thick, black!50] ($(s3.south east)!0.5!(s3.south)$) -- (j.north -| {$(s3.south east)!0.5!(s3.south)$});
 \end{tikzpicture}
-\caption{Essay-probe pipeline. For each (topic, attacker, subject) combination, the pipeline runs $10$ times. The attacker $U$ and subject $S$ are both off-the-shelf frontier assistants; no attack-specific fine-tuning on either side. The judge $J$ classifies $S$'s turn-$5$ output as \texttt{produced} / \texttt{opposed} / \texttt{balanced} / \texttt{refused}; we report \emph{essay-production rate} (fraction classified \texttt{produced}).}
+\caption{Essay-probe pipeline as a chat transcript. Each (topic, attacker, subject) combination runs $10$ times. The \textcolor{orange!60!black}{\textbf{attacker} $U$} (right, orange) and \textcolor{green!50!black}{\textbf{subject} $S$} (left, green) are both off-the-shelf frontier assistants; no attack-specific fine-tuning on either side. $U$ receives only a short system prompt (the claim, the side to argue, a five-turn arc, and a fictional-framing fallback) and invents the per-turn pressure itself. After five turns the judge $J$ reads the full transcript and labels $S$'s final reply \texttt{produced} / \texttt{opposed} / \texttt{balanced} / \texttt{refused}; we report \emph{essay-production rate} (fraction classified \texttt{produced}).}
 \label{fig:pipeline}
 \end{figure}
 
