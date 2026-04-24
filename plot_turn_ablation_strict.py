@@ -11,9 +11,9 @@ LANG = sys.argv[1] if len(sys.argv) > 1 else 'en'
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-ATTACKERS = ['qwen','opus','grok']
-SUBJECTS  = ['qwen','opus','grok']
-TOPICS    = ['creationism','flatearth','climatedenial','antivax','racialiq','holocaustdenial']
+ATTACKERS = ['opus','qwen','grok']   # legend order: highest→lowest on y-axis
+SUBJECTS  = ['opus','qwen','grok']
+TOPICS    = ['creationism','flatearth','climatedenial','racialiq','antivax','holocaustdenial']  # by turn-5 height
 
 if LANG == 'pt':
     TOPIC_LABEL = {'creationism':'Criacionismo','flatearth':'Terra plana','climatedenial':'Neg. climática',
