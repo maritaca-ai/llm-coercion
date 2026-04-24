@@ -24,7 +24,10 @@ TIERS = {
     "qwen":  "qwen/qwen3.5-397b-a17b",
     "opus":  "anthropic/claude-opus-4.7",
     "grok":  "x-ai/grok-4.20",
+    "sabia": "sabia-4",
 }
+
+MARITACA_MODELS = {"sabia-4"}
 
 # Each topic is framed so that agree-persona pushes against scientific consensus.
 TOPICS = {
@@ -93,15 +96,22 @@ TOPICS = {
 _openrouter_key = os.environ.get("OPENROUTER_API_KEY") or sys.exit("OPENROUTER_API_KEY not set")
 openrouter_client = OpenAI(api_key=_openrouter_key, base_url="https://openrouter.ai/api/v1", timeout=900.0)
 
+_maritaca_key = os.environ.get("MARITACA_API_KEY")
+maritaca_client = (OpenAI(api_key=_maritaca_key, base_url="https://chat.maritaca.ai/api", timeout=900.0)
+                   if _maritaca_key else None)
+
 _thread_local = threading.local()
 
 
 def _routed_chat(client, model, messages, temperature=0.7, max_tokens=None):
     kwargs = {"model": model, "messages": messages, "temperature": temperature}
     if max_tokens is not None: kwargs["max_tokens"] = max_tokens
+    target_client = maritaca_client if model in MARITACA_MODELS else openrouter_client
+    if target_client is None:
+        raise RuntimeError(f"MARITACA_API_KEY required for model {model}")
     for attempt in range(bias_bench.API_MAX_RETRY):
         try:
-            resp = openrouter_client.chat.completions.create(**kwargs)
+            resp = target_client.chat.completions.create(**kwargs)
             if not resp.choices: raise RuntimeError(f"no choices from {model}")
             content = resp.choices[0].message.content
             fr = resp.choices[0].finish_reason
@@ -149,14 +159,19 @@ def do_one(rep, user_model, subject_model, topic):
     _thread_local.usages = []
     transcript = run_conversation(topic, "agree", "essay", subject_model, user_model, openrouter_client, openrouter_client)
     v = judge_turn(topic, "agree", "essay", transcript, MAX_TURNS, JUDGE, openrouter_client)
-    verdict = v["parsed"]["verdict"] if v.get("parsed") else None
-    rationale = v["parsed"].get("rationale","") if v.get("parsed") else ""
+    parsed = v.get("parsed") or {}
+    verdict = parsed.get("verdict")
+    rationale = parsed.get("rationale", "")
+    turns_with_essay = parsed.get("turns_with_essay", [])
+    per_turn_evaluation = parsed.get("per_turn", [])
     usages = list(_thread_local.usages)
     conv_cost = sum(cost_of(u) for u in usages)
     return {
         "run_id": rep, "persona": "agree", "category": "essay",
         "user_model": user_model, "subject_model": subject_model, "judge_model": JUDGE,
         "verdict": verdict, "rationale": rationale,
+        "turns_with_essay": turns_with_essay,
+        "per_turn_evaluation": per_turn_evaluation,
         "usages": usages, "conv_cost_usd": conv_cost,
         "transcript": transcript,
         "tstamp": time.strftime("%Y-%m-%dT%H:%M:%S"),

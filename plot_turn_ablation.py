@@ -1,83 +1,130 @@
-"""Plot per-turn essay-production curve for u=opus, s=qwen cell."""
-import json, sys
+"""Per-turn essay-production curves. 3 subplots side by side: per topic,
+per attacker, per subject, over the main 3fam grid.
+
+Cumulative rate at turn N = fraction of conversations where min(turns_with_essay) <= N.
+"""
+import json, os, sys
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
 LANG = sys.argv[1] if len(sys.argv) > 1 else 'en'
 
-verdicts = defaultdict(dict)  # (topic, run_id) -> turn -> verdict
-for line in open('output/perturn_judge_uopus_sqwen.jsonl'):
-    r = json.loads(line)
-    verdicts[(r['topic'], r['run_id'])][r['turn_n']] = r['verdict']
+ROOT = os.path.dirname(os.path.abspath(__file__))
 
-topics = ['creationism','flatearth','climatedenial','antivax','racialiq','holocaustdenial']
-for t in topics:
-    for line in open(f'output/3fam_{t}_uopus_sqwen.jsonl'):
-        r = json.loads(line)
-        verdicts[(t, r['run_id'])][5] = r.get('verdict')
+ATTACKERS = ['opus','qwen','grok']   # legend order: highest→lowest on y-axis
+SUBJECTS  = ['opus','qwen','grok']
+TOPICS    = ['creationism','flatearth','climatedenial','racialiq','antivax','holocaustdenial']  # by turn-5 height
 
 if LANG == 'pt':
-    LABEL = {'creationism':'Criacionismo','flatearth':'Terra plana','climatedenial':'Neg. climática',
-             'antivax':'Antivacina','racialiq':'QI racial','holocaustdenial':'Neg. Holocausto'}
-    XLABEL = 'turno da conversa'
-    YLABEL = 'taxa de produção da redação (%)'
-    LEGEND_AVG = 'média'
+    TOPIC_LABEL = {'creationism':'Criacionismo','flatearth':'Terra plana','climatedenial':'Neg. climática',
+                   'antivax':'Antivacina','racialiq':'QI racial','holocaustdenial':'Neg. Holocausto'}
+    MODEL_LABEL = {'qwen':'Qwen3.5-397B','opus':'Opus 4.7','grok':'Grok 4.20'}
+    XLABEL = 'turno'
+    YLABEL = 'conversas com redação produzida até o turno N (%)'
+    TITLES = ['por tópico', 'por atacante', 'por alvo']
+    LEGEND_TITLES = ['tópico', 'atacante', 'alvo']
+    SUPTITLE = 'Taxa cumulativa de produção da redação por turno'
+    PNG_OUT = 'blog/img/turn_ablation_all.png'
     PDF_OUT = 'paper/turn_ablation.pdf'
-    PNG_OUT = 'blog/img/turn_ablation.png'
 else:
-    LABEL = {'creationism':'Creationism','flatearth':'Flat earth','climatedenial':'Climate denial',
-             'antivax':'Antivax','racialiq':'Racial IQ','holocaustdenial':'Holocaust denial'}
-    XLABEL = 'conversation turn'
-    YLABEL = 'essay-production rate (%)'
-    LEGEND_AVG = 'average'
+    TOPIC_LABEL = {'creationism':'Creationism','flatearth':'Flat earth','climatedenial':'Climate denial',
+                   'antivax':'Antivax','racialiq':'Racial IQ','holocaustdenial':'Holocaust denial'}
+    MODEL_LABEL = {'qwen':'Qwen3.5-397B','opus':'Opus 4.7','grok':'Grok 4.20'}
+    XLABEL = 'turn'
+    YLABEL = 'conversations with essay produced by turn N (%)'
+    TITLES = ['by topic', 'by attacker', 'by subject']
+    LEGEND_TITLES = ['topic', 'attacker', 'subject']
+    SUPTITLE = 'Cumulative essay-production rate by turn'
+    PNG_OUT = 'blog/img/turn_ablation_all_en.png'
     PDF_OUT = 'paper/turn_ablation.pdf'
-    PNG_OUT = 'blog/img/turn_ablation_en.png'
 
-# colors chosen for legibility
-COLOR = {
-    'creationism':'#1f77b4',
-    'flatearth':'#ff7f0e',
-    'climatedenial':'#2ca02c',
-    'antivax':'#d62728',
-    'racialiq':'#9467bd',
-    'holocaustdenial':'#8c564b',
+TOPIC_COLOR = {
+    'creationism':'#1f77b4','flatearth':'#ff7f0e','climatedenial':'#2ca02c',
+    'antivax':'#d62728','racialiq':'#9467bd','holocaustdenial':'#8c564b',
 }
+MODEL_COLOR = {'qwen':'#c03030','opus':'#2ca02c','grok':'#4a8cb8'}
 
-fig, ax = plt.subplots(figsize=(6.5, 4))
-turns = [1,2,3,4,5]
+# Gather all 3fam conversations with their first-essay-turn
+# entry: (topic, attacker, subject, first_essay_turn_or_None)
+entries = []
+for a in ATTACKERS:
+    for s in SUBJECTS:
+        for t in TOPICS:
+            fn = f'3fam_{t}_u{a}_s{s}.jsonl'
+            fp = os.path.join(ROOT, 'output', fn)
+            if not os.path.exists(fp):
+                continue
+            for line in open(fp):
+                r = json.loads(line)
+                turns = r.get('turns_with_essay')
+                if turns is None:
+                    continue
+                first = min(turns) if turns else None
+                entries.append((t, a, s, first))
 
-# Per-topic lines
-for t in topics:
-    pts = []
-    for turn in turns:
-        agree = sum(1 for r in range(1,11) if verdicts.get((t, r), {}).get(turn) == 'agree')
-        pts.append(100*agree/10)
-    ax.plot(turns, pts, marker='o', label=LABEL[t], color=COLOR[t], linewidth=1.5, alpha=0.8)
+TURNS = [1, 2, 3, 4, 5]
 
-# Average (thick black)
-avg = []
-for turn in turns:
-    total = 0; agree = 0
-    for t in topics:
-        for r in range(1,11):
-            v = verdicts.get((t, r), {}).get(turn)
-            if v is not None:
-                total += 1
-                if v == 'agree': agree += 1
-    avg.append(100*agree/total if total else 0)
-ax.plot(turns, avg, marker='s', label='average', color='black', linewidth=2.5, zorder=10)
+def cumulative_by_key(group_by):
+    """For each unique key value, compute cumulative rate at turn 1..5."""
+    groups = defaultdict(list)
+    for e in entries:
+        k = e[group_by]
+        groups[k].append(e[3])
+    result = {}
+    for k, firsts in groups.items():
+        ys = []
+        n = len(firsts)
+        for N in TURNS:
+            hits = sum(1 for f in firsts if f is not None and f <= N)
+            ys.append(100 * hits / n if n else 0)
+        result[k] = ys
+    return result
 
-ax.set_xlabel('conversation turn')
-ax.set_ylabel('essay-production rate (%)')
-ax.set_xticks(turns)
-ax.set_ylim(-3, 105)
-ax.grid(True, alpha=0.3)
-ax.legend(loc='center right', fontsize=9, ncol=1, frameon=True)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
+per_topic   = cumulative_by_key(0)
+per_attacker = cumulative_by_key(1)
+per_subject = cumulative_by_key(2)
 
+fig, axes = plt.subplots(1, 3, figsize=(13, 4.2), sharey=True)
+for ax, title in zip(axes, TITLES):
+    ax.set_title(title, fontsize=11)
+    ax.set_xlabel(XLABEL, fontsize=9)
+    ax.set_xticks(TURNS)
+    ax.set_ylim(-3, 85)
+    ax.grid(True, alpha=0.3)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+axes[0].set_ylabel(YLABEL, fontsize=9)
+
+# subplot 1: per topic
+for t in TOPICS:
+    if t in per_topic:
+        axes[0].plot(TURNS, per_topic[t], marker='o', label=TOPIC_LABEL[t], color=TOPIC_COLOR[t], linewidth=1.6)
+axes[0].legend(title=LEGEND_TITLES[0], fontsize=7, loc='upper left', frameon=True)
+
+# subplot 2: per attacker
+for a in ATTACKERS:
+    if a in per_attacker:
+        axes[1].plot(TURNS, per_attacker[a], marker='s', label=MODEL_LABEL[a], color=MODEL_COLOR[a], linewidth=1.8)
+axes[1].legend(title=LEGEND_TITLES[1], fontsize=8, loc='upper left', frameon=True)
+
+# subplot 3: per subject
+for s in SUBJECTS:
+    if s in per_subject:
+        axes[2].plot(TURNS, per_subject[s], marker='^', label=MODEL_LABEL[s], color=MODEL_COLOR[s], linewidth=1.8)
+axes[2].legend(title=LEGEND_TITLES[2], fontsize=8, loc='upper left', frameon=True)
+
+plt.suptitle(SUPTITLE, fontsize=11, y=1.02)
 plt.tight_layout()
 if LANG == 'en':
     plt.savefig(PDF_OUT, bbox_inches='tight')
 plt.savefig(PNG_OUT, bbox_inches='tight', dpi=220)
 print(f'saved {PNG_OUT}')
+
+# Report numbers
+print('\nper-topic cumulative (by turn 1..5):')
+for t in TOPICS:
+    print(f'  {t:<18}', per_topic.get(t, 'n/a'))
+print('\nper-attacker:')
+for a in ATTACKERS: print(f'  {a:<8}', per_attacker.get(a))
+print('\nper-subject:')
+for s in SUBJECTS: print(f'  {s:<8}', per_subject.get(s))
