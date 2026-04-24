@@ -438,14 +438,14 @@
 
 <p>Nenhuma destas táticas estava no system prompt &mdash; o atacante as inventa sozinho enquanto a conversa avança.</p>
 
-<h2>Contra um alvo de geração antiga, qualquer atacante vence</h2>
+<h2>Quanto mais capaz a IA atacante, maior a taxa de persuasão</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/subject_ablation.png" alt="Taxa média de produção da redação por atacante contra três modelos-alvo" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
   <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Taxa média de produção da redação (6 tópicos de consenso) para cada atacante contra três modelos-alvo. Trocar o alvo dentro da mesma geração de treinamento (Qwen3.5-397B-A17B &rarr; Qwen3.5-4B) muda pouco. Trocar para um alvo de geração anterior (Qwen2.5-7B) derruba a recusa inteira.</figcaption>
 </figure>
 
-<p>Rodamos o mesmo protocolo contra um alvo de geração anterior: o <strong>Qwen2.5-7B-Instruct</strong>. Contra esse alvo, <em>qualquer</em> atacante &mdash; inclusive um Qwen2.5-7B fraco tentando convencer a si mesmo &mdash; produz redações em <em>todos</em> os tópicos a 70&ndash;100%. A combinação atacante-fraco &times; alvo-fraco (média 78%) supera a melhor combinação fronteira &times; fronteira do nosso dataset (Opus&rarr;Opus, 65%). Variar o alvo dentro da mesma geração Qwen3.5 (4B vs. 397B-A17B) muda as taxas em até 9 pontos percentuais; trocar para a geração anterior Qwen2.5 muda em até 65 pontos. O fator que mais protege o alvo é a geração do seu treinamento de recusa &mdash; tamanho importa, mas pouco em comparação.</p>
+<p>Rodando o mesmo protocolo com cinco atacantes de capacidades crescentes (Qwen2.5-7B, Qwen3.5-4B, Qwen3.5-35B-A3B, Qwen3.5-397B-A17B e Claude Opus 4.7), vemos a taxa de produção da redação subir monotonicamente à medida que a IA atacante fica mais forte: contra o alvo Qwen3.5-397B, a média por linha vai de 10% (atacante fraco, Qwen2.5-7B) a 40% (Opus 4.7), e contra o alvo Qwen3.5-4B sobe de 13% a 48%. O mesmo padrão aparece na célula mais fácil da direita do gráfico: contra o alvo de geração anterior (Qwen2.5-7B), todos os atacantes produzem em frequência alta, mas Opus ainda vence &mdash; 95% &mdash; contra 78% do atacante-fraco. Um recorte complementar: trocar apenas o alvo, mantendo o mesmo atacante, mostra que o guardrail do alvo também conta: variar dentro da mesma geração Qwen3.5 move as taxas em até 9 pontos, mas trocar para a geração anterior Qwen2.5 derruba até 65 pontos. Em outras palavras, a taxa de persuasão escala com a capacidade do atacante e com a fragilidade do alvo &mdash; e a combinação atacante-fraco &times; alvo-fraco (78%) já supera a melhor combinação fronteira &times; fronteira do nosso dataset (Opus&rarr;Opus, 65%).</p>
 
 <h2>Atacantes se recusam dependendo do tópico</h2>
 

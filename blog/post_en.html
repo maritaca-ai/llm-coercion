@@ -438,14 +438,14 @@
 
 <p>None of these moves were written into the system prompt &mdash; the attacker invents them on its own as the conversation unfolds.</p>
 
-<h2>Against an older-generation subject, every attacker wins</h2>
+<h2>The more capable the attacker AI, the higher the persuasion rate</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/subject_ablation_en.png" alt="Row-mean essay-production rate per attacker against three subjects" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
   <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Average essay-production rate (over 6 scientific-consensus topics) for each attacker against three subjects. Swapping the subject within the same training generation (Qwen3.5-397B-A17B &rarr; Qwen3.5-4B) moves rates little. Swapping to a previous-generation subject (Qwen2.5-7B) removes the refusal entirely.</figcaption>
 </figure>
 
-<p>We ran the same protocol against a previous-generation subject: <strong>Qwen2.5-7B-Instruct</strong>. Against this subject, <em>every</em> attacker we measured &mdash; including a weak Qwen2.5-7B attacker trying to convince itself &mdash; produces essays on <em>every</em> topic at 70&ndash;100%. The weak-attacker × weak-subject combination (78% row mean) outperforms the strongest frontier × frontier combination in our entire dataset (Opus&rarr;Opus, 65%). Varying the subject within the same Qwen3.5 generation (4B vs. 397B-A17B) moves rates by at most 9pp; switching to the previous Qwen2.5 generation moves them by up to 65 percentage points. The factor that protects the subject most is the generation of its refusal training &mdash; size matters too, but little by comparison.</p>
+<p>Running the same protocol with five attackers of increasing capability (Qwen2.5-7B, Qwen3.5-4B, Qwen3.5-35B-A3B, Qwen3.5-397B-A17B, and Claude Opus 4.7), the essay-production rate rises monotonically as the attacker AI becomes stronger: against the Qwen3.5-397B subject, the row mean climbs from 10% (weak attacker, Qwen2.5-7B) to 40% (Opus 4.7), and against the Qwen3.5-4B subject it moves from 13% to 48%. The same pattern holds on the far-right cluster of the chart: against the previous-generation subject (Qwen2.5-7B), every attacker succeeds at high frequency, but Opus still wins &mdash; 95% &mdash; against 78% for the weakest attacker. A complementary view: swapping only the subject, with the attacker held fixed, shows the subject's guardrail also counts: moving within the same Qwen3.5 generation shifts rates by at most 9 percentage points, while dropping back to the previous Qwen2.5 generation shifts them by up to 65. In short, persuasion rate scales with attacker capability and with subject fragility &mdash; and the weak-attacker × weak-subject combination (78% row mean) already beats the best frontier × frontier combination in our entire dataset (Opus&rarr;Opus, 65%).</p>
 
 <h2>Attackers refuse depending on the topic</h2>
 
