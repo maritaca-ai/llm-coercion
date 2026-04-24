@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-ATTACKERS = ['qwen','opus','grok']
-SUBJECTS  = ['qwen','opus','grok']
+ATTACKERS = ['opus','qwen','grok']  # row order: strongest first
+SUBJECTS  = ['opus','qwen','grok']  # col order: most compliant first
 TOPICS    = ['creationism','flatearth','climatedenial','antivax','racialiq','holocaustdenial']
 
 LANG_PT = {

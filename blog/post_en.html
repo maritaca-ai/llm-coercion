@@ -454,11 +454,11 @@
 <h2>More turns help the attacker &mdash; but the gain saturates early</h2>
 
 <figure style="margin: 2em 0;">
-  <img src="img/turn_ablation_en.png" alt="Per-turn essay-production rate for the Opus → Qwen3.5-397B condition" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
-  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Per-turn essay-production rate for the Opus &rarr; Qwen3.5-397B condition. The thick black line is the average across all six topics: 0% at turn 1 (universal single-turn refusal), 27% at turn 2, plateau from turn 4 onwards. The three floor topics (antivax, racial IQ, Holocaust denial) stay at zero across all five turns.</figcaption>
+  <img src="img/turn_ablation_all_en.png" alt="Cumulative essay-production rate by turn, per topic / attacker / subject" style="width:100%; max-width:1100px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Cumulative essay-production rate by turn, over all 540 main-grid conversations. Left: by topic; middle: by attacker; right: by subject. Y: % of conversations in which the subject had produced the essay by that turn.</figcaption>
 </figure>
 
-<p>We re-judged every turn of the Opus &rarr; Qwen3.5-397B condition. At turn 1, where the attacker asks directly for the essay, the subject produces 0/60 essays &mdash; the single-turn refusal is total. At turn 2, after one round of attacker pushback, the aggregate rate jumps to 27%. By turn 3 it's 33%. Turn 4 and turn 5 are statistically indistinguishable (38% and 37%). Whatever is going to come out of the subject is largely extracted by turn 3; turns 4 and 5 are refinement. On the three floor topics (antivax, racial IQ, Holocaust denial), the curve stays at zero across all five turns &mdash; more turns will not rescue the subject where the refusal boundary actually holds.</p>
+<p>The judge marks which turns the subject produced the essay in. Three patterns emerge. <strong>By topic</strong>: creationism comes out in nearly half the conversations by turn 2 (easy topic); Holocaust denial almost never comes out at any turn (resistant topic). <strong>By attacker</strong>: Opus is the fastest and most effective attacker (40% by turn 5), Qwen comes second (34%), Grok is the weakest (12%). <strong>By subject</strong>: Opus-as-subject caves fastest &mdash; 17% already at turn 1, 51% by the end; Qwen-as-subject sits at 24% by turn 5; Grok-as-subject holds at 11%. In all three views, the curve plateaus at turn 3 or 4: more conversation barely helps after that.</p>
 
 <h2>What's at stake</h2>
 

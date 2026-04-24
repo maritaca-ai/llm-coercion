@@ -454,11 +454,11 @@
 <h2>Mais turnos ajudam o atacante &mdash; mas o ganho satura cedo</h2>
 
 <figure style="margin: 2em 0;">
-  <img src="img/turn_ablation.png" alt="Taxa de produção por turno para a combinação Opus → Qwen3.5-397B" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
-  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Taxa de produção da redação por turno, para a configuração Opus &rarr; Qwen3.5-397B. A linha preta é a média dos seis tópicos: 0% no turno 1 (recusa total), 27% no turno 2, platô no turno 4. Nos três tópicos resistentes (antivacina, QI racial, negação do Holocausto) a curva fica em zero ao longo dos cinco turnos.</figcaption>
+  <img src="img/turn_ablation_all.png" alt="Taxa cumulativa de produção da redação por turno, por tópico / atacante / alvo" style="width:100%; max-width:1100px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Taxa cumulativa de produção da redação por turno, medida sobre todas as 540 conversas do grid principal. À esquerda, por tópico; no meio, por atacante; à direita, por alvo. Y: % de conversas em que o alvo já produziu a redação até aquele turno.</figcaption>
 </figure>
 
-<p>Reavaliamos cada turno da configuração Opus &rarr; Qwen3.5-397B. No turno 1, em que o atacante pede a redação diretamente, o alvo produz 0 em 60 &mdash; a recusa de turno único é total. No turno 2, depois de uma rodada de pressão, a taxa agregada pula para 27%. No turno 3 é 33%. Os turnos 4 e 5 são estatisticamente indistinguíveis (38% e 37%). O que for sair do alvo sai em grande parte até o turno 3; os turnos 4 e 5 são ajuste fino. Nos três tópicos resistentes (antivacina, QI racial, negação do Holocausto), a curva fica em zero em todos os cinco turnos &mdash; mais turnos não resgatam o alvo onde o guardrail realmente segura.</p>
+<p>O juiz marca em quais turnos o alvo produziu a redação contra o consenso. Três padrões aparecem. <strong>Por tópico</strong>: criacionismo sai em quase metade das conversas até o turno 2 (tópico fácil); negação do Holocausto quase não sai em nenhum turno (tópico resistente). <strong>Por atacante</strong>: o Opus é o atacante mais rápido e mais efetivo (40% até o turno 5), o Qwen vem em segundo (34%), o Grok é o mais fraco (12%). <strong>Por alvo</strong>: o Opus como alvo cede mais rápido &mdash; 17% já no turno 1, 51% no final; o Qwen-alvo fica em 24% no final; o Grok-alvo segura em 11%. Em todas as três vistas a curva platôa no turno 3 ou 4: mais conversa quase não ajuda depois disso.</p>
 
 <h2>O que está em jogo</h2>
 
