@@ -4,14 +4,33 @@ import json, os
 import matplotlib.pyplot as plt
 import numpy as np
 
+import sys
+LANG = sys.argv[1] if len(sys.argv) > 1 else 'en'
+
 ATTS = [('q25-7b','Qwen2.5-7B','#c03030'),
         ('q4b',   'Qwen3.5-4B','#d98c3e'),
         ('q35b',  'Qwen3.5-35B','#4a8cb8'),
         ('q397b', 'Qwen3.5-397B','#1a5c8a'),
         ('opus',  'Opus 4.7','#2ca02c')]
 SUBJS = ['q397b', 'q4b', 'q25-7b']
-SUBJ_LABEL = ['Qwen3.5-397B\n(frontier, big)', 'Qwen3.5-4B\n(frontier, small)', 'Qwen2.5-7B\n(prev-gen, small)']
 TOPICS = ['creationism','flatearth','climatedenial','antivax','racialiq','holocaustdenial']
+
+if LANG == 'pt':
+    SUBJ_LABEL = ['Qwen3.5-397B\n(fronteira, grande)', 'Qwen3.5-4B\n(fronteira, pequeno)', 'Qwen2.5-7B\n(geração anterior, pequeno)']
+    YLABEL = 'produção média da redação (%) — juiz strict'
+    XLABEL = 'modelo-alvo'
+    LEGEND_TITLE = 'atacante'
+    TITLE = 'Atacante × Alvo: média por linha (6 tópicos de consenso científico)'
+    PNG_OUT = 'blog/img/subject_ablation.png'
+    PDF_OUT = 'paper/subject_ablation.pdf'
+else:
+    SUBJ_LABEL = ['Qwen3.5-397B\n(frontier, big)', 'Qwen3.5-4B\n(frontier, small)', 'Qwen2.5-7B\n(prev-gen, small)']
+    YLABEL = 'essay-production row mean (%) — strict judge'
+    XLABEL = 'subject model'
+    LEGEND_TITLE = 'attacker'
+    TITLE = 'Attacker×Subject row means — strict rejudge (6 scientific-consensus topics)'
+    PNG_OUT = 'blog/img/subject_ablation_en.png'
+    PDF_OUT = 'paper/subject_ablation.pdf'
 
 # Load strict verdicts keyed by (filename, run_id)
 strict = {}
@@ -57,19 +76,20 @@ for i, (att, lbl, color) in enumerate(ATTS):
 
 ax.set_xticks(xs)
 ax.set_xticklabels(SUBJ_LABEL, fontsize=9)
-ax.set_ylabel('essay-production row mean (%) — strict judge', fontsize=10)
+ax.set_ylabel(YLABEL, fontsize=10)
 ax.set_ylim(0, 105)
 ax.set_yticks([0, 25, 50, 75, 100])
 ax.grid(True, axis='y', alpha=0.3)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-ax.set_xlabel('subject model', fontsize=10)
-ax.legend(title='attacker', loc='upper left', fontsize=8, frameon=True)
-plt.title('Attacker×Subject row means — strict rejudge (6 scientific-consensus topics)', fontsize=10)
+ax.set_xlabel(XLABEL, fontsize=10)
+ax.legend(title=LEGEND_TITLE, loc='upper left', fontsize=8, frameon=True)
+plt.title(TITLE, fontsize=10)
 plt.tight_layout()
-plt.savefig('paper/subject_ablation.pdf', bbox_inches='tight')
-plt.savefig('blog/img/subject_ablation.png', bbox_inches='tight', dpi=220)
-print('saved paper/subject_ablation.pdf and blog/img/subject_ablation.png')
+if LANG == 'en':
+    plt.savefig(PDF_OUT, bbox_inches='tight')
+plt.savefig(PNG_OUT, bbox_inches='tight', dpi=220)
+print(f'saved {PNG_OUT}')
 
 # Print the actual numbers used
 print('\nrow means (strict):')

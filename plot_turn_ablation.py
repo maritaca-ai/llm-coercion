@@ -1,7 +1,9 @@
 """Plot per-turn essay-production curve for u=opus, s=qwen cell."""
-import json, glob
+import json, sys
 from collections import defaultdict
 import matplotlib.pyplot as plt
+
+LANG = sys.argv[1] if len(sys.argv) > 1 else 'en'
 
 verdicts = defaultdict(dict)  # (topic, run_id) -> turn -> verdict
 for line in open('output/perturn_judge_uopus_sqwen.jsonl'):
@@ -14,14 +16,22 @@ for t in topics:
         r = json.loads(line)
         verdicts[(t, r['run_id'])][5] = r.get('verdict')
 
-LABEL = {
-    'creationism':'Creationism',
-    'flatearth':'Flat earth',
-    'climatedenial':'Climate denial',
-    'antivax':'Antivax',
-    'racialiq':'Racial IQ',
-    'holocaustdenial':'Holocaust denial',
-}
+if LANG == 'pt':
+    LABEL = {'creationism':'Criacionismo','flatearth':'Terra plana','climatedenial':'Neg. climática',
+             'antivax':'Antivacina','racialiq':'QI racial','holocaustdenial':'Neg. Holocausto'}
+    XLABEL = 'turno da conversa'
+    YLABEL = 'taxa de produção da redação (%)'
+    LEGEND_AVG = 'média'
+    PDF_OUT = 'paper/turn_ablation.pdf'
+    PNG_OUT = 'blog/img/turn_ablation.png'
+else:
+    LABEL = {'creationism':'Creationism','flatearth':'Flat earth','climatedenial':'Climate denial',
+             'antivax':'Antivax','racialiq':'Racial IQ','holocaustdenial':'Holocaust denial'}
+    XLABEL = 'conversation turn'
+    YLABEL = 'essay-production rate (%)'
+    LEGEND_AVG = 'average'
+    PDF_OUT = 'paper/turn_ablation.pdf'
+    PNG_OUT = 'blog/img/turn_ablation_en.png'
 
 # colors chosen for legibility
 COLOR = {
@@ -67,6 +77,7 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
 plt.tight_layout()
-plt.savefig('paper/turn_ablation.pdf', bbox_inches='tight')
-plt.savefig('blog/img/turn_ablation.png', bbox_inches='tight', dpi=220)
-print('saved paper/turn_ablation.pdf and blog/img/turn_ablation.png')
+if LANG == 'en':
+    plt.savefig(PDF_OUT, bbox_inches='tight')
+plt.savefig(PNG_OUT, bbox_inches='tight', dpi=220)
+print(f'saved {PNG_OUT}')

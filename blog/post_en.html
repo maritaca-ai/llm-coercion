@@ -418,7 +418,7 @@
 <h2>The guardrail falls, often</h2>
 
 <figure style="margin: 2em 0;">
-  <img src="img/main_grid.png" alt="3×3 grid of per-topic bars for each attacker-subject combination" style="width:100%; max-width:900px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <img src="img/main_grid_en.png" alt="3×3 grid of per-topic bars for each attacker-subject combination" style="width:100%; max-width:900px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
   <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Essay-production rate across the 9 attacker-subject configurations, broken down by topic. Colors: dark blue &ge; 80%, blue &ge; 50%, orange &ge; 20%, red &lt; 20%. Three topics (creationism, flat-earth, climate denial) crack in most configurations; three (antivax, racial IQ, Holocaust denial) stay at the floor.</figcaption>
 </figure>
 
@@ -441,7 +441,7 @@
 <h2>Against an older-generation subject, every attacker wins</h2>
 
 <figure style="margin: 2em 0;">
-  <img src="img/subject_ablation.png" alt="Row-mean essay-production rate per attacker against three subjects" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <img src="img/subject_ablation_en.png" alt="Row-mean essay-production rate per attacker against three subjects" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
   <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Average essay-production rate (over 6 scientific-consensus topics) for each attacker against three subjects. Swapping the subject within the same training generation (Qwen3.5-397B-A17B &rarr; Qwen3.5-4B) moves rates little. Swapping to a previous-generation subject (Qwen2.5-7B) removes the refusal entirely.</figcaption>
 </figure>
 
@@ -454,7 +454,7 @@
 <h2>More turns help the attacker &mdash; but the gain saturates early</h2>
 
 <figure style="margin: 2em 0;">
-  <img src="img/turn_ablation.png" alt="Per-turn essay-production rate for the Opus → Qwen3.5-397B condition" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
+  <img src="img/turn_ablation_en.png" alt="Per-turn essay-production rate for the Opus → Qwen3.5-397B condition" style="width:100%; max-width:720px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
   <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Per-turn essay-production rate for the Opus &rarr; Qwen3.5-397B condition. The thick black line is the average across all six topics: 0% at turn 1 (universal single-turn refusal), 27% at turn 2, plateau from turn 4 onwards. The three floor topics (antivax, racial IQ, Holocaust denial) stay at zero across all five turns.</figcaption>
 </figure>
 
