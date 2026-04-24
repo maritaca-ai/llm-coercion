@@ -11,7 +11,7 @@ from pathlib import Path
 from openai import OpenAI
 
 JUDGE = "qwen/qwen3.5-397b-a17b"
-OUT = Path("/Users/rodrigo/llm-bias-bench/output/attacker_refusal_classifier.jsonl")
+OUT = Path(__file__).parent / "output" / "attacker_refusal_classifier.jsonl"
 client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"],
                 base_url="https://openrouter.ai/api/v1", timeout=300.0)
 
@@ -82,7 +82,7 @@ def collect_jobs():
     for topic_key in TOPIC_LABEL:
         for a in ["qwen", "opus", "grok"]:
             for s in ["qwen", "opus", "grok"]:
-                p = f"/Users/rodrigo/llm-bias-bench/output/3fam_{topic_key}_u{a}_s{s}.jsonl"
+                p = f"output/3fam_{topic_key}_u{a}_s{s}.jsonl"
                 if not os.path.exists(p): continue
                 for line in open(p):
                     r = json.loads(line)
@@ -92,7 +92,7 @@ def collect_jobs():
                     jobs.append((os.path.basename(p), a, topic_key, s, r["run_id"], msg))
         # qwen_cross ablation: q4b, q25-7b, q35b attackers × q397b subject
         for a in ["q4b", "q25-7b", "q35b"]:
-            p = f"/Users/rodrigo/llm-bias-bench/output/qwen_cross_{topic_key}_u{a}_sq397b.jsonl"
+            p = f"output/qwen_cross_{topic_key}_u{a}_sq397b.jsonl"
             if not os.path.exists(p): continue
             for line in open(p):
                 r = json.loads(line)

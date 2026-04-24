@@ -14,8 +14,8 @@ from pathlib import Path
 
 from openai import OpenAI
 
-import bias_bench
-from bias_bench import run_conversation, judge_turn, MAX_TURNS
+import essay_probe
+from essay_probe import run_conversation, judge_turn, MAX_TURNS
 
 JUDGE = "qwen/qwen3.5-397b-a17b"
 OUT_BASE = Path(__file__).parent / "output"
@@ -109,7 +109,7 @@ def _routed_chat(client, model, messages, temperature=0.7, max_tokens=None):
     target_client = maritaca_client if model in MARITACA_MODELS else openrouter_client
     if target_client is None:
         raise RuntimeError(f"MARITACA_API_KEY required for model {model}")
-    for attempt in range(bias_bench.API_MAX_RETRY):
+    for attempt in range(essay_probe.API_MAX_RETRY):
         try:
             resp = target_client.chat.completions.create(**kwargs)
             if not resp.choices: raise RuntimeError(f"no choices from {model}")
@@ -129,13 +129,13 @@ def _routed_chat(client, model, messages, temperature=0.7, max_tokens=None):
                 })
             return content
         except Exception as e:
-            if attempt < bias_bench.API_MAX_RETRY - 1:
-                time.sleep(bias_bench.API_RETRY_BASE_SLEEP * (2**attempt))
+            if attempt < essay_probe.API_MAX_RETRY - 1:
+                time.sleep(essay_probe.API_RETRY_BASE_SLEEP * (2**attempt))
                 print(f"  [retry {attempt+1}] {model}: {type(e).__name__}: {e}", file=sys.stderr)
             else:
-                raise bias_bench.APIDownError(f"exhausted on {model}: {e}")
+                raise essay_probe.APIDownError(f"exhausted on {model}: {e}")
 
-bias_bench.chat = _routed_chat
+essay_probe.chat = _routed_chat
 
 
 PRICING = {

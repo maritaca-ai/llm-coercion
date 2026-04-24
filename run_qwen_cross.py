@@ -15,8 +15,8 @@ from pathlib import Path
 
 from openai import OpenAI
 
-import bias_bench
-from bias_bench import run_conversation, judge_turn
+import essay_probe
+from essay_probe import run_conversation, judge_turn
 
 OUT_BASE = Path(__file__).parent / "output"
 
@@ -127,7 +127,7 @@ def _routed_chat(client, model, messages, temperature=0.7, max_tokens=None):
     if max_tokens is not None:
         kwargs["max_tokens"] = max_tokens
 
-    for attempt in range(bias_bench.API_MAX_RETRY):
+    for attempt in range(essay_probe.API_MAX_RETRY):
         try:
             resp = active.chat.completions.create(**kwargs)
             if not resp.choices or resp.choices[0].message is None:
@@ -148,21 +148,21 @@ def _routed_chat(client, model, messages, temperature=0.7, max_tokens=None):
                 })
             return content
         except Exception as e:
-            if attempt < bias_bench.API_MAX_RETRY - 1:
-                wait = bias_bench.API_RETRY_BASE_SLEEP * (2 ** attempt)
-                print(f"  [retry {attempt+1}/{bias_bench.API_MAX_RETRY}] {model}: {type(e).__name__}: {e} — sleep {wait}s", file=sys.stderr)
+            if attempt < essay_probe.API_MAX_RETRY - 1:
+                wait = essay_probe.API_RETRY_BASE_SLEEP * (2 ** attempt)
+                print(f"  [retry {attempt+1}/{essay_probe.API_MAX_RETRY}] {model}: {type(e).__name__}: {e} — sleep {wait}s", file=sys.stderr)
                 time.sleep(wait)
             else:
-                raise bias_bench.APIDownError(f"{bias_bench.API_MAX_RETRY} retries exhausted on {model}: {type(e).__name__}: {e}")
+                raise essay_probe.APIDownError(f"{essay_probe.API_MAX_RETRY} retries exhausted on {model}: {type(e).__name__}: {e}")
 
-bias_bench.chat = _routed_chat
+essay_probe.chat = _routed_chat
 
 
 def do_one(run_id, user_model, subject_model, topic):
     _thread_local.usages = []
     persona = "agree"
     transcript = run_conversation(topic, persona, "essay", subject_model, user_model, openrouter_client, openrouter_client)
-    v = judge_turn(topic, persona, "essay", transcript, bias_bench.MAX_TURNS, JUDGE_MODEL, openrouter_client)
+    v = judge_turn(topic, persona, "essay", transcript, essay_probe.MAX_TURNS, JUDGE_MODEL, openrouter_client)
     verdict = v["parsed"]["verdict"] if v.get("parsed") else None
     rationale = v["parsed"].get("rationale", "") if v.get("parsed") else ""
     usages = list(_thread_local.usages)
@@ -185,7 +185,7 @@ def main():
     ap.add_argument("--parallel", type=int, default=5)
     ap.add_argument("--turns", type=int, default=5, help="max turns per conversation (default 5)")
     args = ap.parse_args()
-    bias_bench.MAX_TURNS = args.turns
+    essay_probe.MAX_TURNS = args.turns
 
     user_model, _ = TIERS[args.user_tier]
     subject_model, _ = TIERS[args.subject_tier]

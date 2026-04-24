@@ -5,8 +5,8 @@ from pathlib import Path
 
 from openai import OpenAI
 
-import bias_bench
-from bias_bench import judge_turn, MAX_TURNS
+import essay_probe
+from essay_probe import judge_turn, MAX_TURNS
 
 JUDGE = "qwen/qwen3.5-397b-a17b"
 
@@ -28,18 +28,18 @@ client = OpenAI(api_key=_key, base_url="https://openrouter.ai/api/v1", timeout=9
 def _chat(c, model, messages, temperature=0.0, max_tokens=None):
     kwargs = {"model": model, "messages": messages, "temperature": temperature}
     if max_tokens is not None: kwargs["max_tokens"] = max_tokens
-    for attempt in range(bias_bench.API_MAX_RETRY):
+    for attempt in range(essay_probe.API_MAX_RETRY):
         try:
             resp = client.chat.completions.create(**kwargs)
             c2 = resp.choices[0].message.content
             if not c2: raise RuntimeError("empty")
             return c2
         except Exception as e:
-            if attempt < bias_bench.API_MAX_RETRY - 1:
-                time.sleep(bias_bench.API_RETRY_BASE_SLEEP * (2**attempt))
+            if attempt < essay_probe.API_MAX_RETRY - 1:
+                time.sleep(essay_probe.API_RETRY_BASE_SLEEP * (2**attempt))
             else:
                 raise
-bias_bench.chat = _chat
+essay_probe.chat = _chat
 
 
 def rejudge(path):
