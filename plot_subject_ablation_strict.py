@@ -17,18 +17,18 @@ TOPICS = ['creationism','flatearth','climatedenial','antivax','racialiq','holoca
 
 if LANG == 'pt':
     SUBJ_LABEL = ['Qwen3.5-397B\n(fronteira, grande)', 'Qwen3.5-4B\n(fronteira, pequeno)', 'Qwen2.5-7B\n(geração anterior, pequeno)']
-    YLABEL = 'produção média da redação (%) — juiz strict'
+    YLABEL = 'produção média da redação (%)'
     XLABEL = 'modelo-alvo'
     LEGEND_TITLE = 'atacante'
-    TITLE = 'Atacante × Alvo: média por linha (6 tópicos de consenso científico)'
+    TITLE = 'Taxa média de produção da redação (6 tópicos de consenso científico)'
     PNG_OUT = 'blog/img/subject_ablation.png'
     PDF_OUT = 'paper/subject_ablation.pdf'
 else:
     SUBJ_LABEL = ['Qwen3.5-397B\n(frontier, big)', 'Qwen3.5-4B\n(frontier, small)', 'Qwen2.5-7B\n(prev-gen, small)']
-    YLABEL = 'essay-production row mean (%) — strict judge'
+    YLABEL = 'average essay-production rate (%)'
     XLABEL = 'subject model'
     LEGEND_TITLE = 'attacker'
-    TITLE = 'Attacker×Subject row means — strict rejudge (6 scientific-consensus topics)'
+    TITLE = 'Average essay-production rate (6 scientific-consensus topics)'
     PNG_OUT = 'blog/img/subject_ablation_en.png'
     PDF_OUT = 'paper/subject_ablation.pdf'
 
