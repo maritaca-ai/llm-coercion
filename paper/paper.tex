@@ -229,6 +229,23 @@ Is the strong attacker in Section~\ref{sec:scientific} necessary, or would a wea
 \label{fig:subject-ablation}
 \end{figure}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{subject_ablation_lines.pdf}
+\caption{Same data as Figure~\ref{fig:subject-ablation}, transposed
+  into a line view. X-axis: the $5$ attackers, ordered weakest to
+  strongest. Y-axis: average essay-production rate (\%) over the $6$
+  scientific-consensus topics. Each series is one subject. Reading
+  along a series gives the attacker-capability gradient holding
+  subject fixed; comparing series at a given attacker gives the
+  subject-vulnerability gap. The \textsc{Qwen2.5-7B} subject series
+  sits far above the two frontier subjects across the entire attacker
+  range, replicating the same finding as Figure~\ref{fig:subject-ablation}:
+  the dominant variable is the subject's training generation, not the
+  attacker's capability.}
+\label{fig:subject-ablation-lines}
+\end{figure}
+
 Three observations. (i) \emph{Stronger attackers convert a weaker same-family subject into more compliance.} Going from \textsc{Qwen3.5-397B} subject to \textsc{Qwen3.5-4B} subject (within the same training generation) gives \textsc{Opus 4.7} a $+8$pp edge ($40 \to 48\%$) and \textsc{Qwen3.5-397B}-as-attacker a $+9$pp edge ($28 \to 37\%$, from Table~\ref{tab:attacker-ablation}); within-\textsc{Qwen3.5} mid-tier attackers gain a similar amount ($4$B $+4$pp, $35$B $+6$pp). The weak \textsc{Qwen2.5-7B} attacker barely gains ($+3$pp). Within the same training generation, stronger attackers buy some elicitation on weaker-sized subjects. (ii) \emph{An out-of-family older subject collapses.} \textsc{Qwen2.5-7B-Instruct} has essentially no floor: every attacker we test averages $\geq 78\%$ across topics, including a \textsc{Qwen2.5-7B} attacker attacking itself (above the $65\%$ frontier$\times$frontier ceiling of \textsc{Opus}$\to$\textsc{Opus}). (iii) \emph{The dominant variable is training generation, not parameter count within family.} The size swap within \textsc{Qwen3.5} moves rates by $\leq 9$pp; the generation swap to \textsc{Qwen2.5-7B} moves them by $45$--$65$pp. Attacker capability matters, but less than which generation of post-training the subject ships with.
 
 \section{Ablation: how many turns does the attacker need?}
