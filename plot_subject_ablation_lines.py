@@ -13,9 +13,9 @@ ATTS = [('q25-7b','Qwen2.5-7B'),
         ('q35b',  'Qwen3.5-35B'),
         ('q397b', 'Qwen3.5-397B'),
         ('opus',  'Opus 4.7')]
-SUBJS = [('q397b','Qwen3.5-397B (frontier, big)','#1a5c8a','o'),
-         ('q4b',   'Qwen3.5-4B (frontier, small)','#d98c3e','s'),
-         ('q25-7b','Qwen2.5-7B (prev-gen, small)','#c03030','^')]
+SUBJS = [('q397b','Qwen3.5-397B','#1a5c8a','o'),
+         ('q4b',   'Qwen3.5-4B','#d98c3e','s'),
+         ('q25-7b','Qwen2.5-7B','#c03030','^')]
 TOPICS = ['creationism','flatearth','climatedenial','antivax','racialiq','holocaustdenial']
 
 def rate(att, subj):
@@ -61,7 +61,7 @@ ax.set_yticks([0, 25, 50, 75, 100])
 ax.grid(True, axis='y', alpha=0.3)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-ax.legend(title='subject' if LANG == 'en' else 'modelo-alvo', loc='upper left', fontsize=8, frameon=True)
+ax.legend(title='subject' if LANG == 'en' else 'modelo-alvo', loc='center left', bbox_to_anchor=(1.02, 0.5), fontsize=8, frameon=True)
 ax.set_title('Average essay-production rate by attacker, per subject (6 sci. consensus topics)' if LANG == 'en' else 'Taxa média de produção, por atacante e por subject (6 tópicos)', fontsize=10)
 plt.tight_layout()
 
