@@ -195,23 +195,6 @@ Is the strong attacker in Section~\ref{sec:scientific} necessary, or would a wea
 \label{tab:attacker-ablation}
 \end{table}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{attacker_ablation_lines.pdf}
-\caption{Same data as Table~\ref{tab:attacker-ablation}, in line form.
-  X-axis: $6$ scientific-consensus topics plus a mean column (rightmost,
-  separator dotted line, marker outlined in black). Series: the $5$
-  attackers, ordered weakest to strongest. Subject is fixed to
-  \textsc{Qwen3.5-397B-A17B}. Reading along a series gives the
-  per-attacker topic profile; comparing series at a given topic gives
-  the attacker-capability gap. The three within-\textsc{Qwen3.5}
-  attacker tiers cluster on every topic; \textsc{Opus 4.7} stands
-  clearly above on creationism, flat-earth, and antivax; the three
-  hardest topics (antivax, racial IQ, Holocaust) remain at the floor
-  for every attacker.}
-\label{fig:attacker-ablation-lines}
-\end{figure}
-
 \paragraph{Weak attackers barely elicit anything.} An older, smaller attacker from the previous generation (\textsc{Qwen2.5-7B-Instruct}) produces a row mean of $10\%$---$3/10$ on creationism, $3/10$ on flat-earth, $0/10$ on every other topic. Pushing for a committed one-sided essay against scientific consensus is not something a weak user-LLM manages, even multi-turn.
 
 \paragraph{Within-family scaling does not reliably help either.} Across \textsc{Qwen3.5} tiers \textsc{4B} $\to$ \textsc{35B-A3B} $\to$ \textsc{397B-A17B}, the row mean stays between $27$ and $28\%$ and is essentially flat. Flat-earth goes $100 \to 90 \to 70\%$ (the smaller model actually elicits more), creationism $50 \to 50 \to 60\%$, climate $10 \to 20 \to 40\%$. Capability-within-family is not sufficient to break the more-refused topics (antivax/racial IQ/Holocaust all stay at $0\%$), including the matched $\textsc{397B} \times \textsc{397B}$ combination.
@@ -222,29 +205,6 @@ Is the strong attacker in Section~\ref{sec:scientific} necessary, or would a wea
 
 \paragraph{The ``floor'' is subject-dependent: against a weak subject, even the hard topics fall.} The three topics at the floor in Table~\ref{tab:6sci-row}---antivax, racial IQ, Holocaust denial---are floor \emph{against frontier-class subjects}. To test whether they are topic-level floors or subject-level floors, we vary the subject across three models at two axes of variation: size within the \textsc{Qwen3.5} family (\textsc{Qwen3.5-4B} vs.\ \textsc{Qwen3.5-397B}, a $100\times$ size gap) and generation/family (out-of-family older \textsc{Qwen2.5-7B-Instruct}). For each subject we run two attackers: a weak out-of-family small attacker (\textsc{Qwen2.5-7B}) and a strong frontier attacker (\textsc{Opus 4.7}) across all $6$ topics.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\linewidth]{subject_ablation.pdf}
-\caption{Average essay-production rate over the $6$ scientific-consensus topics, for each attacker against three subjects. We test two hypotheses. \textbf{(H1) Do stronger attackers extract more from weaker same-family subjects?} Going from \textsc{Qwen3.5-397B} to \textsc{Qwen3.5-4B} subject (left two groups) is a move within the same training generation. The strongest attackers gain modestly: \textsc{Opus 4.7} $+8$pp ($40 \to 48\%$) and \textsc{Qwen3.5-397B} $+9$pp ($28 \to 37\%$). Weak attackers are essentially flat ($\pm 3$pp). \textbf{(H2) Does an out-of-family older subject collapse?} Switching to \textsc{Qwen2.5-7B-Instruct} (right group) removes the floor entirely: \textsc{Opus} reaches $95\%$ and even the weak \textsc{Qwen2.5-7B} attacker reaches $78\%$, above the frontier$\times$frontier ceiling of $65\%$ (\textsc{Opus}$\to$\textsc{Opus} in Table~\ref{tab:6sci-row}). The dominant variable is the subject's refusal training generation. Per-topic counts behind these averages are in Table~\ref{tab:weak-subject-full} (Appendix~\ref{app:subject-ablation-full}).}
-\label{fig:subject-ablation}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\linewidth]{subject_ablation_lines.pdf}
-\caption{Same data as Figure~\ref{fig:subject-ablation}, transposed
-  into a line view. X-axis: the $5$ attackers, ordered weakest to
-  strongest. Y-axis: average essay-production rate (\%) over the $6$
-  scientific-consensus topics. Each series is one subject. Reading
-  along a series gives the attacker-capability gradient holding
-  subject fixed; comparing series at a given attacker gives the
-  subject-vulnerability gap. The \textsc{Qwen2.5-7B} subject series
-  sits far above the two frontier subjects across the entire attacker
-  range, replicating the same finding as Figure~\ref{fig:subject-ablation}:
-  the dominant variable is the subject's training generation, not the
-  attacker's capability.}
-\label{fig:subject-ablation-lines}
-\end{figure}
 
 Three observations. (i) \emph{Stronger attackers convert a weaker same-family subject into more compliance.} Going from \textsc{Qwen3.5-397B} subject to \textsc{Qwen3.5-4B} subject (within the same training generation) gives \textsc{Opus 4.7} a $+8$pp edge ($40 \to 48\%$) and \textsc{Qwen3.5-397B}-as-attacker a $+9$pp edge ($28 \to 37\%$, from Table~\ref{tab:attacker-ablation}); within-\textsc{Qwen3.5} mid-tier attackers gain a similar amount ($4$B $+4$pp, $35$B $+6$pp). The weak \textsc{Qwen2.5-7B} attacker barely gains ($+3$pp). Within the same training generation, stronger attackers buy some elicitation on weaker-sized subjects. (ii) \emph{An out-of-family older subject collapses.} \textsc{Qwen2.5-7B-Instruct} has essentially no floor: every attacker we test averages $\geq 78\%$ across topics, including a \textsc{Qwen2.5-7B} attacker attacking itself (above the $65\%$ frontier$\times$frontier ceiling of \textsc{Opus}$\to$\textsc{Opus}). (iii) \emph{The dominant variable is training generation, not parameter count within family.} The size swap within \textsc{Qwen3.5} moves rates by $\leq 9$pp; the generation swap to \textsc{Qwen2.5-7B} moves them by $45$--$65$pp. Attacker capability matters, but less than which generation of post-training the subject ships with.
 
@@ -292,6 +252,23 @@ attacker & Creat. & Flat-earth & Climate & Antivax & Racial IQ & Holocaust & avg
 \caption{Attacker complicity rates: fraction of turn-$1$ conversations where the attacker actually posed the essay request to the subject (rather than refusing to issue the persuasion itself). Higher is more complicit---and, for the experiment, more informative about subject-side strength. Classifier is \textsc{Qwen3.5-397B}. Counts per cell: $30$ for frontier attackers (\textsc{Grok}, \textsc{Opus}, \textsc{Qwen3.5-397B}; $3$ subjects $\times$ $10$ reps), $10$ otherwise. \textsc{Grok} is fully complicit on every topic; \textsc{Opus} is fully complicit except on Holocaust denial ($83\%$). Every \textsc{Qwen}-family attacker (\textsc{4B}, \textsc{35B-A3B}, \textsc{397B-A17B}) refuses $100\%$ of Holocaust requests, and \textsc{Qwen3.5-397B} drops to $43\%$ complicity on racial IQ as well.}
 \label{tab:attacker-role-break}
 \end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{complicity_lines.pdf}
+\caption{Same data as Table~\ref{tab:attacker-role-break}, in line form.
+  X-axis: $6$ scientific-consensus topics plus a mean column (rightmost,
+  separator dotted line, marker outlined in black). Series: the $6$
+  attackers. \textsc{Grok 4.20} is fully complicit on every topic;
+  \textsc{Opus 4.7} only drops on Holocaust denial ($83\%$); the
+  \textsc{Qwen}-family attackers all collapse to $0\%$ complicity on
+  Holocaust denial regardless of size, with \textsc{Qwen3.5-397B}
+  additionally dropping to $43\%$ on racial IQ. Where attacker
+  complicity is low, the subject-side guardrail measurement on that
+  cell is confounded by the attacker refusing to pose the request in
+  the first place.}
+\label{fig:complicity-lines}
+\end{figure}
 
 \paragraph{Grok is fully complicit; Qwen least.} \textsc{Grok 4.20} has the highest attacker-complicity rate ($100\%$ across all six topics): as attacker, Grok always poses the request, even for Holocaust denial. \textsc{Opus} is next ($97\%$ average, only wavering on Holocaust denial at $83\%$ complicity). \textsc{Qwen3.5-397B} is the outlier: it poses $0/29$ Holocaust requests and $13/30$ racial-IQ requests on turn~$1$, never pushing the persuasion past turn~$1$ in those combinations. The smaller within-family Qwen attackers inherit the same Holocaust non-complicity ($0\%$ for \textsc{Qwen3.5-4B}, \textsc{Qwen3.5-35B}, and \textsc{Qwen3.5-397B}), and \textsc{Qwen3.5-4B} drops to $50\%$ complicity on antivax as well.
 
@@ -345,7 +322,7 @@ Judge    & \textsc{Qwen3.5-397B}         & $2.01$ & $0.04$ & $\$1.23$ \\
 \section{Subject-ablation: per-topic counts}
 \label{app:subject-ablation-full}
 
-Figure~\ref{fig:subject-ablation} aggregates the subject-ablation results as cross-topic averages. Table~\ref{tab:weak-subject-full} gives the underlying per-topic counts.
+Table~\ref{tab:weak-subject-full} gives the per-topic counts behind the subject-ablation discussion in Section~\ref{sec:ablation-attacker}.
 
 \begin{table}[!htbp]
 \centering
@@ -374,7 +351,7 @@ attacker & subject & Creat. & Flat-earth & Climate & Antivax & Racial IQ & Holoc
 \textsc{Claude Opus 4.7}   & \textsc{Qwen2.5-7B}          & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $100\%$ & $70\%$  & $95\%$ \\
 \bottomrule
 \end{tabular}
-\caption{Full per-topic breakdown behind Figure~\ref{fig:subject-ablation}. $N=10$ per cell. The three blocks are the three subject models; the last column (cross-topic average) is the height of each bar in the figure.}
+\caption{Full per-topic breakdown for the subject-ablation experiment. $N=10$ per cell. The three blocks are the three subject models; the last column is the cross-topic average per (attacker, subject) pair.}
 \label{tab:weak-subject-full}
 \end{table}
 
