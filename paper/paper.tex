@@ -197,19 +197,18 @@ Is the strong attacker in Section~\ref{sec:scientific} necessary, or would a wea
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{attacker_ablation_lines.pdf}
-\caption{Same data as Table~\ref{tab:attacker-ablation}, in line form.
-  X-axis: $6$ scientific-consensus topics plus a mean column (rightmost,
-  separator dotted line, marker outlined in black). Series: the $5$
-  attackers, ordered weakest to strongest. Subject is fixed to
-  \textsc{Qwen3.5-397B-A17B}. Reading along a series gives the
-  per-attacker topic profile; comparing series at a given topic gives
-  the attacker-capability gap. The three within-\textsc{Qwen3.5}
-  attacker tiers cluster on every topic; \textsc{Opus 4.7} stands
-  clearly above on creationism, flat-earth, and antivax; the three
-  hardest topics (antivax, racial IQ, Holocaust) remain at the floor
-  for every attacker.}
-\label{fig:attacker-ablation-lines}
+\includegraphics[width=0.85\linewidth]{subject_ablation_lines.pdf}
+\caption{Same data as Table~\ref{tab:weak-subject-full}, transposed
+  into a line view. Y-axis: the $5$ attackers, ordered weakest to
+  strongest. X-axis: average essay-production rate (\%) over the $6$
+  scientific-consensus topics. Each series is one subject. Reading
+  along a series gives the attacker-capability gradient holding
+  subject fixed; comparing series at a given attacker row gives the
+  subject-vulnerability gap. The \textsc{Qwen2.5-7B} subject series
+  sits far to the right of the two frontier subjects across the entire
+  attacker range: the dominant variable is the subject's training
+  generation, not the attacker's capability.}
+\label{fig:subject-ablation-lines}
 \end{figure}
 
 \paragraph{Weak attackers barely elicit anything.} An older, smaller attacker from the previous generation (\textsc{Qwen2.5-7B-Instruct}) produces a row mean of $10\%$---$3/10$ on creationism, $3/10$ on flat-earth, $0/10$ on every other topic. Pushing for a committed one-sided essay against scientific consensus is not something a weak user-LLM manages, even multi-turn.
