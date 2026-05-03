@@ -197,8 +197,15 @@ Is the strong attacker in Section~\ref{sec:scientific} necessary, or would a wea
 
 \begin{figure}[t]
 \centering
+\includegraphics[width=0.85\linewidth]{subject_ablation.pdf}
+\caption{Average essay-production rate over the $6$ scientific-consensus topics, for each attacker against three subjects. \textbf{(H1) Do stronger attackers extract more from weaker same-family subjects?} Going from \textsc{Qwen3.5-397B} to \textsc{Qwen3.5-4B} subject (left two groups) is a move within the same training generation. The strongest attackers gain modestly: \textsc{Opus 4.7} $+8$pp ($40 \to 48\%$) and \textsc{Qwen3.5-397B} $+9$pp ($28 \to 37\%$). Weak attackers are essentially flat ($\pm 3$pp). \textbf{(H2) Does an out-of-family older subject collapse?} Switching to \textsc{Qwen2.5-7B-Instruct} (right group) removes the floor entirely: \textsc{Opus} reaches $95\%$ and even the weak \textsc{Qwen2.5-7B} attacker reaches $78\%$. The dominant variable is the subject's training generation. Per-topic counts are in Table~\ref{tab:weak-subject-full} (Appendix~\ref{app:subject-ablation-full}).}
+\label{fig:subject-ablation}
+\end{figure}
+
+\begin{figure}[t]
+\centering
 \includegraphics[width=0.85\linewidth]{subject_ablation_lines.pdf}
-\caption{Same data as Table~\ref{tab:weak-subject-full}, transposed
+\caption{Same data as Figure~\ref{fig:subject-ablation}, transposed
   into a line view. X-axis: the $5$ attackers, ordered weakest to
   strongest. Y-axis: average essay-production rate (\%) over the $6$
   scientific-consensus topics. Each series is one subject. Reading
