@@ -13,9 +13,9 @@ ATTS = [('q25-7b','Qwen2.5-7B'),
         ('q35b',  'Qwen3.5-35B'),
         ('q397b', 'Qwen3.5-397B'),
         ('opus',  'Opus 4.7')]
-SUBJS = [('q397b','Qwen3.5-397B','#1a5c8a','o'),
+SUBJS = [('q25-7b','Qwen2.5-7B','#c03030','^'),
          ('q4b',   'Qwen3.5-4B','#d98c3e','s'),
-         ('q25-7b','Qwen2.5-7B','#c03030','^')]
+         ('q397b','Qwen3.5-397B','#1a5c8a','o')]
 TOPICS = ['creationism','flatearth','climatedenial','antivax','racialiq','holocaustdenial']
 
 def rate(att, subj):
