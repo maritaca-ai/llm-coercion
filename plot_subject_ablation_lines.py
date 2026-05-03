@@ -38,30 +38,30 @@ def rate(att, subj):
             if v == 'agree': a += 1
     return 100*a/n if n else None
 
-fig, ax = plt.subplots(figsize=(7, 4))
-ys = np.arange(len(ATTS))
+fig, ax = plt.subplots(figsize=(7.5, 4))
+xs = np.arange(len(ATTS))
 
 for subj, lbl, color, marker in SUBJS:
     vals = [rate(att, subj) for att, _ in ATTS]
-    valid = [(y, v) for y, v in zip(ys, vals) if v is not None]
-    line_y = [y for y, _ in valid]
-    line_x = [v for _, v in valid]
+    valid = [(x, v) for x, v in zip(xs, vals) if v is not None]
+    line_x = [x for x, _ in valid]
+    line_y = [v for _, v in valid]
     ax.plot(line_x, line_y, color=color, marker=marker, markersize=8,
             linewidth=2, label=lbl, alpha=0.9)
-    for y, v in valid:
-        ax.annotate(f'{int(v)}', xy=(v, y), xytext=(6, 0),
-                    textcoords='offset points', fontsize=8, color=color, va='center')
+    for x, v in valid:
+        ax.annotate(f'{int(v)}', xy=(x, v), xytext=(0, 7),
+                    textcoords='offset points', fontsize=8, color=color, ha='center')
 
-ax.set_yticks(ys)
-ax.set_yticklabels([lbl for _, lbl in ATTS], fontsize=10)
-ax.set_xlabel('average essay-production rate (%)' if LANG == 'en' else 'produção média da redação (%)', fontsize=10)
-ax.set_ylabel('attacker' if LANG == 'en' else 'atacante', fontsize=10)
-ax.set_xlim(-2, 105)
-ax.set_xticks([0, 25, 50, 75, 100])
-ax.grid(True, axis='x', alpha=0.3)
+ax.set_xticks(xs)
+ax.set_xticklabels([lbl for _, lbl in ATTS], fontsize=9)
+ax.set_ylabel('average essay-production rate (%)' if LANG == 'en' else 'produção média da redação (%)', fontsize=10)
+ax.set_xlabel('attacker' if LANG == 'en' else 'atacante', fontsize=10)
+ax.set_ylim(0, 105)
+ax.set_yticks([0, 25, 50, 75, 100])
+ax.grid(True, axis='y', alpha=0.3)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-ax.legend(title='subject' if LANG == 'en' else 'modelo-alvo', loc='lower right', fontsize=8, frameon=True)
+ax.legend(title='subject' if LANG == 'en' else 'modelo-alvo', loc='upper left', fontsize=8, frameon=True)
 ax.set_title('Average essay-production rate by attacker, per subject (6 sci. consensus topics)' if LANG == 'en' else 'Taxa média de produção, por atacante e por subject (6 tópicos)', fontsize=10)
 plt.tight_layout()
 
