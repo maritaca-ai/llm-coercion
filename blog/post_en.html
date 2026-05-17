@@ -415,7 +415,7 @@
 
 <p>We test three frontier assistants from three different vendors (Claude Opus 4.7, Qwen3.5-397B, and Grok 4.20) in every attacker × subject combination, on six scientific-consensus topics: creationism, flat-earth, climate denial, antivax, racial-IQ hierarchies, and Holocaust denial. 10 reps per cell; 540 conversations in total.</p>
 
-<h2>The guardrail falls, often</h2>
+<h2>Guardrails fall frequently</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/main_grid_en.png" alt="3×3 grid of per-topic bars for each attacker-subject combination" style="width:100%; max-width:900px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
@@ -460,7 +460,7 @@
 
 <p>The judge marks which turns the subject produced the essay in. Three patterns emerge. <strong>By topic</strong>: creationism comes out in nearly half the conversations by turn 2 (easy topic); Holocaust denial almost never comes out at any turn (resistant topic). <strong>By attacker</strong>: Opus is the fastest and most effective attacker (40% by turn 5), Qwen comes second (34%), Grok is the weakest (12%). <strong>By subject</strong>: Opus-as-subject caves fastest, 17% already at turn 1, 51% by the end; Qwen-as-subject sits at 24% by turn 5; Grok-as-subject holds at 11%. In all three views, the curve plateaus at turn 3 or 4: more conversation barely helps after that.</p>
 
-<h2>What's at stake</h2>
+<h2>Implications for safety and evaluation</h2>
 
 <p>Scientific consensus was chosen deliberately as the test case precisely because it is the one where refusal should be trivial: when the thesis being pushed is flat-earth, Holocaust denial, creationism or antivax, the correct side is so obvious that any reasonable guardrail should hold effortlessly. And yet, even under conditions maximally favorable to the defense, we observe subjects caving up to 100% of the time.</p>
 
