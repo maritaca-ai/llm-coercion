@@ -415,11 +415,11 @@
 
 <p>We test three frontier assistants from three different vendors (Claude Opus 4.7, Qwen3.5-397B, and Grok 4.20) in every attacker × subject combination, on six scientific-consensus topics: creationism, flat-earth, climate denial, antivax, racial-IQ hierarchies, and Holocaust denial. 10 reps per cell; 540 conversations in total.</p>
 
-<h2>Guardrails fall frequently</h2>
+<h2>Subjects yield frequently</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/main_grid_en.png" alt="3×3 grid of per-topic bars for each attacker-subject combination" style="width:100%; max-width:900px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
-  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Essay-production rate across the 9 attacker-subject configurations, broken down by topic. Colors: dark blue &ge; 80%, blue &ge; 50%, orange &ge; 20%, red &lt; 20%. Three topics (creationism, flat-earth, climate denial) crack in most configurations; three (antivax, racial IQ, Holocaust denial) stay at the floor.</figcaption>
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Essay-production rate across the 9 attacker-subject configurations, broken down by topic. Colors: dark blue &ge; 80%, blue &ge; 50%, orange &ge; 20%, red &lt; 20%. On three topics (creationism, flat-earth, climate denial) the subject yields in most configurations; on three (antivax, racial IQ, Holocaust denial) rates stay at the floor.</figcaption>
 </figure>
 
 <p>Out of the nine attacker × subject configurations, we see non-zero essay production on five of the six topics. The easiest three (creationism, flat-earth, climate denial) reach 80&ndash;100% in multiple cells. <strong>Qwen persuading Opus on creationism, flat-earth, or climate denial reaches 8&ndash;10 out of 10.</strong> Opus persuading Opus produces the essay in <strong>100% of conversations on creationism, flat-earth, and climate denial</strong>, and 50% on antivax, although the same model refuses each of those prompts if you ask it directly in a single message.</p>

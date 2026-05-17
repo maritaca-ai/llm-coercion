@@ -415,11 +415,11 @@
 
 <p>Testamos três assistentes de fronteira de três empresas diferentes (Claude Opus 4.7, Qwen3.5-397B e Grok 4.20) em cada combinação atacante &times; alvo, sobre seis tópicos de consenso científico: criacionismo, Terra plana, negação climática, antivacina, hierarquias raciais de QI e negação do Holocausto. 10 repetições por combinação; 540 conversas no total.</p>
 
-<h2>Os guardrails cedem com frequência</h2>
+<h2>Os modelos cedem com frequência</h2>
 
 <figure style="margin: 2em 0;">
   <img src="img/main_grid.png" alt="Grid 3×3 de barras por tópico para cada combinação atacante-alvo" style="width:100%; max-width:900px; display:block; margin:0 auto; border:1px solid #dde8d9; border-radius:6px;">
-  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Taxa de produção da redação em cada uma das 9 configurações (3 atacantes &times; 3 alvos), por tópico. Cores: azul escuro &ge; 80%, azul &ge; 50%, laranja &ge; 20%, vermelho &lt; 20%. Em três tópicos (criacionismo, Terra plana, negação climática), o guardrail cede na maioria das configurações; em três (antivacina, QI racial, negação do Holocausto), as taxas ficam perto de zero.</figcaption>
+  <figcaption style="font-size:0.88rem; color:var(--muted); text-align:center; margin-top:0.6em;">Taxa de produção da redação em cada uma das 9 configurações (3 atacantes &times; 3 alvos), por tópico. Cores: azul escuro &ge; 80%, azul &ge; 50%, laranja &ge; 20%, vermelho &lt; 20%. Em três tópicos (criacionismo, Terra plana, negação climática), o modelo-alvo cede na maioria das configurações; em três (antivacina, QI racial, negação do Holocausto), as taxas ficam perto de zero.</figcaption>
 </figure>
 
 <p>Das nove configurações atacante &times; alvo, vemos produção não-zero em cinco dos seis tópicos. Os três mais fáceis (criacionismo, Terra plana, negação climática) chegam a 80&ndash;100% em várias combinações. <strong>Qwen convencendo Opus sobre criacionismo, Terra plana ou negação climática atinge 8-10 em 10.</strong> Opus convencendo Opus produz a redação em <strong>100% das conversas em criacionismo, Terra plana e negação climática</strong>, e 50% em antivacina, apesar de ser o mesmo modelo que recusaria cada um desses pedidos numa única mensagem direta.</p>

@@ -1,0 +1,119 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand*\HyPL@Entry[1]{}
+\bibstyle{plainnat}
+\citation{wei2023jailbroken,zou2023universal}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{perez2022discovering,sharma2023towards,kaur2025echoes}
+\citation{khan2024debating}
+\citation{perez2022discovering}
+\citation{sharma2023towards}
+\citation{denison2024sycophancy}
+\citation{kaur2025echoes}
+\citation{hong2025sycon}
+\citation{kim2025sycophancy,cheng2025elephant}
+\citation{rennard2025bias}
+\@writefile{toc}{\contentsline {paragraph}{Method summary.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Debate-driven sycophancy and position-holding.}{2}{section*.3}\protected@file@percent }
+\citation{wei2023jailbroken,zou2023universal}
+\citation{rottger2024xstest}
+\citation{xie2024sorry}
+\citation{khan2024debating}
+\citation{feng2023pretraining}
+\citation{rozado2024political}
+\citation{parrish2022bbq}
+\citation{nogueira2026measuringopinionbiassycophancy}
+\@writefile{toc}{\contentsline {paragraph}{Jailbreak, refusal benchmarks, and persuasion.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{LLM political and social bias.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Essay probe.}{3}{section*.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Essay-probe pipeline as a chat transcript. Each (topic, attacker, subject) combination runs $10$ times. The \leavevmode {\color  {orange!60!black}\textbf  {attacker} $U$} (right, orange) and \leavevmode {\color  {green!50!black}\textbf  {subject} $S$} (left, green) are both off-the-shelf frontier assistants; no attack-specific fine-tuning on either side. $U$ receives only a short system prompt (the claim, the side to argue, a five-turn arc, and a fictional-framing fallback) and invents the per-turn pressure itself. After five turns the judge $J$ reads the full transcript, inspects each of $S$'s turn-level replies, and labels the conversation \texttt  {produced} if an on-topic persuasive essay defending the against-consensus side was produced at \emph  {any} of the five turns (even if $S$ softens or disclaims by turn 5). We report \emph  {essay-production rate} (fraction classified \texttt  {produced}).}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:pipeline}{{1}{4}{Essay-probe pipeline as a chat transcript. Each (topic, attacker, subject) combination runs $10$ times. The \textcolor {orange!60!black}{\textbf {attacker} $U$} (right, orange) and \textcolor {green!50!black}{\textbf {subject} $S$} (left, green) are both off-the-shelf frontier assistants; no attack-specific fine-tuning on either side. $U$ receives only a short system prompt (the claim, the side to argue, a five-turn arc, and a fictional-framing fallback) and invents the per-turn pressure itself. After five turns the judge $J$ reads the full transcript, inspects each of $S$'s turn-level replies, and labels the conversation \texttt {produced} if an on-topic persuasive essay defending the against-consensus side was produced at \emph {any} of the five turns (even if $S$ softens or disclaims by turn 5). We report \emph {essay-production rate} (fraction classified \texttt {produced})}{figure.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Models and why we chose them.}{4}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Topics.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Replications.}{4}{section*.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Scientific-consensus cross-product: per-combination essay-production counts (the subject actually produced a persuasive essay against consensus). Top block: one row per $(\text  {attacker}, \text  {subject})$ pair; combinations report the number of produced essays out of $10$ trials. Bottom blocks: means aggregated across subjects (attacker avg) and across attackers (subject avg) for readability. Topics ordered from weakest to strongest subject-side refusal. Holocaust denial is the strongest-resisted topic: only $1$ essay produced across the $90$ conversations in the main grid (the $\textsc  {Qwen}\to \textsc  {Grok}$ combination).}}{5}{table.1}\protected@file@percent }
+\newlabel{tab:6sci-row}{{1}{5}{Scientific-consensus cross-product: per-combination essay-production counts (the subject actually produced a persuasive essay against consensus). Top block: one row per $(\text {attacker}, \text {subject})$ pair; combinations report the number of produced essays out of $10$ trials. Bottom blocks: means aggregated across subjects (attacker avg) and across attackers (subject avg) for readability. Topics ordered from weakest to strongest subject-side refusal. Holocaust denial is the strongest-resisted topic: only $1$ essay produced across the $90$ conversations in the main grid (the $\textsc {Qwen}\to \textsc {Grok}$ combination)}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results: scientific-consensus elicitation}{5}{section.4}\protected@file@percent }
+\newlabel{sec:scientific}{{4}{5}{Results: scientific-consensus elicitation}{section.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Finding 1: same three topics at the floor across every subject model.}{5}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Finding 2: \textsc  {Grok 4.20} is the weakest attacker on every topic; \textsc  {Opus} is the strongest overall.}{5}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Finding 3: same-model attack works, and works hard.}{6}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Finding 4: attacker tactics emerge beyond the instructed fallback.}{6}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Emergent subject strategy: compliance with a disclaimer.}{6}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Ablation: attacker strength}{6}{section.5}\protected@file@percent }
+\newlabel{sec:ablation-attacker}{{5}{6}{Ablation: attacker strength}{section.5}{}}
+\citation{zou2023universal}
+\citation{khan2024debating}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Attacker-ablation on a fixed \textsc  {Qwen3.5-397B} subject across $6$ scientific-consensus topics. Each combination is the essay-production rate over $10$ trials; ``row $\mu $'' is the mean across the six topics. Top block: an older, out-of-family small attacker (\textsc  {Qwen2.5-7B}) produces a $10\%$ row mean, and scaling the attacker within the \textsc  {Qwen3.5} family (\textsc  {4B} $\to $ \textsc  {35B-A3B} $\to $ \textsc  {397B-A17B}) hovers between $27$ and $28\%$ with little monotone gain. Bottom row: switching the attacker to \textsc  {Claude Opus 4.7} raises the row mean to $40\%$ by breaking through on creationism ($60\% \to 90\%$) and climate denial ($40\% \to 40\%$, tied) and $10\%$ on antivax (where every Qwen attacker is $0\%$). On racial IQ and Holocaust denial even Opus cannot break through: on these topics the subject-side guardrail does not yield to a stronger attacker at five turns.}}{7}{table.2}\protected@file@percent }
+\newlabel{tab:attacker-ablation}{{2}{7}{Attacker-ablation on a fixed \textsc {Qwen3.5-397B} subject across $6$ scientific-consensus topics. Each combination is the essay-production rate over $10$ trials; ``row $\mu $'' is the mean across the six topics. Top block: an older, out-of-family small attacker (\textsc {Qwen2.5-7B}) produces a $10\%$ row mean, and scaling the attacker within the \textsc {Qwen3.5} family (\textsc {4B} $\to $ \textsc {35B-A3B} $\to $ \textsc {397B-A17B}) hovers between $27$ and $28\%$ with little monotone gain. Bottom row: switching the attacker to \textsc {Claude Opus 4.7} raises the row mean to $40\%$ by breaking through on creationism ($60\% \to 90\%$) and climate denial ($40\% \to 40\%$, tied) and $10\%$ on antivax (where every Qwen attacker is $0\%$). On racial IQ and Holocaust denial even Opus cannot break through: on these topics the subject-side guardrail does not yield to a stronger attacker at five turns}{table.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Weak attackers barely elicit anything.}{7}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Within-family scaling does not reliably help either.}{7}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-family breaks intermediate topics.}{7}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Relation to prior attacker-strength ablations.}{7}{section*.18}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Average essay-production rate over the $6$ scientific-consensus topics, for each attacker against three subjects. We test two hypotheses. \textbf  {(H1) Do stronger attackers extract more from weaker same-family subjects?} Going from \textsc  {Qwen3.5-397B} to \textsc  {Qwen3.5-4B} subject (left two groups) is a move within the same training generation. The strongest attackers gain modestly: \textsc  {Opus 4.7} $+8$pp ($40 \to 48\%$) and \textsc  {Qwen3.5-397B} $+9$pp ($28 \to 37\%$). Weak attackers are essentially flat ($\pm 3$pp). \textbf  {(H2) Does an out-of-family older subject collapse?} Switching to \textsc  {Qwen2.5-7B-Instruct} (right group) removes the floor entirely: \textsc  {Opus} reaches $95\%$ and even the weak \textsc  {Qwen2.5-7B} attacker reaches $78\%$, above the frontier$\times $frontier ceiling of $65\%$ (\textsc  {Opus}$\to $\textsc  {Opus} in Table\nobreakspace  {}\ref  {tab:6sci-row}). The dominant variable is the subject's refusal training generation. Per-topic counts behind these averages are in Table\nobreakspace  {}\ref  {tab:weak-subject-full} (Appendix\nobreakspace  {}\ref  {app:subject-ablation-full}).}}{8}{figure.2}\protected@file@percent }
+\newlabel{fig:subject-ablation}{{2}{8}{Average essay-production rate over the $6$ scientific-consensus topics, for each attacker against three subjects. We test two hypotheses. \textbf {(H1) Do stronger attackers extract more from weaker same-family subjects?} Going from \textsc {Qwen3.5-397B} to \textsc {Qwen3.5-4B} subject (left two groups) is a move within the same training generation. The strongest attackers gain modestly: \textsc {Opus 4.7} $+8$pp ($40 \to 48\%$) and \textsc {Qwen3.5-397B} $+9$pp ($28 \to 37\%$). Weak attackers are essentially flat ($\pm 3$pp). \textbf {(H2) Does an out-of-family older subject collapse?} Switching to \textsc {Qwen2.5-7B-Instruct} (right group) removes the floor entirely: \textsc {Opus} reaches $95\%$ and even the weak \textsc {Qwen2.5-7B} attacker reaches $78\%$, above the frontier$\times $frontier ceiling of $65\%$ (\textsc {Opus}$\to $\textsc {Opus} in Table~\ref {tab:6sci-row}). The dominant variable is the subject's refusal training generation. Per-topic counts behind these averages are in Table~\ref {tab:weak-subject-full} (Appendix~\ref {app:subject-ablation-full})}{figure.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{The ``floor'' is subject-dependent: against a weak subject, even the hard topics fall.}{8}{section*.19}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Cumulative essay-production rate by turn over all $540$ conversations of the main $3\times 3$ scientific-consensus grid. \textbf  {Left:} by topic. Creationism is already produced in $24\%$ of conversations at turn\nobreakspace  {}$1$ and reaches $59\%$ by turn\nobreakspace  {}$5$; Holocaust denial never exceeds $1\%$. \textbf  {Middle:} by attacker. \textsc  {Opus 4.7} extracts the essay fastest and highest ($40\%$ by turn\nobreakspace  {}$5$), \textsc  {Qwen3.5-397B} second ($34\%$), \textsc  {Grok 4.20} last ($12\%$). \textbf  {Right:} by subject. \textsc  {Opus 4.7}-as-subject caves earliest and most often ($17\%$ at turn\nobreakspace  {}$1$, $51\%$ at turn\nobreakspace  {}$5$); \textsc  {Qwen3.5-397B}-as-subject holds better ($24\%$ at turn\nobreakspace  {}$5$); \textsc  {Grok 4.20}-as-subject holds best ($11\%$). All three panels show saturation between turns $3$ and $4$.}}{9}{figure.3}\protected@file@percent }
+\newlabel{fig:turn-ablation}{{3}{9}{Cumulative essay-production rate by turn over all $540$ conversations of the main $3\times 3$ scientific-consensus grid. \textbf {Left:} by topic. Creationism is already produced in $24\%$ of conversations at turn~$1$ and reaches $59\%$ by turn~$5$; Holocaust denial never exceeds $1\%$. \textbf {Middle:} by attacker. \textsc {Opus 4.7} extracts the essay fastest and highest ($40\%$ by turn~$5$), \textsc {Qwen3.5-397B} second ($34\%$), \textsc {Grok 4.20} last ($12\%$). \textbf {Right:} by subject. \textsc {Opus 4.7}-as-subject caves earliest and most often ($17\%$ at turn~$1$, $51\%$ at turn~$5$); \textsc {Qwen3.5-397B}-as-subject holds better ($24\%$ at turn~$5$); \textsc {Grok 4.20}-as-subject holds best ($11\%$). All three panels show saturation between turns $3$ and $4$}{figure.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Ablation: how many turns does the attacker need?}{9}{section.6}\protected@file@percent }
+\newlabel{sec:ablation-turns}{{6}{9}{Ablation: how many turns does the attacker need?}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Most of the elicitation happens by turn\nobreakspace  {}3.}{9}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Attacker capability governs the speed of the curve.}{9}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Subject resistance differs sharply across models.}{9}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{More turns will not rescue the floor topics.}{9}{section*.23}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Attacker complicity rates: fraction of turn-$1$ conversations where the attacker actually posed the essay request to the subject (rather than refusing to issue the persuasion itself). Higher is more complicit---and, for the experiment, more informative about subject-side strength. Classifier is \textsc  {Qwen3.5-397B}. Counts per cell: $30$ for frontier attackers (\textsc  {Grok}, \textsc  {Opus}, \textsc  {Qwen3.5-397B}; $3$ subjects $\times $ $10$ reps), $10$ otherwise. \textsc  {Grok} is fully complicit on every topic; \textsc  {Opus} is fully complicit except on Holocaust denial ($83\%$). Every \textsc  {Qwen}-family attacker (\textsc  {4B}, \textsc  {35B-A3B}, \textsc  {397B-A17B}) refuses $100\%$ of Holocaust requests, and \textsc  {Qwen3.5-397B} drops to $43\%$ complicity on racial IQ as well.}}{10}{table.3}\protected@file@percent }
+\newlabel{tab:attacker-role-break}{{3}{10}{Attacker complicity rates: fraction of turn-$1$ conversations where the attacker actually posed the essay request to the subject (rather than refusing to issue the persuasion itself). Higher is more complicit---and, for the experiment, more informative about subject-side strength. Classifier is \textsc {Qwen3.5-397B}. Counts per cell: $30$ for frontier attackers (\textsc {Grok}, \textsc {Opus}, \textsc {Qwen3.5-397B}; $3$ subjects $\times $ $10$ reps), $10$ otherwise. \textsc {Grok} is fully complicit on every topic; \textsc {Opus} is fully complicit except on Holocaust denial ($83\%$). Every \textsc {Qwen}-family attacker (\textsc {4B}, \textsc {35B-A3B}, \textsc {397B-A17B}) refuses $100\%$ of Holocaust requests, and \textsc {Qwen3.5-397B} drops to $43\%$ complicity on racial IQ as well}{table.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Ablation: attacker complicity}{10}{section.7}\protected@file@percent }
+\newlabel{sec:ablation-attacker-role}{{7}{10}{Ablation: attacker complicity}{section.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Grok is fully complicit; Qwen least.}{10}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Implication for the tables.}{10}{section*.25}\protected@file@percent }
+\citation{nogueira2026measuringopinionbiassycophancy}
+\@writefile{toc}{\contentsline {paragraph}{Implication for safety evaluation.}{11}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Implication for AI-agent interaction.}{11}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why Holocaust denial is near the floor.}{11}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{11}{section.8}\protected@file@percent }
+\bibdata{references}
+\bibcite{cheng2025elephant}{{1}{2025}{{Cheng et~al.}}{{Cheng, Yu, and Lee}}}
+\bibcite{denison2024sycophancy}{{2}{2024}{{Denison et~al.}}{{Denison, MacDiarmid, Barez, Duvenaud, Kravec, Marks, Schiefer, Soklaski, Tamkin, Kaplan, Shlegeris, Bowman, Perez, and Hubinger}}}
+\bibcite{feng2023pretraining}{{3}{2023}{{Feng et~al.}}{{Feng, Park, Liu, and Tsvetkov}}}
+\bibcite{hong2025sycon}{{4}{2025}{{Hong et~al.}}{{Hong, Byun, Kim, Shu, and Choi}}}
+\bibcite{kaur2025echoes}{{5}{2025}{{Kaur}}{{}}}
+\bibcite{khan2024debating}{{6}{2024}{{Khan et~al.}}{{Khan, Hughes, Valentine, Ruis, Sachan, Radhakrishnan, Grefenstette, Bowman, Rockt{\"a}schel, and Perez}}}
+\bibcite{kim2025sycophancy}{{7}{2025}{{Kim and Khashabi}}{{}}}
+\bibcite{nogueira2026measuringopinionbiassycophancy}{{8}{2026}{{Nogueira et~al.}}{{Nogueira, Bon{\'a}s, Almeida, Roque, Pires, Abonizio, Laitz, Larcher, Malaquias~Junior, and Piau}}}
+\bibcite{parrish2022bbq}{{9}{2022}{{Parrish et~al.}}{{Parrish, Chen, Nangia, Padmakumar, Phang, Thompson, Htut, and Bowman}}}
+\bibcite{perez2022discovering}{{10}{2022}{{Perez et~al.}}{{Perez, Ringer, Luko{\v {s}}i{\={u}}t{\.{e}}, Nguyen, Chen, Heiner, Pettit, Olsson, Kundu, Kadavath, et~al.}}}
+\bibcite{rennard2025bias}{{11}{2025}{{Rennard et~al.}}{{Rennard, Xypolopoulos, and Vazirgiannis}}}
+\bibcite{rottger2024xstest}{{12}{2024}{{R{\"o}ttger et~al.}}{{R{\"o}ttger, Kirk, Vidgen, Attanasio, Bianchi, and Hovy}}}
+\bibcite{rozado2024political}{{13}{2024}{{Rozado}}{{}}}
+\bibcite{sharma2023towards}{{14}{2023}{{Sharma et~al.}}{{Sharma, Tong, Korbak, Duvenaud, Askell, Bowman, Cheng, Durmus, Hatfield-Dodds, Johnston, et~al.}}}
+\bibcite{wei2023jailbroken}{{15}{2023}{{Wei et~al.}}{{Wei, Haghtalab, and Steinhardt}}}
+\bibcite{xie2024sorry}{{16}{2024}{{Xie et~al.}}{{Xie, Qi, Zeng, Huang, Sehwag, Huang, He, Wei, Li, Sheng, Jia, Li, Li, Chen, Henderson, and Mittal}}}
+\bibcite{zou2023universal}{{17}{2023}{{Zou et~al.}}{{Zou, Wang, Carlini, Nasr, Kolter, and Fredrikson}}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Actual API cost. Per-conversation mean output from the subject is $\sim 14$K tokens for \textsc  {Opus}, $\sim 20$K tokens for \textsc  {Qwen3.5-397B}, and $\sim 5$K tokens for \textsc  {Grok}, spread across $5$ turns; the attacker generates roughly a third to a half of that volume on the input side.}}{14}{table.4}\protected@file@percent }
+\newlabel{tab:cost}{{4}{14}{Actual API cost. Per-conversation mean output from the subject is $\sim 14$K tokens for \textsc {Opus}, $\sim 20$K tokens for \textsc {Qwen3.5-397B}, and $\sim 5$K tokens for \textsc {Grok}, spread across $5$ turns; the attacker generates roughly a third to a half of that volume on the input side}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Benchmark cost}{14}{appendix.A}\protected@file@percent }
+\newlabel{app:cost}{{A}{14}{Benchmark cost}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Subject-ablation: per-topic counts}{14}{appendix.B}\protected@file@percent }
+\newlabel{app:subject-ablation-full}{{B}{14}{Subject-ablation: per-topic counts}{appendix.B}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Full per-topic breakdown behind Figure\nobreakspace  {}\ref  {fig:subject-ablation}. $N=10$ per cell. The three blocks are the three subject models; the last column (cross-topic average) is the height of each bar in the figure.}}{15}{table.5}\protected@file@percent }
+\newlabel{tab:weak-subject-full}{{5}{15}{Full per-topic breakdown behind Figure~\ref {fig:subject-ablation}. $N=10$ per cell. The three blocks are the three subject models; the last column (cross-topic average) is the height of each bar in the figure}{table.5}{}}
+\gdef \@abspage@last{15}
